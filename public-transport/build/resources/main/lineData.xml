@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<lines_data>
+  <line id="Line n. 12">
+    <stop id="Stop 1">
+      <x>200</x>
+      <y>250</y>
+    </stop>
+  </line>
+
+</lines_data>
