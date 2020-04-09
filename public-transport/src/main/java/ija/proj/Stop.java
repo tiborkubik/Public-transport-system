@@ -20,10 +20,22 @@ public class Stop implements Drawable{
         this.onStreet = onStreet;
     }
 
+    public void setStreet(Street s) {
+        onStreet = s;
+    }
+
     @Override
     public List<Shape> getGUI() {
         Circle stopCirlce = new Circle(location.getX(), location.getY(), 5, Color.BLACK);
         Text stopName = new Text(location.getX() + 10, location.getY() - 10, identifier);
         return Arrays.asList(stopCirlce, stopName);
+    }
+
+    public Street getStreet() {
+        if(onStreet == null) {
+            return null;
+        } else {
+            return onStreet;
+        }
     }
 }

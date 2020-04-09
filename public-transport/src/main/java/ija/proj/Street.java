@@ -18,6 +18,34 @@ public class Street implements Drawable {
         this.end = end;
     }
 
+    public Coordinate begin() {
+        return start;
+    }
+
+    public Coordinate end() {
+        return end;
+    }
+
+    public boolean follows(Street s) {
+        Coordinate givenStart = s.begin();
+        Coordinate givenEnd = s.end();
+
+        if(start.diffX(givenStart) == 0 && start.diffY(givenStart) == 0) {
+            return true;
+        }
+        if(start.diffX(givenEnd) == 0 && start.diffY(givenEnd) == 0) {
+            return true;
+        }
+        if(end.diffX(givenStart) == 0 && end.diffY(givenStart) == 0) {
+            return true;
+        }
+        if(end.diffX(givenEnd) == 0 && end.diffY(givenEnd) == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public List<Shape> getGUI() {
         Line singleStreet = new Line(start.getX(), start.getY(), end.getX(), end.getY());

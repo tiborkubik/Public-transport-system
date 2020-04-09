@@ -96,7 +96,6 @@ public class Main extends Application {
             NodeList nList = doc.getElementsByTagName("stop");
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
-
                 Node nNode = nList.item(temp);
 
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
