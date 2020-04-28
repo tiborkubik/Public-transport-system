@@ -110,7 +110,10 @@ public class Main extends Application {
                     int start_y = Integer.parseInt(temp_start_y);
 
                     // adding streets
-                    allElements.add(new Stop(eElement.getAttribute("id"), new Coordinate(start_x, start_y), null));
+
+                    Stop tempStop = new Stop(eElement.getAttribute("id"), new Coordinate(start_x, start_y), null);
+
+                    allElements.add(tempStop);
                 }
             }
         } catch (Exception e) {

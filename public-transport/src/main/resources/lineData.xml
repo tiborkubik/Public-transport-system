@@ -1,11 +1,41 @@
 <?xml version="1.0"?>
 
 <lines_data>
-  <line id="Line n. 12">
-    <stop id="Stop 1">
-      <x>200</x>
-      <y>250</y>
-    </stop>
+
+  <line id="Line n. 1" type="tram">
+
+    <street id="Canal St">
+      <stop id="Stop 1">
+        <x>200</x>
+        <y>400</y>
+      </stop>
+      <stop id="Stop 2">
+        <x>370</x>
+        <y>400</y>
+      </stop>
+    </street>
+
+    <street id="1st St">
+      <stop id="Hammilton Stop">
+        <x>450</x>
+        <y>400</y>
+      </stop>
+      <stop id="Wildwood Stop">
+        <x>590</x>
+        <y>400</y>
+      </stop>
+      <stop id="Cherry Hill Stop">
+        <x>890</x>
+        <y>400</y>
+      </stop>
+    </street>
+
+  </line>
+
+  <line id="Line n. 2" type="bus">
+    <street id="Bercley St">
+
+    </street>
   </line>
 
 </lines_data>

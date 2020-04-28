@@ -38,4 +38,12 @@ public class Stop implements Drawable{
             return onStreet;
         }
     }
+
+    public Coordinate getCoordinate() {
+        if(location == null) {
+            return null;
+        } else {
+            return location;
+        }
+    }
 }
