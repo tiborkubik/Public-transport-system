@@ -28,12 +28,13 @@ public class Line {
         if(stop.getStreet() == null) {
             return false;
         }
-
         if(stopList.size() == 0) {
             stopList.add(stop);
             streetList.add(stop.getStreet());
             return true;
         }
+
+
 
         if(stop.getStreet().follows(streetList.get(streetList.size()-1)) == false) {
             return false;
