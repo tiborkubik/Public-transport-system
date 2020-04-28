@@ -20,6 +20,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        System.out.println("ahojky");
+
+
         FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml"));
         BorderPane rootElement = layoutLoader.load();
         Scene mainScene = new Scene(rootElement);       // loads root element from GUI
