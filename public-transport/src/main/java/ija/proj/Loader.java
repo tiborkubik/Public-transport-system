@@ -107,6 +107,7 @@ public class Loader {
                                 System.out.println("Line is going through unexisting street.");
                                 System.exit(-1);
                             }
+
                             streetsOnLine.add(sStreet); // street is in Line list
 
                             // getting List of Stops of given Street

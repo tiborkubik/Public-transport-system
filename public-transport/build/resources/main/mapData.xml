@@ -1,26 +1,175 @@
 <?xml version="1.0"?>
 
 <map_data>
-  <street id="1st Ave">
+  <street id="West 1st St">
     <start_x>50</start_x>
-    <start_y>200</start_y>
-    <end_x>200</end_x>
-    <end_y>400</end_y>
+    <start_y>50</start_y>
+    <end_x>800</end_x>
+    <end_y>50</end_y>
   </street>
 
-  <street id="Canal St">
-    <start_x>200</start_x>
+  <street id="East 1st St">
+    <start_x>800</start_x>
+    <start_y>50</start_y>
+    <end_x>1600</end_x>
+    <end_y>50</end_y>
+  </street>
+
+  <street id="West 2nd St">
+    <start_x>50</start_x>
+    <start_y>150</start_y>
+    <end_x>800</end_x>
+    <end_y>150</end_y>
+  </street>
+
+  <street id="East 2nd St">
+    <start_x>800</start_x>
+    <start_y>150</start_y>
+    <end_x>1600</end_x>
+    <end_y>150</end_y>
+  </street>
+
+  <street id="Lexington Con">
+    <start_x>800</start_x>
+    <start_y>50</start_y>
+    <end_x>800</end_x>
+    <end_y>150</end_y>
+  </street>
+
+  <street id="Babylon Con">
+    <start_x>800</start_x>
+    <start_y>150</start_y>
+    <end_x>800</end_x>
+    <end_y>250</end_y>
+  </street>
+
+  <street id="West 3rd St">
+    <start_x>50</start_x>
+    <start_y>250</start_y>
+    <end_x>800</end_x>
+    <end_y>250</end_y>
+  </street>
+
+  <street id="West 4th St">
+    <start_x>50</start_x>
     <start_y>400</start_y>
     <end_x>400</end_x>
     <end_y>400</end_y>
   </street>
 
-  <street id="1st St">
+  <street id="Rabadon St">
+    <start_x>800</start_x>
+    <start_y>250</start_y>
+    <end_x>1000</end_x>
+    <end_y>400</end_y>
+  </street>
+
+  <street id="Mid 4th St">
     <start_x>400</start_x>
     <start_y>400</start_y>
     <end_x>1000</end_x>
     <end_y>400</end_y>
   </street>
+
+  <street id="4th Con">
+    <start_x>1000</start_x>
+    <start_y>400</start_y>
+    <end_x>1200</end_x>
+    <end_y>400</end_y>
+  </street>
+
+  <street id="East 3rd St">
+    <start_x>1200</start_x>
+    <start_y>300</start_y>
+    <end_x>1700</end_x>
+    <end_y>300</end_y>
+  </street>
+
+  <street id="Mid 3rd St">
+    <start_x>800</start_x>
+    <start_y>250</start_y>
+    <end_x>1200</end_x>
+    <end_y>300</end_y>
+  </street>
+
+  <street id="Card Ave A">
+    <start_x>1200</start_x>
+    <start_y>300</start_y>
+    <end_x>1200</end_x>
+    <end_y>400</end_y>
+  </street>
+
+  <street id="Card Ave B">
+    <start_x>1200</start_x>
+    <start_y>400</start_y>
+    <end_x>1200</end_x>
+    <end_y>500</end_y>
+  </street>
+
+  <street id="Card Ave C">
+    <start_x>1200</start_x>
+    <start_y>500</start_y>
+    <end_x>1200</end_x>
+    <end_y>600</end_y>
+  </street>
+
+  <street id="Jobs Ave A">
+    <start_x>1600</start_x>
+    <start_y>50</start_y>
+    <end_x>1600</end_x>
+    <end_y>150</end_y>
+  </street>
+
+  <street id="Jobs Ave B">
+    <start_x>1600</start_x>
+    <start_y>150</start_y>
+    <end_x>1700</end_x>
+    <end_y>300</end_y>
+  </street>
+
+  <street id="Jobs Ave C">
+    <start_x>1700</start_x>
+    <start_y>300</start_y>
+    <end_x>1700</end_x>
+    <end_y>400</end_y>
+  </street>
+
+  <street id="Jobs Ave D">
+    <start_x>1700</start_x>
+    <start_y>400</start_y>
+    <end_x>1700</end_x>
+    <end_y>500</end_y>
+  </street>
+
+  <street id="Jobs Ave E">
+    <start_x>1700</start_x>
+    <start_y>500</start_y>
+    <end_x>1700</end_x>
+    <end_y>600</end_y>
+  </street>
+
+
+  <street id="East 4th St">
+    <start_x>1200</start_x>
+    <start_y>400</start_y>
+    <end_x>1700</end_x>
+    <end_y>400</end_y>
+  </street>
+
+  <street id="East 5th St">
+    <start_x>1200</start_x>
+    <start_y>500</start_y>
+    <end_x>1700</end_x>
+    <end_y>500</end_y>
+  </street>
+
+  <street id="East 6th St">
+    <start_x>1200</start_x>
+    <start_y>600</start_y>
+    <end_x>1700</end_x>
+    <end_y>600</end_y>
+  </street>
+
 
   <street id="Oxford St">
     <start_x>400</start_x>
@@ -36,17 +185,150 @@
     <end_y>1000</end_y>
   </street>
 
-  <street id="2nd St">
-    <start_x>100</start_x>
+  <street id="Blind Spot">
+    <start_x>1000</start_x>
     <start_y>1000</start_y>
-    <end_x>1200</end_x>
+    <end_x>1000</end_x>
+    <end_y>1100</end_y>
+  </street>
+
+  <street id="Bercley St A">
+    <start_x>50</start_x>
+    <start_y>50</start_y>
+    <end_x>50</end_x>
+    <end_y>150</end_y>
+  </street>
+
+  <street id="Bercley St B">
+    <start_x>50</start_x>
+    <start_y>150</start_y>
+    <end_x>50</end_x>
+    <end_y>250</end_y>
+  </street>
+
+  <street id="Bercley St C">
+    <start_x>50</start_x>
+    <start_y>250</start_y>
+    <end_x>50</end_x>
+    <end_y>400</end_y>
+  </street>
+
+  <street id="Pitt Ave">
+    <start_x>400</start_x>
+    <start_y>400</start_y>
+    <end_x>400</end_x>
+    <end_y>900</end_y>
+  </street>
+
+  <street id="Monroe Ave">
+    <start_x>50</start_x>
+    <start_y>400</start_y>
+    <end_x>400</end_x>
+    <end_y>900</end_y>
+  </street>
+
+  <street id="Mid 9th St">
+    <start_x>400</start_x>
+    <start_y>900</start_y>
+    <end_x>800</end_x>
+    <end_y>900</end_y>
+  </street>
+
+  <street id="Mid 10th St">
+    <start_x>400</start_x>
+    <start_y>1000</start_y>
+    <end_x>800</end_x>
     <end_y>1000</end_y>
   </street>
 
-  <street id="Bercley St">
-    <start_x>50</start_x>
-    <start_y>200</start_y>
-    <end_x>100</end_x>
+  <street id="Pitt Con">
+    <start_x>400</start_x>
+    <start_y>900</start_y>
+    <end_x>400</end_x>
     <end_y>1000</end_y>
+  </street>
+
+  <street id="Marble Con">
+    <start_x>800</start_x>
+    <start_y>900</start_y>
+    <end_x>800</end_x>
+    <end_y>1000</end_y>
+  </street>
+
+  <street id="Pearl St">
+    <start_x>800</start_x>
+    <start_y>1000</start_y>
+    <end_x>1000</end_x>
+    <end_y>1000</end_y>
+  </street>
+
+  <street id="Mountain Tunnel Road">
+    <start_x>1000</start_x>
+    <start_y>1000</start_y>
+    <end_x>2200</end_x>
+    <end_y>1000</end_y>
+  </street>
+
+  <street id="Hancock St">
+    <start_x>2200</start_x>
+    <start_y>800</start_y>
+    <end_x>2200</end_x>
+    <end_y>1000</end_y>
+  </street>
+
+  <street id="Ocean Ave C">
+    <start_x>2100</start_x>
+    <start_y>700</start_y>
+    <end_x>2200</end_x>
+    <end_y>800</end_y>
+  </street>
+
+  <street id="Ocean Ave B">
+    <start_x>2100</start_x>
+    <start_y>300</start_y>
+    <end_x>2100</end_x>
+    <end_y>700</end_y>
+  </street>
+
+  <street id="Ocean Ave A">
+    <start_x>1950</start_x>
+    <start_y>100</start_y>
+    <end_x>2100</end_x>
+    <end_y>300</end_y>
+  </street>
+
+  <street id="Brooklyn St">
+    <start_x>1600</start_x>
+    <start_y>150</start_y>
+    <end_x>1950</end_x>
+    <end_y>100</end_y>
+  </street>
+
+  <street id="Pacific St">
+    <start_x>1950</start_x>
+    <start_y>100</start_y>
+    <end_x>1950</end_x>
+    <end_y>650</end_y>
+  </street>
+
+  <street id="Suffer Con">
+    <start_x>1950</start_x>
+    <start_y>650</start_y>
+    <end_x>2100</end_x>
+    <end_y>700</end_y>
+  </street>
+
+  <street id="Plymouth">
+    <start_x>1700</start_x>
+    <start_y>600</start_y>
+    <end_x>1950</end_x>
+    <end_y>600</end_y>
+  </street>
+
+  <street id="Exit 95">
+    <start_x>2200</start_x>
+    <start_y>1000</start_y>
+    <end_x>2500</end_x>
+    <end_y>1400</end_y>
   </street>
 </map_data>

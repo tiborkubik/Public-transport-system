@@ -126,6 +126,7 @@ public class Street implements Drawable {
 
             }
         }
+
         return false;
     }
 
