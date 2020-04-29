@@ -50,6 +50,8 @@ public class Stop implements Drawable{
         Circle stopCirlce = new Circle(location.getX(), location.getY(), 5, Color.BLACK);
         Text stopName = new Text(location.getX() + 10, location.getY() - 10, identifier);
         stopName.setFont(Font.font ("Impact", 12));
+        stopCirlce.setId(identifier);
+        stopName.setId(identifier);
         return Arrays.asList(stopCirlce, stopName);
     }
 }

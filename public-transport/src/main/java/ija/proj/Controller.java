@@ -104,10 +104,8 @@ public class Controller {
 
     public void ChangeLineColor(Line line, Color color) {
         ObservableList<Node> x = mapContent.getChildren();
-
         for(Node sg : x) {
             Shape sp = (Shape) sg;
-
             for(Street street : line.getStreetList()) {
                 if(sp.getId() == street.getName()) {
                     sp.setStroke(color);

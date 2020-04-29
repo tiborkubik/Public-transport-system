@@ -150,6 +150,7 @@ public class Street implements Drawable {
         singleStreet.setStrokeLineCap(StrokeLineCap.ROUND);
         singleStreet.setStrokeLineJoin(StrokeLineJoin.ROUND);
         singleStreet.setId(identifier);
+        streetName.setId(identifier);
         return Arrays.asList(singleStreet, streetName);
     }
 

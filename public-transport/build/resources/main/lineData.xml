@@ -2,7 +2,7 @@
 
 <lines_data>
 
-  <line id="Line A" type="tram">
+  <line id="Tram Line A" type="tram">
     <street id="Bercley St A">
       <stop id="Bc W1">
         <x>50</x>
@@ -118,7 +118,7 @@
 
 
 
-  <line id="Line B" type="tram">
+  <line id="Tram Line B" type="tram">
     <street id="Lexington Con">
       <stop id="1st+Lex">
         <x>800</x>
