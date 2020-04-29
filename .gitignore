@@ -1,2 +1,8 @@
 .idea/
 public-transport/.gradle/
+public-transport/build
+public-transport/gradle
+public-transport/build.gradle
+public-transport/gradlew
+public-transport/gradlew.bat
+public-transport/settings.gradle
