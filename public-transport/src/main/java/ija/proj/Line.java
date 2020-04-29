@@ -40,7 +40,6 @@ public class Line {
     }
 
     public boolean addStop(Stop stop) {
-        //System.out.println(stop.getCoordinate().getY());
         if(stop.getStreet() == null) {
             return false;
         }

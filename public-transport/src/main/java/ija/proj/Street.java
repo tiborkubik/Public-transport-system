@@ -1,7 +1,9 @@
 package ija.proj;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
 
@@ -134,6 +136,11 @@ public class Street implements Drawable {
     public List<Shape> getGUI() {
         Line singleStreet = new Line(start.getX(), start.getY(), end.getX(), end.getY());
         Text streetName = new Text(start.getX() + 10 + (Math.abs(start.diffX(end))/2), start.getY() - 10 + Math.abs(start.diffY(end))/2, identifier);
+        streetName.setFont(Font.font ("Impact", 12));
+
+        streetName.setFill(Color.GRAY);
+        singleStreet.setStroke(Color.rgb(125, 125, 125));
+        singleStreet.setStrokeWidth(6);
         return Arrays.asList(singleStreet, streetName);
     }
 }

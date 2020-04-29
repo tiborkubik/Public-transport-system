@@ -3,6 +3,7 @@ package ija.proj;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.Arrays;
@@ -48,6 +49,7 @@ public class Stop implements Drawable{
     public List<Shape> getGUI() {
         Circle stopCirlce = new Circle(location.getX(), location.getY(), 5, Color.BLACK);
         Text stopName = new Text(location.getX() + 10, location.getY() - 10, identifier);
+        stopName.setFont(Font.font ("Impact", 12));
         return Arrays.asList(stopCirlce, stopName);
     }
 }
