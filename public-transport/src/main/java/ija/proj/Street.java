@@ -19,6 +19,9 @@ public class Street implements Drawable {
         this.identifier = identifier;
         this.start = start;
         this.end = end;
+
+        coordinatesList.add(start);
+        coordinatesList.add(end);
     }
 
     public Coordinate begin() {
@@ -27,6 +30,10 @@ public class Street implements Drawable {
 
     public Coordinate end() {
         return end;
+    }
+
+    public String getName() {
+        return this.identifier;
     }
 
     public boolean follows(Street s) {

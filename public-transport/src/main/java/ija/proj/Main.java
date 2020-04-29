@@ -5,10 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,9 +17,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        System.out.println("ahojky");
 
-
+        // Loading resource for map layout
         FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml"));
         BorderPane rootElement = layoutLoader.load();
         Scene mainScene = new Scene(rootElement);       // loads root element from GUI
@@ -32,22 +28,31 @@ public class Main extends Application {
 
         Controller controller = layoutLoader.getController();
 
+        // allElements containg all Drawable elements such as streets, stops, etc
         List<Drawable> allElements = new ArrayList<>();
 
+        // Loading all streets from XML input into Drawable objects + adding them to all drawable elements
         List<Drawable> streets = loadMapData(allElements);
-        List<Drawable> stops = loadLinesData(allElements);
-
-        // draws all streets on canvas
         allElements.addAll(streets);
 
-        // draws all stops on canvas
-        allElements.addAll(stops);
+        // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
+        List<Line> lines = loadLinesData(allElements, streets);
+        for(Line line : lines) {
+            List<Stop> stopsInLine = line.getStopList();
+            for(Stop stop : stopsInLine) {
+                Drawable drStop = (Drawable) stop;
+                allElements.add(drStop);
+            }
+        }
 
-        // setting list into gui
+        // Setting list into gui
         controller.setGUIelements(allElements);
         controller.startTimer(1);
     }
 
+    /*
+     * Method loads all Streets from resource
+     */
     private List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
             File fXmlFile = new File("public-transport/src/main/resources/mapData.xml");
@@ -86,7 +91,20 @@ public class Main extends Application {
         return allElements;
     }
 
-    private List<Drawable> loadLinesData(List<Drawable> allElements) {
+    // returns street of type Street if is in List of Drawable, otherwise null
+    public Street findStreetByName(List<Drawable> listStreet, String identifier) {
+        for(Drawable street : listStreet) {
+            Street typedStreet = (Street) street;
+            if(typedStreet.getName().equals(identifier)) {
+                return typedStreet;
+            }
+        }
+        return null;
+    }
+
+    private List<Line> loadLinesData(List<Drawable> allElements, List<Drawable> streets) {
+        List<Line> allLines = new ArrayList<>();
+
         try {
             File fXmlFile = new File("public-transport/src/main/resources/lineData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -95,30 +113,83 @@ public class Main extends Application {
 
             doc.getDocumentElement().normalize();
 
-            NodeList nList = doc.getElementsByTagName("stop");
+            // All lines in
+            NodeList lineList = doc.getElementsByTagName("line");
 
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-                Node nNode = nList.item(temp);
+            // Iterating through lines
+            for (int temp = 0; temp < lineList.getLength(); temp++) {
+                Node singleLine = lineList.item(temp);
 
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                if (singleLine.getNodeType() == Node.ELEMENT_NODE) {
 
-                    Element eElement = (Element) nNode;
+                    // Name and ID of line are located in its attributes, need to extract them
+                    NamedNodeMap lineAttributes = singleLine.getAttributes();
 
-                    String temp_start_x = eElement.getElementsByTagName("x").item(0).getTextContent();
-                    int start_x = Integer.parseInt(temp_start_x);
-                    String temp_start_y = eElement.getElementsByTagName("y").item(0).getTextContent();
-                    int start_y = Integer.parseInt(temp_start_y);
+                    // preparing values for new line constructor
+                    String lineName = lineAttributes.item(0).getNodeValue();
+                    String lineType = lineAttributes.item(1).getNodeValue();
+                    List<Street> streetsOnLine = new ArrayList<>();
+                    List<Stop> stopsOnLine = new ArrayList<>();
 
-                    // adding streets
+                    NodeList streetsList = singleLine.getChildNodes();
 
-                    Stop tempStop = new Stop(eElement.getAttribute("id"), new Coordinate(start_x, start_y), null);
+                    // Iterating through all streets of given line
+                    for (int i = 0; i < streetsList.getLength(); i++) {
+                        Node singleStreet = streetsList.item(i);
 
-                    allElements.add(tempStop);
+                        if(singleStreet.getNodeType() == Node.ELEMENT_NODE) {
+                            NamedNodeMap streetAttribute = singleStreet.getAttributes();
+                            String streetName = streetAttribute.item(0).getNodeValue();
+
+                            // Getting given street from streetList, which is already on canvas
+                            Street sStreet = findStreetByName(streets, streetName);
+
+                            // Street must be defined on map, otherwise error
+                            if(sStreet == null) {
+                                System.out.println("Line is going through unexisting street.");
+                                System.exit(-1);
+                            }
+                            streetsOnLine.add(sStreet); // street is in Line list
+
+                            // getting List of Stops of given Street
+                            NodeList stopList = singleStreet.getChildNodes();
+                            for(int j = 0; j < stopList.getLength(); j++) {
+                                Node singleStop = stopList.item(j);
+
+                                if(singleStop.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element eElement = (Element) singleStop;
+                                    String stopName = eElement.getAttribute("id");
+
+                                    String temp_start_x = eElement.getElementsByTagName("x").item(0).getTextContent();
+                                    int start_x = Integer.parseInt(temp_start_x);
+                                    String temp_start_y = eElement.getElementsByTagName("y").item(0).getTextContent();
+                                    int start_y = Integer.parseInt(temp_start_y);
+
+                                    Stop newStop = new Stop(stopName, new Coordinate(start_x, start_y), sStreet);
+
+                                    // Checking whether stop is on a street
+                                    boolean stopToStreet = sStreet.addStop(newStop);
+                                    if(stopToStreet == false) {
+                                        System.out.println("Stop " + newStop.getName() + " lies outside of street " + sStreet.getName());
+                                        System.exit(-1);
+                                    }
+
+                                    // adding stop into list of stops of given instance
+                                    stopsOnLine.add(newStop);
+                                }
+                            }
+                        }
+                    }
+
+                    // finally, adding line into returning list
+                    Line newLine = new Line(lineName, lineType, streetsOnLine, stopsOnLine);
+                    allLines.add(newLine);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return allElements;
+
+        return allLines;
     }
 }

@@ -20,15 +20,12 @@ public class Stop implements Drawable{
         this.onStreet = onStreet;
     }
 
-    public void setStreet(Street s) {
-        onStreet = s;
+    public String getName() {
+        return this.identifier;
     }
 
-    @Override
-    public List<Shape> getGUI() {
-        Circle stopCirlce = new Circle(location.getX(), location.getY(), 5, Color.BLACK);
-        Text stopName = new Text(location.getX() + 10, location.getY() - 10, identifier);
-        return Arrays.asList(stopCirlce, stopName);
+    public void setStreet(Street s) {
+        onStreet = s;
     }
 
     public Street getStreet() {
@@ -38,11 +35,19 @@ public class Stop implements Drawable{
             return onStreet;
         }
     }
+
     public Coordinate getCoordinate() {
         if(location == null) {
             return null;
         } else {
             return location;
         }
+    }
+
+    @Override
+    public List<Shape> getGUI() {
+        Circle stopCirlce = new Circle(location.getX(), location.getY(), 5, Color.BLACK);
+        Text stopName = new Text(location.getX() + 10, location.getY() - 10, identifier);
+        return Arrays.asList(stopCirlce, stopName);
     }
 }
