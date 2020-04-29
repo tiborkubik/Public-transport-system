@@ -6,8 +6,8 @@ import java.util.List;
 public class Line {
     private String identifier;
     private String type;  // tram, sub, bus..
-    private List<Street> streetList= new ArrayList<>();
-    private List<Stop> stopList= new ArrayList<>();
+    private List<Street> streetList = new ArrayList<>();
+    private List<Stop> stopList = new ArrayList<>();
 
     public Line(String identifier, String type, List<Street> streetList, List<Stop> stopList) {
         this.identifier = identifier;

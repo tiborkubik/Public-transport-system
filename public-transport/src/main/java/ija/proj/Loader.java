@@ -104,7 +104,7 @@ public class Loader {
 
                             // Street must be defined on map, otherwise error
                             if(sStreet == null) {
-                                System.out.println("Line is going through unexisting street.");
+                                System.out.println("Line is going through non-existing street.");
                                 System.exit(-1);
                             }
 
@@ -128,7 +128,7 @@ public class Loader {
 
                                     // Checking whether stop is on a street
                                     boolean stopToStreet = sStreet.addStop(newStop);
-                                    if(stopToStreet == false) {
+                                    if(!stopToStreet) {
                                         System.out.println("Stop " + newStop.getName() + " lies outside of street " + sStreet.getName());
                                         System.exit(-1);
                                     }
@@ -153,7 +153,7 @@ public class Loader {
         for(Line line : allLines) {
             List<Stop> stopsInLine = line.getStopList();
             for(Stop stop : stopsInLine) {
-                Drawable drStop = (Drawable) stop;
+                Drawable drStop = stop;
                 allElements.add(drStop);
             }
         }

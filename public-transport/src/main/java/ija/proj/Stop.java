@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 import java.util.Arrays;
 import java.util.List;
 
-public class Stop implements Drawable{
+public class Stop implements Drawable {
     private String identifier;
     private Coordinate location = null;
     private Street onStreet = null;
