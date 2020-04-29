@@ -24,6 +24,30 @@ public class Street implements Drawable {
         coordinatesList.add(end);
     }
 
+    public Street(){
+
+    }
+
+    /** Method iterates through list of drawable elements containing streets and tries to find out street with given name
+     *
+     * @param listStreet List of streets in which a street is looked for
+     * @param identifier Name of street which will be searched in given list
+     * @return found street, if not found null
+     */
+    public void findStreetByName(List<Drawable> listStreet, String identifier) {
+        for(Drawable street : listStreet) {
+            Street typedStreet = (Street) street;
+            if(typedStreet.getName().equals(identifier)) {
+                this.identifier = typedStreet.getName();
+                this.start = typedStreet.begin();
+                this.end = typedStreet.end();
+
+                coordinatesList.add(this.start);
+                coordinatesList.add(this.end);
+            }
+        }
+    }
+
     public Coordinate begin() {
         return start;
     }
