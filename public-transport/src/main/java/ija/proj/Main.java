@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.w3c.dom.*;
 
@@ -40,6 +41,11 @@ public class Main extends Application {
 
         // Setting list into gui
         controller.setGUIelements(allElements);
+
+        controller.setLinesInfo(lines);
+        controller.setCursor();
+        controller.ChangeLineColor(lines.get(0), Color.ORCHID);
+        controller.ChangeLineColor(lines.get(1), Color.TURQUOISE);
         controller.startTimer(1);
     }
 }

@@ -32,6 +32,9 @@
       </stop>
     </street>
 
+    <street id="Monroe Ave">
+    </street>
+
     <street id="Pitt Ave">
       <stop id="By Monroes">
         <x>400</x>
@@ -96,6 +99,9 @@
       </stop>
     </street>
 
+    <street id="Jobs Ave B">
+    </street>
+
     <street id="Jobs Ave A">
       <stop id="2nd+Jobs">
         <x>1600</x>
@@ -129,6 +135,9 @@
         <x>800</x>
         <y>240</y>
       </stop>
+    </street>
+
+    <street id="Rabadon St">
     </street>
 
     <street id="2nd Ave">
@@ -177,6 +186,9 @@
       </stop>
     </street>
 
+    <street id="Ocean Ave C">
+    </street>
+
     <street id="Ocean Ave B">
       <stop id="Surf Beach S">
         <x>2100</x>
@@ -197,6 +209,9 @@
         <x>2100</x>
         <y>300</y>
       </stop>
+    </street>
+
+    <street id="Ocean Ave A">
     </street>
 
     <street id="Pacific St">

@@ -1,11 +1,19 @@
 package ija.proj;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Slider;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 
+import java.awt.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +28,9 @@ public class Controller {
 
     @FXML
     private Slider speedChange;
+
+    @FXML
+    private Accordion linesInfo;
 
     private List<Drawable> GUIelements = new ArrayList<>();
     private Timer timer;
@@ -56,6 +67,23 @@ public class Controller {
         }
     }
 
+    public void setLinesInfo(List<Line> lines) {
+        for(Line line : lines) {
+            String name = line.getName();
+            ListView<String> list = new ListView<>();
+            ObservableList<String> items = FXCollections.observableArrayList ();
+
+            TitledPane pane1 = new TitledPane(name, new Label("Stops in line " + name + " are following:\n"));
+            for(Stop stop : line.getStopList()) {
+                String stopName = stop.getName();
+                items.add(stopName);
+            }
+            list.setItems(items);
+            pane1.setContent(list);
+            linesInfo.getPanes().add(pane1);
+        }
+    }
+
     // Timer will start
     public void startTimer(double scale) {
         timer = new Timer(false);
@@ -65,5 +93,26 @@ public class Controller {
                 currentTime = currentTime.plusSeconds(1);
             }
         }, 0, (long) (1000 / scale));
+    }
+
+    public void setCursor() {
+        ObservableList<Node> x = mapContent.getChildren();
+        for(Node sg : x) {
+            sg.setCursor(Cursor.HAND);
+        }
+    }
+
+    public void ChangeLineColor(Line line, Color color) {
+        ObservableList<Node> x = mapContent.getChildren();
+
+        for(Node sg : x) {
+            Shape sp = (Shape) sg;
+
+            for(Street street : line.getStreetList()) {
+                if(sp.getId() == street.getName()) {
+                    sp.setStroke(color);
+                }
+            }
+        }
     }
 }

@@ -16,8 +16,16 @@ public class Line {
         this.stopList = stopList;
     }
 
+    public String getName() {
+        return this.identifier;
+    }
+
     public List<Stop> getStopList() {
         return this.stopList;
+    }
+
+    public List<Street> getStreetList() {
+        return this.streetList;
     }
 
     public boolean addStreet(Street street) {
