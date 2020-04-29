@@ -33,25 +33,18 @@ public class Main extends Application {
 
         // Loading all streets from XML input into Drawable objects + adding them to all drawable elements
         List<Drawable> streets = loadMapData(allElements);
-        allElements.addAll(streets);
 
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loadLinesData(allElements, streets);
-        for(Line line : lines) {
-            List<Stop> stopsInLine = line.getStopList();
-            for(Stop stop : stopsInLine) {
-                Drawable drStop = (Drawable) stop;
-                allElements.add(drStop);
-            }
-        }
 
         // Setting list into gui
         controller.setGUIelements(allElements);
         controller.startTimer(1);
     }
 
-    /*
-     * Method loads all Streets from resource
+    /** Method loads all streets from input XML file. Streets are parsed from XML and added into a list of Drawable objects, which is then returned
+     *
+     * @param allElements List of objects that will be put in canvas
      */
     private List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
@@ -91,7 +84,12 @@ public class Main extends Application {
         return allElements;
     }
 
-    // returns street of type Street if is in List of Drawable, otherwise null
+    /** Method iterates through list of drawable elements containing streets and tries to find out street with given name
+     *
+     * @param listStreet List of streets in which a street is looked for
+     * @param identifier Name of street which will be searched in given list
+     * @return found street, if not found null
+     */
     public Street findStreetByName(List<Drawable> listStreet, String identifier) {
         for(Drawable street : listStreet) {
             Street typedStreet = (Street) street;
@@ -102,6 +100,12 @@ public class Main extends Application {
         return null;
     }
 
+    /**
+     * Method loads all data about lines and stops and adds them to elements for drawing
+     * @param allElements List of drawable elements into which new found stops will be appended
+     * @param streets List of streets that are already defined
+     * @return List of parsed lines, containg all information about streets and stops, too
+     */
     private List<Line> loadLinesData(List<Drawable> allElements, List<Drawable> streets) {
         List<Line> allLines = new ArrayList<>();
 
@@ -188,6 +192,15 @@ public class Main extends Application {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        // Extracting stops only, typing into Drawable objects and adding on cavas
+        for(Line line : allLines) {
+            List<Stop> stopsInLine = line.getStopList();
+            for(Stop stop : stopsInLine) {
+                Drawable drStop = (Drawable) stop;
+                allElements.add(drStop);
+            }
         }
 
         return allLines;

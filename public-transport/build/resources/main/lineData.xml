@@ -33,6 +33,9 @@
   </line>
 
   <line id="Line n. 2" type="bus">
+    <street id="Bercley St">
+
+    </street>
   </line>
 
 </lines_data>
