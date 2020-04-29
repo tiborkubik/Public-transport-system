@@ -6,11 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.w3c.dom.*;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +43,7 @@ public class Main extends Application {
 
         controller.ChangeLineColor(lines.get(0), Color.ORCHID);
         controller.ChangeLineColor(lines.get(1), Color.TURQUOISE);
+        controller.ChangeLineColor(lines.get(2), Color.CRIMSON);
 
         controller.startTimer(1);
     }

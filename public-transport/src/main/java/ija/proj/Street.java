@@ -8,6 +8,7 @@ import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
+import java.lang.Math;
 
 import java.util.Arrays;
 import java.util.List;
@@ -86,52 +87,22 @@ public class Street implements Drawable {
 
     public boolean addStop(Stop stop) {
         Coordinate stopCoordinate = stop.getCoordinate();
-        int newStopX = stopCoordinate.getX();
-        int newStopY = stopCoordinate.getY();
+        Coordinate stop_to_add = stopCoordinate;
 
-        int numberOfCoordinates = coordinatesList.size();
-
-        for(int i = 0; i < numberOfCoordinates-1; i++) {
-            if((coordinatesList.get(i).getX() == coordinatesList.get(i+1).getX()) && (coordinatesList.get(i+1).getX() == newStopX)) {
-                int startingY = coordinatesList.get(i).getY();
-                int endingY = coordinatesList.get(i+1).getY();
-
-                if(startingY < endingY) {
-                    if(newStopY >= startingY && newStopY <= endingY) {
-                        stopList.add(stop);
-                        stop.setStreet(this);
-                        return true;
-                    }
-                } else {
-                    if(newStopY <= startingY && newStopY >= endingY) {
-                        stopList.add(stop);
-                        stop.setStreet(this);
-                        return true;
-                    }
-                }
-            }
-            if(coordinatesList.get(i).getY() == coordinatesList.get(i+1).getY() && (coordinatesList.get(i+1).getY() == newStopY)) {
-                int startingX = coordinatesList.get(i).getX();
-                int endingX = coordinatesList.get(i+1).getX();
-
-                if(startingX < endingX) {
-                    if(newStopX >= startingX && newStopX <= endingX) {
-                        stopList.add(stop);
-                        stop.setStreet(this);
-                        return true;
-                    }
-                } else {
-                    if(newStopX <= startingX && newStopX >= endingX) {
-                        stopList.add(stop);
-                        stop.setStreet(this);
-                        return true;
-                    }
-                }
-
-            }
+        double distance = distance(start, end);     // original distance of the street
+        double distance_with_stop = distance(start, stop_to_add) + distance(stop_to_add, end); //distance of the street trought the new stop
+        double delta = 0.00001;     // allowed distance from the line (proportional to street length)
+        //check if the distances and approximately the same
+        if (delta> Math.abs(distance- distance_with_stop) / Math.max(Math.abs(distance), Math.abs(distance_with_stop))){
+            stopList.add(stop);
+            stop.setStreet(this);
+            return true;
         }
-
         return false;
+    }
+    //brief: distance between two coordinates
+    private double distance(Coordinate a, Coordinate b){
+        return Math.sqrt(Math.pow(a.getX()-b.getX(),2) + Math.pow(a.getY()-b.getY(),2));
     }
 
     @Override

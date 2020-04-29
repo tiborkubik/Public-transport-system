@@ -223,4 +223,42 @@
   </line>
 
 
+  <line id="Tram Line B" type="tram">
+    <street id="Lexington Con">
+      <stop id="1st+Lex">
+        <x>800</x>
+        <y>50</y>
+      </stop>
+      <stop id="2nd+Lex">
+        <x>800</x>
+        <y>150</y>
+      </stop>
+    </street>
+
+    <street id="Babylon Con">
+      <stop id="3rd+Bab">
+        <x>800</x>
+        <y>240</y>
+      </stop>
+    </street>
+    <street id="Mid 3rd St">
+      <stop id="3rd+Mid">
+        <x>1120</x>
+        <y>290</y>
+      </stop>
+    </street>
+    <street id="East 3rd St">
+      <stop id="Sand St">
+        <x>1600</x>
+        <y>300</y>
+      </stop>
+    </street>
+
+  </line>
+
+
 </lines_data>
+
+
+
+
