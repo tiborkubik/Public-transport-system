@@ -3,8 +3,8 @@ package ija.proj;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
-
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
 
