@@ -241,22 +241,42 @@
         <y>240</y>
       </stop>
     </street>
+
     <street id="Mid 3rd St">
       <stop id="3rd+Mid">
         <x>1120</x>
         <y>290</y>
       </stop>
     </street>
+
     <street id="East 3rd St">
-      <stop id="Sand St">
+      <stop id="East 3rd St Sand St">
         <x>1600</x>
         <y>300</y>
       </stop>
     </street>
 
+    <street id="Jobs Ave B">
+      <stop id="Jobs Ave B Sloping">
+        <x>1650</x>
+        <y>225</y>
+      </stop>
+    </street>
+
+    <street id="Jobs Ave A">
+    </street>
+
+    <street id="East 1st St">
+      <stop id="East 1st St Upper">
+        <x>1320</x>
+        <y>50</y>
+      </stop>
+      <stop id="East 1st St Lower">
+        <x>1120</x>
+        <y>50</y>
+      </stop>
+    </street>
   </line>
-
-
 </lines_data>
 
 
