@@ -21,13 +21,20 @@ public class Stop implements Drawable {
         this.onStreet = onStreet;
     }
 
+    /***
+     * @return name of this stop
+     */
     public String getName() {
         return this.identifier;
     }
 
+    /***
+     * @param s street of the stop
+     */
     public void setStreet(Street s) {
         onStreet = s;
     }
+
 
     public Street getStreet() {
         if(onStreet == null) {
@@ -37,6 +44,9 @@ public class Stop implements Drawable {
         }
     }
 
+    /***
+     * returns coordinates of the stop
+     */
     public Coordinate getCoordinate() {
         if(location == null) {
             return null;

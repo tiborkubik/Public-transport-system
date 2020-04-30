@@ -7,6 +7,7 @@ public class Coordinate extends java.lang.Object {
     private int x;
     private int y;
 
+
     public Coordinate(int inputX, int inputY) {
         x = inputX;
         y = inputY;
@@ -53,6 +54,11 @@ public class Coordinate extends java.lang.Object {
         return y1 - y2;
     }
 
+    /***
+     * compares Coordinates
+     * @param o coordinate to compared with
+     * @return return true if Coordinates are the same
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

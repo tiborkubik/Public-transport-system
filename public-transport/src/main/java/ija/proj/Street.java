@@ -13,6 +13,9 @@ import java.lang.Math;
 import java.util.Arrays;
 import java.util.List;
 
+/***
+ * class Street represents real life street
+ */
 public class Street implements Drawable {
     private String identifier;
     private Coordinate start;
@@ -33,8 +36,8 @@ public class Street implements Drawable {
 
     }
 
-    /** Method iterates through list of drawable elements containing streets and tries to find out street with given name
-     *
+    /***
+     * Method iterates through list of drawable elements containing streets and tries to find out street with given name
      * @param listStreet List of streets in which a street is looked for
      * @param identifier Name of street which will be searched in given list
      * @return found street, if not found null
@@ -65,6 +68,11 @@ public class Street implements Drawable {
         return this.identifier;
     }
 
+    /***
+     * Check if street s follows current this.street
+     * @param s street
+     * @return true if streets follows or false if they don't
+     */
     public boolean follows(Street s) {
         Coordinate givenStart = s.begin();
         Coordinate givenEnd = s.end();
@@ -85,6 +93,11 @@ public class Street implements Drawable {
         return false;
     }
 
+    /***
+     * Adds stop if it lies on the street
+     * @param stop stop to add
+     * @return returns true if the stop lies on the street, false if they don't
+     */
     public boolean addStop(Stop stop) {
         Coordinate stopCoordinate = stop.getCoordinate();
         Coordinate stop_to_add = stopCoordinate;
@@ -100,7 +113,13 @@ public class Street implements Drawable {
         }
         return false;
     }
-    //brief: distance between two coordinates
+
+    /***
+     * distance between 2 coordinates
+     * @param a first coordinate
+     * @param b second coordinate
+     * @return distance
+     */
     private double distance(Coordinate a, Coordinate b){
         return Math.sqrt(Math.pow(a.getX()-b.getX(),2) + Math.pow(a.getY()-b.getY(),2));
     }

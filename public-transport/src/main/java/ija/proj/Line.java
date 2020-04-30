@@ -28,6 +28,11 @@ public class Line {
         return this.streetList;
     }
 
+    /***
+     * Adds street to the line
+     * @param street street to be added
+     * @return if it was successful then returns true, else false
+     */
     public boolean addStreet(Street street) {
         if(streetList.size() == 0) {
             return false;
@@ -43,10 +48,19 @@ public class Line {
         }
     }
 
+    /***
+     * sets type to the line
+     * @param type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /***
+     * If successful then stop is added to stopList and it's street to streetList
+     * @param stop stop to add
+     * @return true if adding stop was successful, false if it wasn't
+     */
     public boolean addStop(Stop stop) {
         if(stop.getStreet() == null) {
             return false;

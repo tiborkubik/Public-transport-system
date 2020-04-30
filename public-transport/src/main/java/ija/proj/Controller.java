@@ -6,14 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
-import java.awt.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +33,18 @@ public class Controller {
     private Timer timer;
     private LocalTime currentTime = LocalTime.now();
 
+    /***
+     * changes speed
+     */
     @FXML
     private void speedChanged() {
         float scaleForSpeed = (float) speedChange.getValue();
         timer.cancel();
         startTimer(scaleForSpeed);
     }
-
+    /***
+     * Zooms map
+     */
     @FXML
     private void zooming(ScrollEvent event) {
         event.consume();                    // to ensure that only the part of map will be zoomed, not whole window
@@ -60,6 +62,10 @@ public class Controller {
         mapContent.layout();
     }
 
+    /***
+     * displays gui elements
+     * @param GUIelements - list of elements to display
+     */
     public void setGUIelements(List<Drawable> GUIelements) {
         this.GUIelements = GUIelements;
         for(Drawable obj : GUIelements) {
@@ -67,6 +73,10 @@ public class Controller {
         }
     }
 
+    /***
+     * Adds information about line to the navigation
+     * @param lines
+     */
     public void setLinesInfo(List<Line> lines) {
         for(Line line : lines) {
             String name = line.getName();
@@ -84,7 +94,10 @@ public class Controller {
         }
     }
 
-    // Timer will start
+    /***
+     * Starts timer
+     * @param scale
+     */
     public void startTimer(double scale) {
         timer = new Timer(false);
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -95,6 +108,9 @@ public class Controller {
         }, 0, (long) (1000 / scale));
     }
 
+    /***
+     * changes cursor according it's position
+     */
     public void setCursor() {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
@@ -102,6 +118,11 @@ public class Controller {
         }
     }
 
+    /***
+     * changes line to a certain color
+     * @param line line to which it changes color
+     * @param color to which color we are changing the line
+     */
     public void ChangeLineColor(Line line, Color color) {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
