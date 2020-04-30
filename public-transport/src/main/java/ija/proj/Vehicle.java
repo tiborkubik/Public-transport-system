@@ -11,13 +11,11 @@ import java.util.List;
 public class Vehicle implements Drawable, UpdateState {
     private Coordinate position;
     private double speed;
-    private List<Shape> GUI;
+    protected List<Shape> GUI;
 
     public Vehicle(Coordinate position, double speed) {
         this.position = position;
         this.speed = speed;
-        GUI = new ArrayList<>();
-        GUI.add(new Circle(position.getX(), position.getY(), 8, Color.BLACK));
     }
 
     // TODO
