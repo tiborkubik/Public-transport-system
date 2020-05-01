@@ -1,8 +1,10 @@
 package ija.proj;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -57,11 +59,21 @@ public class Stop implements Drawable {
 
     @Override
     public List<Shape> getGUI() {
-        Circle stopCirlce = new Circle(location.getX(), location.getY(), 5, Color.BLACK);
-        Text stopName = new Text(location.getX() + 10, location.getY() - 10, identifier);
+        Line stopLine = new Line(location.getX(), location.getY(), location.getX() + 10, location.getY() - 10);
+
+        Text stopName = new Text(location.getX() + 14, location.getY() - 14, identifier);
         stopName.setFont(Font.font ("Impact", 12));
-        stopCirlce.setId(identifier);
+        stopName.setFill(Color.rgb(50, 50, 50));
+
+        stopLine.setId(this.onStreet.getName());
+
         stopName.setId(identifier);
-        return Arrays.asList(stopCirlce, stopName);
+        stopLine.setSmooth(true);
+        stopLine.setStroke(Color.rgb(50, 50, 50));
+        stopLine.setStrokeWidth(6);
+        stopLine.toBack();
+        stopLine.setStrokeLineCap(StrokeLineCap.ROUND);
+        stopLine.setStrokeLineJoin(StrokeLineJoin.ROUND);
+        return Arrays.asList(stopLine, stopName);
     }
 }

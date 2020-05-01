@@ -121,7 +121,15 @@ public class Street implements Drawable {
      * @return distance
      */
     private double distance(Coordinate a, Coordinate b){
-        return Math.sqrt(Math.pow(a.getX()-b.getX(),2) + Math.pow(a.getY()-b.getY(),2));
+        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
+    }
+
+    public double getSlope() {
+        // vertical + zero division avoiding
+        if((this.end.getX() - this.start.getX()) == 0.0) {
+            return 1.0;
+        }
+        return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
     }
 
     @Override
@@ -137,10 +145,11 @@ public class Street implements Drawable {
         singleStreet.setStroke(Color.rgb(150, 150, 150));
         singleStreet.setStrokeWidth(6);
         singleStreet.setSmooth(true);
+        singleStreet.toFront();
         singleStreet.setStrokeLineCap(StrokeLineCap.ROUND);
         singleStreet.setStrokeLineJoin(StrokeLineJoin.ROUND);
         singleStreet.setId(identifier);
-        streetName.setId(identifier);
+        //streetName.setId(identifier);
         return Arrays.asList(singleStreet, streetName);
     }
 
