@@ -43,16 +43,14 @@ public class Main extends Application {
         allElements.add(sub);
         allElements.add(bus);
         allElements.add(tram);
+
         // Setting list into gui
         controller.setGUIelements(allElements);
 
         controller.setLinesInfo(lines);
         controller.setCursor();
 
-        ;
-        //controller.ChangeLineColor(lines.get(0), Color.ORCHID);
-        //controller.ChangeLineColor(lines.get(1), Color.TURQUOISE);
-        //controller.ChangeLineColor(lines.get(2), Color.CRIMSON);
+
 
 
 

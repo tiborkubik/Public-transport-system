@@ -119,6 +119,17 @@
 
 
   <line id="Tram Line 1" type="tram">
+    <street id="East 1st St">
+      <stop id="East 1st St Upper">
+        <x>1320</x>
+        <y>50</y>
+      </stop>
+      <stop id="East 1st St Lower">
+        <x>1120</x>
+        <y>50</y>
+      </stop>
+    </street>
+
     <street id="Lexington Con">
       <stop id="1st+Lex">
         <x>800</x>
@@ -221,7 +232,6 @@
       </stop>
     </street>
   </line>
-
 
   <line id="Bus Line 40" type="bus">
     <street id="Lexington Con">

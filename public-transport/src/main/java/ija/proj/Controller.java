@@ -118,6 +118,7 @@ public class Controller {
         }
     }
 
+
     /***
      * changes line to a certain color
      * @param line line to which it changes color

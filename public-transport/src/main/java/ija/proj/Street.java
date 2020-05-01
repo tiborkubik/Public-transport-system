@@ -34,6 +34,10 @@ public class Street implements Drawable {
 
     }
 
+    public void setN_lines(int value) {
+        this.n_lines = value;
+    }
+
     public Street() {
 
     }
@@ -59,12 +63,15 @@ public class Street implements Drawable {
                 this.identifier = typedStreet.getName();
                 this.start = typedStreet.begin();
                 this.end = typedStreet.end();
+                this.n_lines = typedStreet.getN_lines();
 
                 coordinatesList.add(this.start);
                 coordinatesList.add(this.end);
             }
         }
     }
+
+
 
     public Coordinate begin() {
         return start;

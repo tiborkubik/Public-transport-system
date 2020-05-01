@@ -9,6 +9,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.lang.*;
+
+
 
 public class Line implements Drawable  {
     private String identifier;
@@ -75,8 +78,8 @@ public class Line implements Drawable  {
     }
 
     public void addCoordinates(Coordinate start, Coordinate end) {
-        start_c.add(start);
-        end_c.add(end);
+        this.start_c.add(start);
+        this.end_c.add(end);
     }
 
     /***
@@ -118,11 +121,32 @@ public class Line implements Drawable  {
 
             Coordinate start = start_c.get(i);
             Coordinate end = end_c.get(i);
-            if(street.getN_lines() == 1){
-                int slope = (int)street.getSlope()*6;
-                boolean s = start_c.get(i).change(start.getX()+slope,start.getY());
-                boolean e =end_c.get(i).change(end.getX()+slope,end.getY());
-                if (s ==false || e == false){
+            int n_lines = street.getN_lines();
+            //fix endings after
+            if (i > 0 && n_lines !=0) {
+                Coordinate lastEnd = end_c.get(i-1);
+                double diff_x = lastEnd.diffX(start);
+                double diff_y = lastEnd.diffY(start);
+
+                start = lastEnd;
+                end = new Coordinate(end.getX()+diff_x, end.getY()+diff_y);
+            }
+
+//            if(i > 0) {
+//                System.out.printf("\nstart this: " + start.getX() + " " + start.getY() + " end prev: " + end_c.get(i - 1).getX() + " " + end_c.get(i - 1).getY());
+//            }
+
+            if(street.getSlope() != 0.0) {
+                boolean s = start.change(start.getX() + (6*n_lines), start.getY());
+                boolean e = end.change(end.getX() + (6*n_lines), end.getY());
+                if (s == false || e == false) {
+                    System.err.println("Error: failed to change coordinate. (Line.java)");
+                }
+            }
+            else{
+                boolean s = start.change(start.getX(), start.getY()+(6*n_lines));
+                boolean e = end.change(end.getX(), end.getY()+(6*n_lines));
+                if (s == false || e == false) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
             }

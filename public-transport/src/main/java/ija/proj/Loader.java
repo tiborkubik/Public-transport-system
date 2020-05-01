@@ -107,6 +107,12 @@ public class Loader {
                                 System.out.println("Line is going through non-existing street.");
                                 System.exit(-1);
                             }
+                            if (streetsOnLine.size() != 0){
+                                Coordinate lastEnd = streetsOnLine.get(streetsOnLine.size()-1).end();
+
+                                if(!lastEnd.equals(sStreet.begin()))
+                                    sStreet.end().swap_coordinates(sStreet.begin());
+                            }
 
                             streetsOnLine.add(sStreet); // street is in Line list
 
@@ -139,13 +145,21 @@ public class Loader {
                             }
                         }
                     }
-
-                    // finally, adding line into returning list
                     Line newLine = new Line(lineName, lineType, streetsOnLine, stopsOnLine);
+
                     for(Street street : streetsOnLine) {
-                        street.add_line();
+
+                        for(Drawable mapStreet : streets) {
+                            Street mapS = (Street)mapStreet;
+                            if(street.getName() == mapS.getName()) {
+
+                                ((Street) mapStreet).add_line();
+
+                            }
+                        }
                         newLine.addCoordinates(street.begin(),street.end());
                     }
+
                     allLines.add(newLine);
                 }
             }
