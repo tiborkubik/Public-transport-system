@@ -15,7 +15,7 @@ public class Loader {
      */
     public List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
-            File fXmlFile = new File("src/main/resources/mapData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/mapData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -62,7 +62,7 @@ public class Loader {
         List<Line> allLines = new ArrayList<>();
 
         try {
-            File fXmlFile = new File("src/main/resources/lineData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/lineData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -142,6 +142,10 @@ public class Loader {
 
                     // finally, adding line into returning list
                     Line newLine = new Line(lineName, lineType, streetsOnLine, stopsOnLine);
+                    for(Street street : streetsOnLine) {
+                        street.add_line();
+                        newLine.addCoordinates(street.begin(),street.end());
+                    }
                     allLines.add(newLine);
                 }
             }
@@ -156,6 +160,8 @@ public class Loader {
                 Drawable drStop = stop;
                 allElements.add(drStop);
             }
+            Drawable drLine = line;
+            allElements.add(drLine);
         }
 
         return allLines;

@@ -1,11 +1,8 @@
 package ija.proj;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Vehicle implements Drawable, UpdateState {

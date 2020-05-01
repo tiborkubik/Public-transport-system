@@ -23,6 +23,16 @@ public class Coordinate extends java.lang.Object {
         }
     }
 
+    public boolean change(int inputX, int inputY){
+        if(inputX >= 0 && inputY >= 0) {
+            this.x = inputX;
+            this.y = inputY;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Vrací hodnotu souřadnice x.
      *

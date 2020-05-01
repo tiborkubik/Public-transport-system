@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -51,9 +50,9 @@ public class Main extends Application {
         controller.setCursor();
 
         ;
-        controller.ChangeLineColor(lines.get(0), Color.ORCHID);
-        controller.ChangeLineColor(lines.get(1), Color.TURQUOISE);
-        controller.ChangeLineColor(lines.get(2), Color.CRIMSON);
+        //controller.ChangeLineColor(lines.get(0), Color.ORCHID);
+        //controller.ChangeLineColor(lines.get(1), Color.TURQUOISE);
+        //controller.ChangeLineColor(lines.get(2), Color.CRIMSON);
 
 
 

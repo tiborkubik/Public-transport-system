@@ -22,6 +22,7 @@ public class Street implements Drawable {
     private Coordinate end;
     private List<Stop> stopList= new ArrayList<>();
     private List<Coordinate> coordinatesList= new ArrayList<>();
+    private int n_lines = 0;
 
     public Street(String identifier, Coordinate start, Coordinate end) {
         this.identifier = identifier;
@@ -30,10 +31,19 @@ public class Street implements Drawable {
 
         coordinatesList.add(start);
         coordinatesList.add(end);
+
     }
 
-    public Street(){
+    public Street() {
 
+    }
+
+    public int getN_lines(){
+        return this.n_lines;
+    }
+
+    public void  add_line(){
+        this.n_lines++;
     }
 
     /***
