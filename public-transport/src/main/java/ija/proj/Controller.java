@@ -2,10 +2,12 @@ package ija.proj;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -90,6 +92,7 @@ public class Controller {
             }
             list.setItems(items);
             pane1.setContent(list);
+            pane1.setId(name);
             linesInfo.getPanes().add(pane1);
         }
     }
@@ -111,10 +114,29 @@ public class Controller {
     /***
      * changes cursor according it's position
      */
-    public void setCursor() {
+    public void setCursor(List<Line> lines) {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
             sg.setCursor(Cursor.HAND);
+            if(sg instanceof javafx.scene.shape.Line) {
+                sg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        System.out.println(sg.getId());
+                       for(Line line : lines) {
+                           if(line.streetInLineStreets(sg.getId())) {
+                               ObservableList<TitledPane> panes = linesInfo.getPanes();
+                               for(TitledPane pane : panes) {
+                                   if(pane.getId() == line.getName())
+                                       linesInfo.setExpandedPane(pane);
+                               }
+
+                           }
+
+                       }
+                    }
+                });
+            }
         }
     }
 

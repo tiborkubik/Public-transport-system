@@ -67,6 +67,15 @@ public class Line implements Drawable  {
         }
     }
 
+    public boolean streetInLineStreets(String streetName) {
+        for(Street s : this.streetList) {
+            if(s.getName() == streetName) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean isCircular() {
         Coordinate firstStreetStart = this.start_c.get(0);
         Coordinate lastStreetEnd = this.end_c.get(this.end_c.size());
@@ -158,6 +167,7 @@ public class Line implements Drawable  {
             singleStreet.setStrokeWidth(6);
             singleStreet.setSmooth(true);
             singleStreet.toFront();
+            singleStreet.setId(street.getName());
             singleStreet.setStrokeLineCap(StrokeLineCap.ROUND);
             singleStreet.setStrokeLineJoin(StrokeLineJoin.ROUND);
             line.add(singleStreet);

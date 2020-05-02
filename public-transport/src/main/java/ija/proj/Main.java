@@ -61,7 +61,7 @@ public class Main extends Application {
         controller.setGUIelements(allElements);
 
         controller.setLinesInfo(lines);
-        controller.setCursor();
+        controller.setCursor(lines);
 
 
 
