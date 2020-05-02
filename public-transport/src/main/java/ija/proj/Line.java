@@ -33,7 +33,7 @@ public class Line implements Drawable  {
         set_color();
     }
 
-    public void set_color(){
+    public void set_color() {
 
         Random random = new Random();
         final float hue = random.nextFloat();
