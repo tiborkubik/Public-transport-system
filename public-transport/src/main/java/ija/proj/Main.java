@@ -1,7 +1,9 @@
 package ija.proj;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -34,17 +36,11 @@ public class Main extends Application {
 
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loader.loadLinesData(allElements, streets);
-
         controller.setLines(lines);
-
         controller.setDefaultLineColors(lines);
 
-
-
         Subway sub = new Subway(new Coordinate(50, 80),12);
-
         Bus bus = new Bus(new Coordinate(50, 250), 30);
-
         Tram tram = new Tram(new Coordinate(800, 100), 10);
 
         allElements.add(sub);
@@ -55,8 +51,9 @@ public class Main extends Application {
         controller.setGUIelements(allElements);
 
         controller.setLinesInfo(lines);
+
         controller.setCursor(lines);
-        //controller.highlightLine(lines);
+        controller.setBasicSettings2(lines);
 
         controller.startTimer(1);
     }

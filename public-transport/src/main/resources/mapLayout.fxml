@@ -19,7 +19,7 @@
                <children>
                   <Pane fx:id="mapContent" onScroll="#zooming" prefHeight="1110.0" prefWidth="1437.0">
                      <children>
-                        <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#f0f0f0b1" height="2000.0" onMouseClicked="#setBasicSettings" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="3000.0" />
+                        <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#f0f0f0b1" height="2000.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="3000.0" />
                      </children></Pane>
                </children>
             </Group>

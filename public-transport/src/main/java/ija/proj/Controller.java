@@ -41,6 +41,8 @@ public class Controller {
 
     private List<Line> lines = new ArrayList<>();
 
+    List<Color> colorsForLines = new ArrayList<>();
+
     /***
      * changes speed
      */
@@ -81,21 +83,19 @@ public class Controller {
         }
     }
 
-    @FXML
-    public void setBasicSettings() {
-        linesInfo.setExpandedPane(null);
+    public void setBasicSettings2(List<Line> lines) {
+        background.setOnMouseClicked(event -> {
+            linesInfo.setExpandedPane(null);
 
-        setDefaultLineColors(this.lines);
+            for(int i = 0; i < lines.size(); i++) {
+                ChangeLineColor(lines.get(i), colorsForLines.get(i));
+            }
+        });
     }
 
     public void setLines(List<Line> lines){
         this.lines = lines;
-    }
 
-    public void setDefaultLineColors(List<Line> lines) {
-        System.out.println(lines.get(0).getName());
-
-        List<Color> colorsForLines = new ArrayList<>();
         colorsForLines.add(Color.FORESTGREEN);
         colorsForLines.add(Color.ORANGERED);
         colorsForLines.add(Color.CORNFLOWERBLUE);
@@ -103,7 +103,9 @@ public class Controller {
         colorsForLines.add(Color.SANDYBROWN);
         colorsForLines.add(Color.ROYALBLUE);
         colorsForLines.add(Color.OLIVE);
+    }
 
+    public void setDefaultLineColors(List<Line> lines) {
         for(int i = 0; i < lines.size(); i++) {
             lines.get(i).setColor(colorsForLines.get(i));
         }
@@ -154,29 +156,23 @@ public class Controller {
             if(sg != background)
                 sg.setCursor(Cursor.HAND);
             if(sg instanceof javafx.scene.shape.Line) {
-                sg.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                       for(Line line : lines) {
-                         if(sg.getId().contains(line.getName())) {
-                               for(Line otherLine : lines) {
-                                   if (otherLine.getName() != line.getName()) {
-                                       //otherLine.getColor().brighter()
-                                       ChangeLineColor(otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
-                                   } else {
-                                       ChangeLineColor(otherLine, otherLine.getColor().saturate().saturate());
-                                   }
+                sg.setOnMouseClicked(event -> {
+                   for(Line line : lines) {
+                     if(sg.getId().contains(line.getName())) {
+                           for(Line otherLine : lines) {
+                               if (otherLine.getName() != line.getName()) {
+                                   ChangeLineColor(otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
+                               } else {
+                                   ChangeLineColor(otherLine, otherLine.getColor().saturate().saturate());
                                }
-
-                             ObservableList<TitledPane> panes = linesInfo.getPanes();
-                             for(TitledPane pane : panes) {
-                                 System.out.println("---as");
-                                 if(line.getName().contains(pane.getId()))
-                                     linesInfo.setExpandedPane(pane);
-                             }
                            }
+                         ObservableList<TitledPane> panes = linesInfo.getPanes();
+                         for(TitledPane pane : panes) {
+                             if(line.getName().contains(pane.getId()))
+                                 linesInfo.setExpandedPane(pane);
+                         }
                        }
-                    }
+                   }
                 });
             }
         }
@@ -192,7 +188,7 @@ public class Controller {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
             Shape sp = (Shape) sg;
-            for(Street street : line.getStreetList()) {
+            for(Street ignored : line.getStreetList()) {
                 if(sp.getId() != null && sp.getId().contains(line.getName())) {
                     sp.setStroke(color);
                 }
