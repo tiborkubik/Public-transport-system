@@ -1,14 +1,15 @@
 package ija.proj;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Coordinate extends java.lang.Object {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
 
-    public Coordinate(int inputX, int inputY) {
+    public Coordinate(double inputX, double inputY) {
         x = inputX;
         y = inputY;
     }
@@ -28,7 +29,7 @@ public class Coordinate extends java.lang.Object {
      *
      * @return Souřadnice x.
      */
-    public int getX() {
+    public double getX() {
         return this.x;
     }
 
@@ -37,20 +38,20 @@ public class Coordinate extends java.lang.Object {
      *
      * @return Souřadnice y.
      */
-    public int getY() {
+    public double getY() {
         return this.y;
     }
 
-    public int diffX(Coordinate c) {
-        int x1 = this.x;
-        int x2 = c.getX();
+    public double diffX(Coordinate c) {
+        double x1 = this.x;
+        double x2 = c.getX();
         return x1 - x2;
     }
 
 
-    public int diffY(Coordinate c) {
-        int y1 = this.y;
-        int y2 = c.getY();
+    public double diffY(Coordinate c) {
+        double y1 = this.y;
+        double y2 = c.getY();
         return y1 - y2;
     }
 

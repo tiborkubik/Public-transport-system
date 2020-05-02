@@ -31,6 +31,8 @@ public class Controller {
 
     private List<Drawable> GUIelements = new ArrayList<>();
     private Timer timer;
+    private List<UpdateState> updates = new ArrayList<>();
+
     private LocalTime currentTime = LocalTime.now();
 
     /***
@@ -70,6 +72,10 @@ public class Controller {
         this.GUIelements = GUIelements;
         for(Drawable obj : GUIelements) {
             mapContent.getChildren().addAll(obj.getGUI());
+
+            if(obj instanceof UpdateState) {
+                updates.add((UpdateState) obj);
+            }
         }
     }
 
@@ -104,6 +110,9 @@ public class Controller {
             @Override
             public void run() {
                 currentTime = currentTime.plusSeconds(1);
+                for(UpdateState update : updates) {
+                    update.update(currentTime);
+                }
             }
         }, 0, (long) (1000 / scale));
     }
@@ -127,6 +136,7 @@ public class Controller {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
             Shape sp = (Shape) sg;
+
             for(Street street : line.getStreetList()) {
                 if(sp.getId() == street.getName()) {
                     sp.setStroke(color);

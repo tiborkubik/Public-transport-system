@@ -25,7 +25,7 @@
     <right>
         <AnchorPane prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
-            <Slider fx:id="speedChange" layoutX="58.0" layoutY="61.0" max="1.75" min="0.25" onDragDone="#speedChanged" showTickLabels="true" showTickMarks="true" value="1.0" />
+            <Slider fx:id="speedChange" layoutX="58.0" layoutY="61.0" max="50.0" onMouseReleased="#speedChanged" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
             <Text fontSmoothingType="LCD" layoutX="26.0" layoutY="925.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Public Transport System Tracker for IJA/2019L course by Andrej Jezik and Tibor Kubik" textAlignment="CENTER" wrappingWidth="188.13671875" />
             <Accordion id="linesInfo" fx:id="linesInfo" layoutX="19.0" layoutY="135.0" prefHeight="727.0" prefWidth="202.0" />
          </children>
