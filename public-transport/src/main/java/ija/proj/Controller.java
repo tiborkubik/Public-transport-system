@@ -159,7 +159,14 @@ public class Controller {
                     public void handle(MouseEvent event) {
                        for(Line line : lines) {
                          if(sg.getId().contains(line.getName())) {
-                               ChangeLineColor(line, Color.GRAY);
+                               for(Line otherLine : lines) {
+                                   if (otherLine.getName() != line.getName()) {
+                                       //otherLine.getColor().brighter()
+                                       ChangeLineColor(otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
+                                   } else {
+                                       ChangeLineColor(otherLine, otherLine.getColor().saturate().saturate());
+                                   }
+                               }
 
                              ObservableList<TitledPane> panes = linesInfo.getPanes();
                              for(TitledPane pane : panes) {

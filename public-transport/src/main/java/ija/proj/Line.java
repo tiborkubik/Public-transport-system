@@ -96,6 +96,10 @@ public class Line implements Drawable  {
         this.type = type;
     }
 
+    public Color getColor() {
+        return this.col;
+    }
+
     /***
      * If successful then stop is added to stopList and it's street to streetList
      * @param stop stop to add
