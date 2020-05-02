@@ -13,6 +13,14 @@ public class Coordinate extends java.lang.Object {
         y = inputY;
     }
 
+    public void setX(double inputX) {
+        this.x = inputX;
+    }
+
+    public void setY(double inputY) {
+        this.y = inputY;
+    }
+
     public static Coordinate create(double inputX, double inputY) {
 
         if(inputX >= 0 && inputY >= 0) {

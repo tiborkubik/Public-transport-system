@@ -1,6 +1,60 @@
 <?xml version="1.0"?>
 
 <lines_data>
+  <line id="Bus Line 40" type="bus">
+    <street id="Lexington Con">
+      <stop id="1st+Lex">
+        <x>800</x>
+        <y>50</y>
+      </stop>
+      <stop id="2nd+Lex">
+        <x>800</x>
+        <y>150</y>
+      </stop>
+    </street>
+
+    <street id="Babylon Con">
+      <stop id="3rd+Bab">
+        <x>800</x>
+        <y>240</y>
+      </stop>
+    </street>
+
+    <street id="Mid 3rd St">
+      <stop id="3rd+Mid">
+        <x>1120</x>
+        <y>290</y>
+      </stop>
+    </street>
+
+    <street id="East 3rd St">
+      <stop id="East 3rd St Sand St">
+        <x>1600</x>
+        <y>300</y>
+      </stop>
+    </street>
+
+    <street id="Jobs Ave B">
+      <stop id="Jobs Ave B Sloping">
+        <x>1650</x>
+        <y>225</y>
+      </stop>
+    </street>
+
+    <street id="Jobs Ave A">
+    </street>
+
+    <street id="East 1st St">
+      <stop id="East 1st St Upper">
+        <x>1320</x>
+        <y>50</y>
+      </stop>
+      <stop id="East 1st St Lower">
+        <x>1120</x>
+        <y>50</y>
+      </stop>
+    </street>
+  </line>
 
   <line id="Metro Line A" type="subway">
     <street id="Bercley St A">
@@ -229,61 +283,6 @@
       <stop id="Sunsets">
         <x>1950</x>
         <y>100</y>
-      </stop>
-    </street>
-  </line>
-
-  <line id="Bus Line 40" type="bus">
-    <street id="Lexington Con">
-      <stop id="1st+Lex">
-        <x>800</x>
-        <y>50</y>
-      </stop>
-      <stop id="2nd+Lex">
-        <x>800</x>
-        <y>150</y>
-      </stop>
-    </street>
-
-    <street id="Babylon Con">
-      <stop id="3rd+Bab">
-        <x>800</x>
-        <y>240</y>
-      </stop>
-    </street>
-
-    <street id="Mid 3rd St">
-      <stop id="3rd+Mid">
-        <x>1120</x>
-        <y>290</y>
-      </stop>
-    </street>
-
-    <street id="East 3rd St">
-      <stop id="East 3rd St Sand St">
-        <x>1600</x>
-        <y>300</y>
-      </stop>
-    </street>
-
-    <street id="Jobs Ave B">
-      <stop id="Jobs Ave B Sloping">
-        <x>1650</x>
-        <y>225</y>
-      </stop>
-    </street>
-
-    <street id="Jobs Ave A">
-    </street>
-
-    <street id="East 1st St">
-      <stop id="East 1st St Upper">
-        <x>1320</x>
-        <y>50</y>
-      </stop>
-      <stop id="East 1st St Lower">
-        <x>1120</x>
-        <y>50</y>
       </stop>
     </street>
   </line>
