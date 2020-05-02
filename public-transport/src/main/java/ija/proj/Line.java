@@ -1,6 +1,6 @@
 package ija.proj;
 
-//import javafx.scene.paint.Color;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -30,19 +30,11 @@ public class Line implements Drawable  {
         this.type = type;
         this.streetList = streetList;
         this.stopList = stopList;
-        set_color();
+        //set_color();
     }
 
-    public void set_color() {
-
-        Random random = new Random();
-        final float hue = random.nextFloat();
-        final Color color = Color.getHSBColor(hue, 1.0f, 1.0f);
-
-        int r = color.getRed();
-        int g = color.getGreen();
-        int b = color.getBlue();
-        this.col = javafx.scene.paint.Color.rgb(r, g, b);
+    public void setColor(Color c) {
+        this.col = c;
     }
 
     public String getName() {
@@ -117,7 +109,7 @@ public class Line implements Drawable  {
     public List<Shape> getGUI() {
         List<Shape> line  = new ArrayList<>();
         int i = 0;
-        for (Street street : streetList){
+        for (Street street : streetList) {
 
             Coordinate start = start_c.get(i);
             Coordinate end = end_c.get(i);
@@ -127,37 +119,20 @@ public class Line implements Drawable  {
             if(i > 0 && streetList.get(i-1).getN_lines() != 0 && streetList.get(i-1).getSlope() != street.getSlope()) {
                 if(streetList.get(i-1).getSlope() == 1.0) {
                     start.setX(start.getX() + 6 * streetList.get(i-1).getN_lines());
-                    //end.setX(end.getX() + 6 * streetList.get(i-1).getN_lines());
                 }
-
                 if(streetList.get(i-1).getSlope() == 0.0) {
                     start.setY(start.getY() - 6 * streetList.get(i-1).getN_lines());
                 }
             }
 
-            if(i < streetList.size()-1 && streetList.get(i+1).getN_lines() == 1) {
+            if(i < streetList.size() - 1 && streetList.get(i+1).getN_lines() == 1) {
                 if(streetList.get(i+1).getSlope() != 1.0) {
                     end.setX(end.getX() + 6);
-                   //end.setY(end.getY() + 6);
                 }
-
                 if(streetList.get(i+1).getSlope() == 1.0 && streetList.get(i).getSlope() == 0.0) {
                     end.setX(end.getX() + 6);
                 }
             }
-
-//            if (i > 0 && n_lines !=0) {
-//                Coordinate lastEnd = end_c.get(i-1);
-//                double diff_x = lastEnd.diffX(start);
-//                double diff_y = lastEnd.diffY(start);
-//
-//                start = lastEnd;
-//                end = new Coordinate(end.getX()+diff_x, end.getY()+diff_y);
-//            }
-
-//            if(i > 0) {
-//                System.out.printf("\nstart this: " + start.getX() + " " + start.getY() + " end prev: " + end_c.get(i - 1).getX() + " " + end_c.get(i - 1).getY());
-//            }
 
             if(street.getSlope() != 0.0) {
                 boolean s = start.change(start.getX() + (6*n_lines), start.getY());
@@ -165,14 +140,14 @@ public class Line implements Drawable  {
                 if (s == false || e == false) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
-            }
-            else{
+            } else {
                 boolean s = start.change(start.getX(), start.getY()-(6*n_lines));
                 boolean e = end.change(end.getX(), end.getY()-(6*n_lines));
                 if (s == false || e == false) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
             }
+
             javafx.scene.shape.Line singleStreet = new javafx.scene.shape.Line(start.getX(), start.getY(), end.getX(), end.getY());
             singleStreet.setStroke(this.col);
             singleStreet.setStrokeWidth(6);

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -33,6 +34,14 @@ public class Main extends Application {
 
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loader.loadLinesData(allElements, streets);
+        List<Color> colorsForLines = new ArrayList<>();
+        colorsForLines.add(Color.FORESTGREEN);
+        colorsForLines.add(Color.ORANGERED);
+        colorsForLines.add(Color.CORNFLOWERBLUE);
+
+        for(int i = 0; i < lines.size(); i++) {
+            lines.get(i).setColor(colorsForLines.get(i));
+        }
 
         Subway sub = new Subway(new Coordinate(50, 80),12);
 

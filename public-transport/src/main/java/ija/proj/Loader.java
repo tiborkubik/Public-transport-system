@@ -146,6 +146,7 @@ public class Loader {
                         }
                     }
                     Line newLine = new Line(lineName, lineType, streetsOnLine, stopsOnLine);
+                    newLine.setType(lineType);
 
                     for(Street street : streetsOnLine) {
 
@@ -169,13 +170,17 @@ public class Loader {
 
         // Extracting stops only, typing into Drawable objects and adding on cavas
         for(Line line : allLines) {
+            Drawable drLine = line;
+            allElements.add(drLine);
+        }
+
+        for(Line line : allLines) {
             List<Stop> stopsInLine = line.getStopList();
             for(Stop stop : stopsInLine) {
                 Drawable drStop = stop;
                 allElements.add(drStop);
             }
-            Drawable drLine = line;
-            allElements.add(drLine);
+
         }
 
         return allLines;
