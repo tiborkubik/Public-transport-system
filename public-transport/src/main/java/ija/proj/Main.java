@@ -38,6 +38,10 @@ public class Main extends Application {
         colorsForLines.add(Color.FORESTGREEN);
         colorsForLines.add(Color.ORANGERED);
         colorsForLines.add(Color.CORNFLOWERBLUE);
+        colorsForLines.add(Color.YELLOW);
+        colorsForLines.add(Color.SANDYBROWN);
+        colorsForLines.add(Color.ROYALBLUE);
+        colorsForLines.add(Color.OLIVE);
 
         for(int i = 0; i < lines.size(); i++) {
             lines.get(i).setColor(colorsForLines.get(i));

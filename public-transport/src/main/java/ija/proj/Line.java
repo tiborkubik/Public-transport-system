@@ -5,10 +5,8 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.lang.*;
 
 
@@ -69,6 +67,13 @@ public class Line implements Drawable  {
         }
     }
 
+    public boolean isCircular() {
+        Coordinate firstStreetStart = this.start_c.get(0);
+        Coordinate lastStreetEnd = this.end_c.get(this.end_c.size());
+
+        return firstStreetStart.equals(lastStreetEnd);
+    }
+
     public void addCoordinates(Coordinate start, Coordinate end) {
         this.start_c.add(start);
         this.end_c.add(end);
@@ -127,16 +132,16 @@ public class Line implements Drawable  {
 
             if(i < streetList.size() - 1 && streetList.get(i+1).getN_lines() == 1) {
                 if(streetList.get(i+1).getSlope() != 1.0) {
-                    end.setX(end.getX() + 6);
+                    end.setX(end.getX() + 6 * streetList.get(i+1).getN_lines());
                 }
                 if(streetList.get(i+1).getSlope() == 1.0 && streetList.get(i).getSlope() == 0.0) {
-                    end.setX(end.getX() + 6);
+                    end.setX(end.getX() + 6 * streetList.get(i+1).getN_lines());
                 }
             }
 
-            if(street.getSlope() != 0.0) {
-                boolean s = start.change(start.getX() + (6*n_lines), start.getY());
-                boolean e = end.change(end.getX() + (6*n_lines), end.getY());
+            if(street.getSlope() != 0.0 && street.getN_lines() != 0) {
+                boolean s = start.change(start.getX() + (6), start.getY());
+                boolean e = end.change(end.getX() + (6), end.getY());
                 if (s == false || e == false) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }

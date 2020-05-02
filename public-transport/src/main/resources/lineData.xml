@@ -277,12 +277,40 @@
     </street>
 
     <street id="Ocean Ave A">
-    </street>
-
-    <street id="Pacific St">
       <stop id="Sunsets">
         <x>1950</x>
         <y>100</y>
+      </stop>
+    </street>
+  </line>
+
+  <line id="Bus Line 41" type="bus">
+    <street id="Jobs Ave E">
+      <stop id="6th+Jobs">
+        <x>1700</x>
+        <y>600</y>
+      </stop>
+
+    </street>
+
+    <street id="Jobs Ave D">
+      <stop id="5th+Jobs">
+        <x>1700</x>
+        <y>500</y>
+      </stop>
+    </street>
+    <street id="Jobs Ave C">
+    </street>
+    <street id="Jobs Ave B"></street>
+
+    <street id="Jobs Ave A">
+      <stop id="Lawns">
+        <x>1600</x>
+        <y>75</y>
+      </stop>
+      <stop id="1st+Jobs">
+        <x>1600</x>
+        <y>50</y>
       </stop>
     </street>
   </line>

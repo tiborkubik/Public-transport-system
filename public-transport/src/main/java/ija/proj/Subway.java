@@ -1,5 +1,6 @@
 package ija.proj;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -11,9 +12,10 @@ public class Subway extends Vehicle {
 
         super.GUI = new ArrayList<>();
         Rectangle singleSub = new Rectangle();
-        singleSub.setX(position.getX() - 5);
-        singleSub.setY(position.getY() - 10);
-        singleSub.setWidth(10);
-        singleSub.setHeight(20);
+        singleSub.setX(position.getX() - 6);
+        singleSub.setY(position.getY() - 12);
+        singleSub.setWidth(12);
+        singleSub.setHeight(24);
+        singleSub.setFill(Color.rgb(50, 50, 50));
         super.GUI.add(singleSub);
     }}
