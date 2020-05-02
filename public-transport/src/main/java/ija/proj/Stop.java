@@ -78,9 +78,9 @@ public class Stop implements Drawable {
         stopName.setFont(Font.font ("Impact", 12));
         stopName.setFill(Color.rgb(50, 50, 50));
 
-        stopLine.setId(this.onStreet.getName());
+        stopLine.setId(this.onStreet.getName()+"Stop");
 
-        stopName.setId(identifier);
+        stopName.setId(identifier+"Stop");
         stopLine.setSmooth(true);
         stopLine.setStroke(Color.rgb(50, 50, 50));
         stopLine.setStrokeWidth(6);

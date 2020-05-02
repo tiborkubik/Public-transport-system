@@ -34,18 +34,12 @@ public class Main extends Application {
 
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loader.loadLinesData(allElements, streets);
-        List<Color> colorsForLines = new ArrayList<>();
-        colorsForLines.add(Color.FORESTGREEN);
-        colorsForLines.add(Color.ORANGERED);
-        colorsForLines.add(Color.CORNFLOWERBLUE);
-        colorsForLines.add(Color.YELLOW);
-        colorsForLines.add(Color.SANDYBROWN);
-        colorsForLines.add(Color.ROYALBLUE);
-        colorsForLines.add(Color.OLIVE);
 
-        for(int i = 0; i < lines.size(); i++) {
-            lines.get(i).setColor(colorsForLines.get(i));
-        }
+        controller.setLines(lines);
+
+        controller.setDefaultLineColors(lines);
+
+
 
         Subway sub = new Subway(new Coordinate(50, 80),12);
 
@@ -62,10 +56,7 @@ public class Main extends Application {
 
         controller.setLinesInfo(lines);
         controller.setCursor(lines);
-
-
-
-
+        //controller.highlightLine(lines);
 
         controller.startTimer(1);
     }

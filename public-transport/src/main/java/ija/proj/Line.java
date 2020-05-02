@@ -167,7 +167,8 @@ public class Line implements Drawable  {
             singleStreet.setStrokeWidth(6);
             singleStreet.setSmooth(true);
             singleStreet.toFront();
-            singleStreet.setId(street.getName());
+            String id = street.getName()+this.identifier;
+            singleStreet.setId(id);
             singleStreet.setStrokeLineCap(StrokeLineCap.ROUND);
             singleStreet.setStrokeLineJoin(StrokeLineJoin.ROUND);
             line.add(singleStreet);

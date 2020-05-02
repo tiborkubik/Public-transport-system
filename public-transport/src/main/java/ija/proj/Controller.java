@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import java.time.LocalTime;
@@ -26,6 +27,9 @@ public class Controller {
     private Pane mapContent;
 
     @FXML
+    private Rectangle background;
+
+    @FXML
     private Slider speedChange;
 
     @FXML
@@ -34,6 +38,8 @@ public class Controller {
     private List<Drawable> GUIelements = new ArrayList<>();
     private Timer timer;
     private LocalTime currentTime = LocalTime.now();
+
+    private List<Line> lines = new ArrayList<>();
 
     /***
      * changes speed
@@ -75,6 +81,34 @@ public class Controller {
         }
     }
 
+    @FXML
+    public void setBasicSettings() {
+        linesInfo.setExpandedPane(null);
+
+        setDefaultLineColors(this.lines);
+    }
+
+    public void setLines(List<Line> lines){
+        this.lines = lines;
+    }
+
+    public void setDefaultLineColors(List<Line> lines) {
+        System.out.println(lines.get(0).getName());
+
+        List<Color> colorsForLines = new ArrayList<>();
+        colorsForLines.add(Color.FORESTGREEN);
+        colorsForLines.add(Color.ORANGERED);
+        colorsForLines.add(Color.CORNFLOWERBLUE);
+        colorsForLines.add(Color.YELLOW);
+        colorsForLines.add(Color.SANDYBROWN);
+        colorsForLines.add(Color.ROYALBLUE);
+        colorsForLines.add(Color.OLIVE);
+
+        for(int i = 0; i < lines.size(); i++) {
+            lines.get(i).setColor(colorsForLines.get(i));
+        }
+    }
+
     /***
      * Adds information about line to the navigation
      * @param lines
@@ -112,27 +146,28 @@ public class Controller {
     }
 
     /***
-     * changes cursor according it's position
+     * changes cursor according it's position + expanding of line information after clicking
      */
     public void setCursor(List<Line> lines) {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
-            sg.setCursor(Cursor.HAND);
+            if(sg != background)
+                sg.setCursor(Cursor.HAND);
             if(sg instanceof javafx.scene.shape.Line) {
                 sg.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        System.out.println(sg.getId());
                        for(Line line : lines) {
-                           if(line.streetInLineStreets(sg.getId())) {
-                               ObservableList<TitledPane> panes = linesInfo.getPanes();
-                               for(TitledPane pane : panes) {
-                                   if(pane.getId() == line.getName())
-                                       linesInfo.setExpandedPane(pane);
-                               }
+                         if(sg.getId().contains(line.getName())) {
+                               ChangeLineColor(line, Color.GRAY);
 
+                             ObservableList<TitledPane> panes = linesInfo.getPanes();
+                             for(TitledPane pane : panes) {
+                                 System.out.println("---as");
+                                 if(line.getName().contains(pane.getId()))
+                                     linesInfo.setExpandedPane(pane);
+                             }
                            }
-
                        }
                     }
                 });
@@ -151,7 +186,7 @@ public class Controller {
         for(Node sg : x) {
             Shape sp = (Shape) sg;
             for(Street street : line.getStreetList()) {
-                if(sp.getId() == street.getName()) {
+                if(sp.getId() != null && sp.getId().contains(line.getName())) {
                     sp.setStroke(color);
                 }
             }
