@@ -1,12 +1,16 @@
 package ija.proj;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -57,6 +61,14 @@ public class Main extends Application {
         controller.ChangeLineColor(lines.get(1), Color.TURQUOISE);
         controller.ChangeLineColor(lines.get(2), Color.CRIMSON);
 
-        controller.startTimer(1);
+        //controller.startTimer(1);
+
+        AnimationTimer t = new AnimationTimer(){
+            @Override
+            public void handle(long now) {
+                controller.testt();
+            }
+        };
+        t.start();
     }
 }

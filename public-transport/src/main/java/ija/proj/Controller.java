@@ -42,7 +42,7 @@ public class Controller {
     private void speedChanged() {
         float scaleForSpeed = (float) speedChange.getValue();
         timer.cancel();
-        startTimer(scaleForSpeed);
+        //startTimer(scaleForSpeed);
     }
     /***
      * Zooms map
@@ -104,18 +104,18 @@ public class Controller {
      * Starts timer
      * @param scale
      */
-    public void startTimer(double scale) {
-        timer = new Timer(false);
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                currentTime = currentTime.plusSeconds(1);
-                for(UpdateState update : updates) {
-                    update.update(currentTime);
-                }
-            }
-        }, 0, (long) (1000 / scale));
-    }
+//    public void startTimer(double scale) {
+//        timer = new Timer(false);
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                currentTime = currentTime.plusSeconds(1);
+//                for(UpdateState update : updates) {
+//                    update.update();
+//                }
+//            }
+//        }, 0, (long) (1000 / scale));
+//    }
 
     /***
      * changes cursor according it's position
@@ -142,6 +142,19 @@ public class Controller {
                     sp.setStroke(color);
                 }
             }
+        }
+    }
+
+    public void testt() {
+        for(UpdateState update : updates) {
+
+            List<Coordinate> x = new ArrayList<>();
+            x.add(new Coordinate(50, 400));
+            x.add(new Coordinate(400, 900));
+            for(int i = 0; i < x.size()-1; i++) {
+                update.update(x.get(0), x.get(1));
+            }
+
         }
     }
 }

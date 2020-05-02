@@ -10,18 +10,14 @@ import java.util.List;
 
 public class Vehicle implements Drawable, UpdateState {
     private Coordinate position;
-    private double speed = 1;
+    private double speed;
     private double distance = 0;
-    private List<Coordinate> path = new ArrayList();
-    private List<Coordinate> path2 = new ArrayList();
 
     protected List<Shape> GUI;
 
     public Vehicle(Coordinate position, double speed) {
         this.position = position;
         this.speed = speed;
-        this.path.add(new Coordinate(50, 400));
-        this.path.add(new Coordinate(400, 900));
     }
 
     // TODO
@@ -41,39 +37,28 @@ public class Vehicle implements Drawable, UpdateState {
         return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
     }
 
-    public Coordinate getNewCoord(double distance, List<Coordinate> path) {
-        double length = 0;
-        double currentLength = 0;
-        Coordinate a = null;
-        Coordinate b = null;
+    public Coordinate getNewCoord(double distance, Coordinate a, Coordinate b) {
 
-        for(int i = 0; i < path.size() - 1; i++) {
-            a = path.get(i);
-            b = path.get(i + 1);
-            currentLength = coordDistance(a, b);
-            if(length + currentLength >= distance) {
-                break;
-            }
-            length += currentLength;
-        }
-        if(a == null || b == null) {
-            return null;
-        }
+        double currentLength;
 
-        double driven = (distance - length) / currentLength;
+        currentLength = coordDistance(a, b);
+
+        double driven = (distance) / currentLength;
         return new Coordinate(a.getX() + (b.getX() - a.getX()) * driven, a.getY() + (b.getY() - a.getY()) * driven);
     }
 
     @Override
-    public void update(LocalTime time) {
+    public void update(Coordinate a, Coordinate b) {
         distance += speed;
 
-        double total = coordDistance(path.get(0), path.get(1));
+
+        double total = coordDistance(a, b);
         if(distance > total) {
+            distance = 0;
             return;
         }
 
-        Coordinate newC = getNewCoord(distance, path);
+        Coordinate newC = getNewCoord(distance, a, b);
         modifyGUI(newC);
         position = newC;
     }
