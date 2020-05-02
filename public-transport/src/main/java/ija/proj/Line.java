@@ -127,14 +127,22 @@ public class Line implements Drawable  {
             if(i > 0 && streetList.get(i-1).getN_lines() != 0 && streetList.get(i-1).getSlope() != street.getSlope()) {
                 if(streetList.get(i-1).getSlope() == 1.0) {
                     start.setX(start.getX() + 6 * streetList.get(i-1).getN_lines());
-                    end.setX(end.getX() + 6 * streetList.get(i-1).getN_lines());
+                    //end.setX(end.getX() + 6 * streetList.get(i-1).getN_lines());
+                }
+
+                if(streetList.get(i-1).getSlope() == 0.0) {
+                    start.setY(start.getY() - 6 * streetList.get(i-1).getN_lines());
                 }
             }
 
-            if(i < streetList.size()-1 && streetList.get(i+1).getN_lines() != 0) {
-                if(streetList.get(i+1).getSlope() == 1.0) {
-                    //end.setX(end.getX() + 6);
+            if(i < streetList.size()-1 && streetList.get(i+1).getN_lines() == 1) {
+                if(streetList.get(i+1).getSlope() != 1.0) {
+                    end.setX(end.getX() + 6);
                    //end.setY(end.getY() + 6);
+                }
+
+                if(streetList.get(i+1).getSlope() == 1.0 && streetList.get(i).getSlope() == 0.0) {
+                    end.setX(end.getX() + 6);
                 }
             }
 
