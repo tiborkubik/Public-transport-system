@@ -15,7 +15,7 @@ public class Loader {
      */
     public List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
-            File fXmlFile = new File("src/main/resources/mapData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/mapData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -62,7 +62,7 @@ public class Loader {
         List<Line> allLines = new ArrayList<>();
 
         try {
-            File fXmlFile = new File("src/main/resources/lineData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/lineData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -130,7 +130,16 @@ public class Loader {
                                     String temp_start_y = eElement.getElementsByTagName("y").item(0).getTextContent();
                                     int start_y = Integer.parseInt(temp_start_y);
 
-                                    Stop newStop = new Stop(stopName, new Coordinate(start_x, start_y), sStreet);
+                                    int time_to_stay;
+
+                                    try{
+                                        String temp_time_to_stay =  eElement.getElementsByTagName("time").item(0).getTextContent();
+                                        time_to_stay =Integer.parseInt(temp_time_to_stay );
+                                    }
+                                    catch(NullPointerException e){
+                                        time_to_stay = 100;
+                                    }
+                                    Stop newStop = new Stop(stopName, new Coordinate(start_x, start_y), sStreet, time_to_stay);
 
                                     // Checking whether stop is on a street
                                     boolean stopToStreet = sStreet.addStop(newStop);

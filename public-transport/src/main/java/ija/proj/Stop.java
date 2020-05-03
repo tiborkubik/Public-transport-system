@@ -17,17 +17,22 @@ public class Stop implements Drawable {
     private Coordinate location = null;
     private Street onStreet = null;
     private javafx.scene.paint.Color col;
+    private int time_to_stay;
 
-    public Stop(String identifier, Coordinate location, Street onStreet) {
+    public Stop(String identifier, Coordinate location, Street onStreet, int time_to_stay) {
         this.identifier = identifier;
         this.location = location;
         this.onStreet = onStreet;
+        this.time_to_stay = time_to_stay;
     }
 
     public Stop() {
 
     }
 
+    public int getTime(){
+        return this.time_to_stay;
+    }
     public void set_color() {
 
         Random random = new Random();

@@ -59,6 +59,7 @@
   <line id="Metro Line A" type="subway">
     <street id="Bercley St A">
       <stop id="Bc W1">
+        <time>50</time>
         <x>50</x>
         <y>50</y>
       </stop>
@@ -70,6 +71,7 @@
 
     <street id="Bercley St B">
       <stop id="Bc W3">
+        <time>50</time>
         <x>50</x>
         <y>230</y>
       </stop>

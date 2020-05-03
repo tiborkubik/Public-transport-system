@@ -38,13 +38,16 @@ public class Main extends Application {
 
         List<Vehicle> allVehicles = new ArrayList<>();
 
-        //Subway sub = new Subway(new Coordinate(50, 80),12);
-        Bus bus = new Bus(new Coordinate(50, 50), 1, lines.get(1), "Bus#45000");
+        Bus bus = new Bus(new Coordinate(50, 50), 1, lines.get(0), "Bus#45001");
+        Tram tram = new Tram(new Coordinate(50, 50), 1, lines.get(1), "Tram#45000");
+
         //Tram tram = new Tram(new Coordinate(800, 100), 10);
         allVehicles.add(bus);
+        allVehicles.add(tram);
 
        // allElements.add(sub);
         allElements.add(bus);
+        allElements.add(tram);
        // allElements.add(tram);
 
         // Setting list into gui

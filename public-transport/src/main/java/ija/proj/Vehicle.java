@@ -3,13 +3,13 @@ package ija.proj;
 import javafx.scene.shape.Shape;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class Vehicle implements Drawable, UpdateState {
     private Coordinate position;
-    private double speed = 1;
+    private double speed;
+    private double constantSpeed;
+
     private double distance = 0;
     private String identifier;
     private Line onLine;
@@ -17,12 +17,12 @@ public class Vehicle implements Drawable, UpdateState {
     private List<Coordinate> path = new ArrayList<>();
     private int cnt_time = 0;
 
-
     public Vehicle(Coordinate position, double speed, Line onLine, String identifier) {
         this.position = position;
         this.speed = speed;
         this.onLine = onLine;
         this.identifier = identifier;
+        this.constantSpeed = speed;
     }
 
     public String getName() {
@@ -84,10 +84,20 @@ public class Vehicle implements Drawable, UpdateState {
 
     @Override
     public void update(LocalTime time) {
-        if (cnt_time !=0){
+        System.out.println(cnt_time);
+        if (cnt_time >= 0){
             cnt_time--;
-            return;
+            if(cnt_time == 0){
+                this.speed = this.constantSpeed;
+            }
+            else if (cnt_time < 50){
+                this.speed = this.constantSpeed - this.constantSpeed* cnt_time/50;
+            }
+            else {
+                return;
+            }
         }
+
         distance += speed;
 
         double total = 0;
@@ -101,11 +111,8 @@ public class Vehicle implements Drawable, UpdateState {
 
         Coordinate newC = getNewCoord(distance, path);
         for(Stop stopOnRoute : this.onLine.getStopList()) {
-            //System.out.println("DIFF: " +  stopOnRoute.getCoordinate().diffX(newC) + " " + stopOnRoute.getCoordinate().diffY(newC));
             if(Math.abs(stopOnRoute.getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(stopOnRoute.getCoordinate().diffY(newC)) < this.speed/2) {
-                // MAKE IT PAUSE RIGHT HERE
-                System.out.println("Teraz by mala byt pauza na zastavke " + stopOnRoute.getName());
-                cnt_time = 100;
+                cnt_time = stopOnRoute.getTime();
             }
         }
         modifyGUI(newC);

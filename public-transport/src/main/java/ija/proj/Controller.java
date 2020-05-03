@@ -10,7 +10,6 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
@@ -43,7 +42,9 @@ public class Controller {
     private javafx.scene.shape.Line vehicleRoute;
 
     private List<Drawable> GUIelements = new ArrayList<>();
-    private Timer timer;
+
+    public Timer timer;
+
     private LocalTime currentTime = LocalTime.now();
 
     private List<Line> lines = new ArrayList<>();
@@ -98,6 +99,11 @@ public class Controller {
                 updates.add((UpdateState) obj);
             }
         }
+    }
+
+    public void vehicleSpeed(double scale) {
+        timer.cancel();
+        startTimer(scale);
     }
 
     public void setBasicSettings(List<Line> lines) {
