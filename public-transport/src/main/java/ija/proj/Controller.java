@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -119,13 +120,15 @@ public class Controller {
         for(Line line : lines) {
             String name = line.getName();
             ListView<String> list = new ListView<>();
-            ObservableList<String> items = FXCollections.observableArrayList ();
+            ObservableList<String> items = FXCollections.observableArrayList();
 
             TitledPane pane1 = new TitledPane(name, new Label("Stops in line " + name + " are following:\n"));
+            pane1.setFont(Font.font ("Impact", 14));
             for(Stop stop : line.getStopList()) {
                 String stopName = stop.getName();
                 items.add(stopName);
             }
+            
             list.setItems(items);
             pane1.setContent(list);
             pane1.setId(name);

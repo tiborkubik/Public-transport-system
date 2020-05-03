@@ -53,6 +53,7 @@ public class Main extends Application {
         controller.setLinesInfo(lines);
 
         controller.setCursor(lines);
+
         controller.setBasicSettings2(lines);
 
         controller.startTimer(1);
