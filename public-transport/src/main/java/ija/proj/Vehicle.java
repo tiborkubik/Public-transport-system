@@ -6,7 +6,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Vehicle implements Drawable, UpdateState {
     private Coordinate position;
@@ -16,6 +15,7 @@ public class Vehicle implements Drawable, UpdateState {
     private Line onLine;
     protected List<Shape> GUI;
     private List<Coordinate> path = new ArrayList<>();
+    private int cnt_time = 0;
 
 
     public Vehicle(Coordinate position, double speed, Line onLine, String identifier) {
@@ -84,6 +84,10 @@ public class Vehicle implements Drawable, UpdateState {
 
     @Override
     public void update(LocalTime time) {
+        if (cnt_time !=0){
+            cnt_time--;
+            return;
+        }
         distance += speed;
 
         double total = 0;
@@ -101,11 +105,7 @@ public class Vehicle implements Drawable, UpdateState {
             if(Math.abs(stopOnRoute.getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(stopOnRoute.getCoordinate().diffY(newC)) < this.speed/2) {
                 // MAKE IT PAUSE RIGHT HERE
                 System.out.println("Teraz by mala byt pauza na zastavke " + stopOnRoute.getName());
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                cnt_time = 100;
             }
         }
         modifyGUI(newC);
