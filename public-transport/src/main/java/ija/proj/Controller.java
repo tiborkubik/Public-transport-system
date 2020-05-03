@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
@@ -35,6 +37,12 @@ public class Controller {
 
     @FXML
     private Accordion linesInfo;
+
+    @FXML
+    private Circle vehicleOnRoute;
+
+    @FXML
+    private javafx.scene.shape.Line vehicleRoute;
 
     private List<Drawable> GUIelements = new ArrayList<>();
     private Timer timer;
@@ -84,9 +92,12 @@ public class Controller {
         }
     }
 
-    public void setBasicSettings2(List<Line> lines) {
+    public void setBasicSettings(List<Line> lines) {
         background.setOnMouseClicked(event -> {
             linesInfo.setExpandedPane(null);
+            vehicleRoute.setFill(Color.rgb(50,50,50));
+            vehicleRoute.setOpacity(0.5);
+          //  vehicleOnRoute.setFill(Color.rgb(50,50,50));
 
             for(int i = 0; i < lines.size(); i++) {
                 ChangeLineColor(lines.get(i), colorsForLines.get(i));
@@ -128,7 +139,7 @@ public class Controller {
                 String stopName = stop.getName();
                 items.add(stopName);
             }
-            
+
             list.setItems(items);
             pane1.setContent(list);
             pane1.setId(name);
@@ -177,6 +188,16 @@ public class Controller {
                        }
                    }
                 });
+            }
+        }
+    }
+
+    public void showVehicleRoute() {
+        ObservableList<Node> x = mapContent.getChildren();
+        for(Node sg : x) {
+            if(sg instanceof Polygon) {
+                sg.setOnMouseClicked(event ->
+                        vehicleRoute.setFill(Color.RED));
             }
         }
     }

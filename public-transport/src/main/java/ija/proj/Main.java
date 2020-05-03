@@ -54,7 +54,8 @@ public class Main extends Application {
 
         controller.setCursor(lines);
 
-        controller.setBasicSettings2(lines);
+        controller.setBasicSettings(lines);
+        controller.showVehicleRoute();
 
         controller.startTimer(1);
     }
