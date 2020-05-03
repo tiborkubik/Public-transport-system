@@ -269,6 +269,20 @@
     <end_y>1000</end_y>
   </street>
 
+  <street id="Short Far">
+    <start_x>2200</start_x>
+    <start_y>1000</start_y>
+    <end_x>2200</end_x>
+    <end_y>1200</end_y>
+  </street>
+
+  <street id="Long Close">
+    <start_x>2200</start_x>
+    <start_y>1200</start_y>
+    <end_x>2200</end_x>
+    <end_y>2300</end_y>
+  </street>
+
   <street id="Hancock St">
     <start_x>2200</start_x>
     <start_y>800</start_y>
@@ -330,5 +344,230 @@
     <start_y>1000</start_y>
     <end_x>2500</end_x>
     <end_y>1400</end_y>
+  </street>
+  <street id="Taylor Market">
+    <start_x>400</start_x>
+    <start_y>1000</start_y>
+    <end_x>400</end_x>
+    <end_y>1300</end_y>
+  </street>
+
+  <street id="Sylvan Lawn">
+    <start_x>400</start_x>
+    <start_y>1300</start_y>
+    <end_x>580</end_x>
+    <end_y>1300</end_y>
+  </street>
+
+  <street id="Pont Glen">
+    <start_x>580</start_x>
+    <start_y>1300</start_y>
+    <end_x>690</end_x>
+    <end_y>1300</end_y>
+  </street>
+
+  <street id="Hatton Lawn">
+    <start_x>400</start_x>
+    <start_y>1300</start_y>
+    <end_x>400</end_x>
+    <end_y>1800</end_y>
+  </street>
+
+  <street id="Copcot Place">
+    <start_x>580</start_x>
+    <start_y>1300</start_y>
+    <end_x>580</end_x>
+    <end_y>1800</end_y>
+  </street>
+
+  <street id="Crown Copse">
+    <start_x>800</start_x>
+    <start_y>1000</start_y>
+    <end_x>800</end_x>
+    <end_y>1500</end_y>
+  </street>
+
+  <street id="King St">
+    <start_x>690</start_x>
+    <start_y>1300</start_y>
+    <end_x>690</end_x>
+    <end_y>1500</end_y>
+  </street>
+
+  <street id="Short St">
+    <start_x>690</start_x>
+    <start_y>1500</start_y>
+    <end_x>800</end_x>
+    <end_y>1500</end_y>
+  </street>
+
+  <street id="King St">
+    <start_x>690</start_x>
+    <start_y>1300</start_y>
+    <end_x>690</end_x>
+    <end_y>1500</end_y>
+  </street>
+
+  <street id="Maris Vale">
+    <start_x>400</start_x>
+    <start_y>1800</start_y>
+    <end_x>450</end_x>
+    <end_y>1900</end_y>
+  </street>
+
+  <street id="Cambrian Down">
+    <start_x>580</start_x>
+    <start_y>1800</start_y>
+    <end_x>450</end_x>
+    <end_y>1900</end_y>
+  </street>
+
+  <street id="Torn Road">
+    <start_x>800</start_x>
+    <start_y>1500</start_y>
+    <end_x>800</end_x>
+    <end_y>1720</end_y>
+  </street>
+
+  <street id="Whitby Road">
+    <start_x>800</start_x>
+    <start_y>1720</start_y>
+    <end_x>800</end_x>
+    <end_y>1950</end_y>
+  </street>
+
+  <street id="Century Acre">
+    <start_x>450</start_x>
+    <start_y>2000</start_y>
+    <end_x>800</end_x>
+    <end_y>1720</end_y>
+  </street>
+
+  <street id="French Loke">
+    <start_x>450</start_x>
+    <start_y>2000</start_y>
+    <end_x>450</end_x>
+    <end_y>2120</end_y>
+  </street>
+
+  <street id="Erwin St">
+    <start_x>450</start_x>
+    <start_y>2120</start_y>
+    <end_x>950</end_x>
+    <end_y>2120</end_y>
+  </street>
+
+  <street id="Griffin St">
+    <start_x>800</start_x>
+    <start_y>1950</start_y>
+    <end_x>950</end_x>
+    <end_y>2120</end_y>
+  </street>
+
+  <street id="Richmen St">
+    <start_x>950</start_x>
+    <start_y>2120</start_y>
+    <end_x>1700</end_x>
+    <end_y>2120</end_y>
+  </street>
+
+  <street id="Pipers Gait">
+    <start_x>1700</start_x>
+    <start_y>2120</start_y>
+    <end_x>1900</end_x>
+    <end_y>1950</end_y>
+  </street>
+
+  <street id="Colwyn St">
+    <start_x>800</start_x>
+    <start_y>1950</start_y>
+    <end_x>1900</end_x>
+    <end_y>1950</end_y>
+  </street>
+
+  <street id="Chair St">
+    <start_x>450</start_x>
+    <start_y>1900</start_y>
+    <end_x>450</end_x>
+    <end_y>2000</end_y>
+  </street>
+
+  <street id="Black St">
+    <start_x>2200</start_x>
+    <start_y>1200</start_y>
+    <end_x>2000</end_x>
+    <end_y>1500</end_y>
+  </street>
+
+  <street id="Purple St">
+    <start_x>2000</start_x>
+    <start_y>1500</start_y>
+    <end_x>800</end_x>
+    <end_y>1500</end_y>
+  </street>
+
+  <street id="Argus Crest">
+    <start_x>1900</start_x>
+    <start_y>1950</start_y>
+    <end_x>2100</end_x>
+    <end_y>1800</end_y>
+  </street>
+
+  <street id="Conn St">
+    <start_x>2100</start_x>
+    <start_y>1800</start_y>
+    <end_x>2200</end_x>
+    <end_y>2000</end_y>
+  </street>
+
+  <street id="Princess Oak">
+    <start_x>2100</start_x>
+    <start_y>1800</start_y>
+    <end_x>1800</end_x>
+    <end_y>1850</end_y>
+  </street>
+  <street id="Garden Hall">
+    <start_x>1800</start_x>
+    <start_y>1850</start_y>
+    <end_x>1100</end_x>
+    <end_y>1850</end_y>
+  </street>
+
+  <street id="Pub Row">
+    <start_x>2100</start_x>
+    <start_y>1800</start_y>
+    <end_x>2100</end_x>
+    <end_y>1720</end_y>
+  </street>
+
+  <street id="Woodhey Lane">
+    <start_x>2100</start_x>
+    <start_y>1720</start_y>
+    <end_x>1050</end_x>
+    <end_y>1720</end_y>
+  </street>
+  <street id="Pale St">
+    <start_x>2100</start_x>
+    <start_y>1720</start_y>
+    <end_x>2100</end_x>
+    <end_y>1670</end_y>
+  </street>
+  <street id="Dark St">
+    <start_x>2100</start_x>
+    <start_y>1670</start_y>
+    <end_x>2000</end_x>
+    <end_y>1570</end_y>
+  </street>
+  <street id="Baker St">
+    <start_x>2000</start_x>
+    <start_y>1570</start_y>
+    <end_x>1050</end_x>
+    <end_y>1570</end_y>
+  </street>
+  <street id="Stuart Piece">
+    <start_x>1050</start_x>
+    <start_y>1570</start_y>
+    <end_x>1050</end_x>
+    <end_y>1720</end_y>
   </street>
 </map_data>
