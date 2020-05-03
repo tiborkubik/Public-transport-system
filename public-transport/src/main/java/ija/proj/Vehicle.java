@@ -101,6 +101,11 @@ public class Vehicle implements Drawable, UpdateState {
             if(Math.abs(stopOnRoute.getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(stopOnRoute.getCoordinate().diffY(newC)) < this.speed/2) {
                 // MAKE IT PAUSE RIGHT HERE
                 System.out.println("Teraz by mala byt pauza na zastavke " + stopOnRoute.getName());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         modifyGUI(newC);
