@@ -5,10 +5,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.lang.*;
-
+import java.util.*;
 
 
 public class Line implements Drawable  {
@@ -16,10 +13,12 @@ public class Line implements Drawable  {
     private String type;  // tram, sub, bus..
     private List<Street> streetList = new ArrayList<>();
     private List<Stop> stopList = new ArrayList<>();
+    private LinkedHashMap path = new LinkedHashMap<>();
 
     private List<Coordinate> start_c = new ArrayList<>();
     private List<Coordinate> end_c = new ArrayList<>();
     private javafx.scene.paint.Color col;
+
 
 
     public Line(String identifier, String type, List<Street> streetList, List<Stop> stopList) {
@@ -28,7 +27,45 @@ public class Line implements Drawable  {
         this.type = type;
         this.streetList = streetList;
         this.stopList = stopList;
-        //set_color();
+        setPath();
+    }
+
+    private void setPath(){
+
+        int n_places = stopList.size()+streetList.size();
+        int street_id =0;
+        int stop_id =0;
+        this.path.put("street: " + streetList.get(0).getName(),streetList.get(0).begin());
+        for (int i = 0; i < n_places; i++) {
+
+            Street act_street = new Street();
+            Stop act_stop = new Stop();
+
+            try {
+                act_street = streetList.get(street_id);
+                act_stop = stopList.get(stop_id);
+            } catch (Exception e) {
+                act_stop.setStreet(streetList.get(0));
+            }
+
+
+            if(act_stop.getStreet().getName() == act_street.getName()){
+                //System.out.println("stop: " + stopList.get(stop_id).getName());
+                this.path.put("stop: " + stopList.get(stop_id).getName(),stopList.get(stop_id).getCoordinate());
+                stop_id++;
+            }
+            else {
+                //System.out.println("street: " + streetList.get(street_id).getName());
+                this.path.put("street: " + streetList.get(street_id).getName(),streetList.get(street_id).begin());
+                street_id++;
+            }
+
+        }
+
+    }
+
+    public LinkedHashMap<String, Coordinate> getPath() {
+        return this.path;
     }
 
     public void setColor(Color c) {

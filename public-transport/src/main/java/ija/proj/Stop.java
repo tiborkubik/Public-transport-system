@@ -24,6 +24,10 @@ public class Stop implements Drawable {
         this.onStreet = onStreet;
     }
 
+    public Stop() {
+
+    }
+
     public void set_color() {
 
         Random random = new Random();

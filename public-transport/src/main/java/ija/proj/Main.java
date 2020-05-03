@@ -1,12 +1,9 @@
 package ija.proj;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -39,13 +36,13 @@ public class Main extends Application {
         controller.setLines(lines);
         controller.setDefaultLineColors(lines);
 
-        Subway sub = new Subway(new Coordinate(50, 80),12);
-        Bus bus = new Bus(new Coordinate(50, 250), 30);
-        Tram tram = new Tram(new Coordinate(800, 100), 10);
+        //Subway sub = new Subway(new Coordinate(50, 80),12);
+        Bus bus = new Bus(new Coordinate(50, 50), 2, lines.get(1));
+        //Tram tram = new Tram(new Coordinate(800, 100), 10);
 
-        allElements.add(sub);
+       // allElements.add(sub);
         allElements.add(bus);
-        allElements.add(tram);
+       // allElements.add(tram);
 
         // Setting list into gui
         controller.setGUIelements(allElements);

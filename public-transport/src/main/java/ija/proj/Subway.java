@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 public class Subway extends Vehicle {
 
-    public Subway(Coordinate position, double speed) {
-        super(position, speed);
+    public Subway(Coordinate position, double speed, Line onLine) {
+        super(position, speed, onLine);
+
+        super.setStops();
 
         super.GUI = new ArrayList<>();
         Rectangle singleSub = new Rectangle();

@@ -2,12 +2,10 @@ package ija.proj;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -52,6 +50,8 @@ public class Controller {
 
     List<Color> colorsForLines = new ArrayList<>();
 
+    private List<UpdateState> updates = new ArrayList<>();
+
     /***
      * changes speed
      */
@@ -89,6 +89,10 @@ public class Controller {
         this.GUIelements = GUIelements;
         for(Drawable obj : GUIelements) {
             mapContent.getChildren().addAll(obj.getGUI());
+
+            if(obj instanceof UpdateState) {
+                updates.add((UpdateState) obj);
+            }
         }
     }
 
@@ -157,6 +161,9 @@ public class Controller {
             @Override
             public void run() {
                 currentTime = currentTime.plusSeconds(1);
+                for(UpdateState update : updates) {
+                    update.update(currentTime);
+                }
             }
         }, 0, (long) (1000 / scale));
     }
@@ -201,7 +208,6 @@ public class Controller {
             }
         }
     }
-
 
     /***
      * changes line to a certain color
