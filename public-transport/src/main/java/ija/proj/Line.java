@@ -47,8 +47,6 @@ public class Line implements Drawable  {
             } catch (Exception e) {
                 act_stop.setStreet(streetList.get(0));
             }
-
-
             if(act_stop.getStreet().getName() == act_street.getName()){
                 //System.out.println("stop: " + stopList.get(stop_id).getName());
                 this.path.put("stop: " + stopList.get(stop_id).getName(),stopList.get(stop_id).getCoordinate());
@@ -59,9 +57,7 @@ public class Line implements Drawable  {
                 this.path.put("street: " + streetList.get(street_id).getName(),streetList.get(street_id).begin());
                 street_id++;
             }
-
         }
-
     }
 
     public LinkedHashMap<String, Coordinate> getPath() {
