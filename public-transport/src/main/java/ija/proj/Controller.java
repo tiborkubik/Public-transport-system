@@ -81,6 +81,10 @@ public class Controller {
         mapContent.layout();
     }
 
+    private Circle getVehicleOnRoute() {
+        return this.vehicleOnRoute;
+    }
+
     /***
      * displays gui elements
      * @param GUIelements - list of elements to display
@@ -99,10 +103,10 @@ public class Controller {
     public void setBasicSettings(List<Line> lines) {
         background.setOnMouseClicked(event -> {
             linesInfo.setExpandedPane(null);
-            vehicleRoute.setFill(Color.rgb(50,50,50));
+            vehicleRoute.setStroke(Color.rgb(50,50,50));
             vehicleRoute.setOpacity(0.5);
-          //  vehicleOnRoute.setFill(Color.rgb(50,50,50));
-
+            vehicleOnRoute.setRadius(8);
+            vehicleOnRoute.setLayoutY(113);
             for(int i = 0; i < lines.size(); i++) {
                 ChangeLineColor(lines.get(i), colorsForLines.get(i));
             }
@@ -178,6 +182,9 @@ public class Controller {
                 sg.setCursor(Cursor.HAND);
             if(sg instanceof javafx.scene.shape.Line) {
                 sg.setOnMouseClicked(event -> {
+                    vehicleRoute.setStroke(Color.rgb(50,50,50));
+                    vehicleRoute.setOpacity(0.5);
+
                    for(Line line : lines) {
                      if(sg.getId().contains(line.getName())) {
                            for(Line otherLine : lines) {
@@ -199,12 +206,32 @@ public class Controller {
         }
     }
 
-    public void showVehicleRoute() {
+    public void showVehicleRoute(List<Vehicle> allVehicles) {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
-            if(sg instanceof Polygon) {
-                sg.setOnMouseClicked(event ->
-                        vehicleRoute.setFill(Color.RED));
+            if(sg instanceof Circle) {
+                sg.setOnMouseClicked(event ->{
+                        for(Vehicle singleV : allVehicles) {
+                            if(singleV.getName().equals(sg.getId())) {
+                                vehicleRoute.setStroke(singleV.getLine().getColor().saturate().saturate());
+                                vehicleRoute.setOpacity(1.0);
+                                vehicleOnRoute.setRadius(12);
+                                vehicleOnRoute.setLayoutY(699);
+                                for(Line otherLine : lines) {
+                                    if (otherLine.getName() != singleV.getLine().getName()) {
+                                        ChangeLineColor(otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
+                                    } else {
+                                        ChangeLineColor(otherLine, otherLine.getColor().saturate().saturate());
+                                    }
+                                }
+                            }
+                            ObservableList<TitledPane> panes = linesInfo.getPanes();
+                            for(TitledPane pane : panes) {
+                                if(singleV.getLine().getName().contains(pane.getId()))
+                                    linesInfo.setExpandedPane(pane);
+                            }
+                        }
+                });
             }
         }
     }

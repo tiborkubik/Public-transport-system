@@ -35,7 +35,7 @@ public class Line implements Drawable  {
         int n_places = stopList.size()+streetList.size();
         int street_id =0;
         int stop_id =0;
-        this.path.put("street: " + streetList.get(0).getName(),streetList.get(0).begin());
+        this.path.put("street " + streetList.get(0).getName(),streetList.get(0).begin());
         for (int i = 0; i < n_places; i++) {
 
             Street act_street = new Street();
@@ -54,7 +54,7 @@ public class Line implements Drawable  {
             }
             else {
                 //System.out.println("street: " + streetList.get(street_id).getName());
-                this.path.put("street: " + streetList.get(street_id).getName(),streetList.get(street_id).begin());
+                this.path.put("street: " + streetList.get(street_id).getName(),streetList.get(street_id).end());
                 street_id++;
             }
         }

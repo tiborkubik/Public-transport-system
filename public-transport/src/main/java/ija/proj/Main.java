@@ -36,9 +36,12 @@ public class Main extends Application {
         controller.setLines(lines);
         controller.setDefaultLineColors(lines);
 
+        List<Vehicle> allVehicles = new ArrayList<>();
+
         //Subway sub = new Subway(new Coordinate(50, 80),12);
-        Bus bus = new Bus(new Coordinate(50, 50), 2, lines.get(1));
+        Bus bus = new Bus(new Coordinate(50, 50), 1, lines.get(1), "Bus#45000");
         //Tram tram = new Tram(new Coordinate(800, 100), 10);
+        allVehicles.add(bus);
 
        // allElements.add(sub);
         allElements.add(bus);
@@ -52,7 +55,7 @@ public class Main extends Application {
         controller.setCursor(lines);
 
         controller.setBasicSettings(lines);
-        controller.showVehicleRoute();
+        controller.showVehicleRoute(allVehicles);
 
         controller.startTimer(1);
     }

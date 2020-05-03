@@ -12,29 +12,38 @@ public class Vehicle implements Drawable, UpdateState {
     private Coordinate position;
     private double speed = 1;
     private double distance = 0;
+    private String identifier;
     private Line onLine;
     protected List<Shape> GUI;
     private List<Coordinate> path = new ArrayList<>();
 
 
-    public Vehicle(Coordinate position, double speed, Line onLine) {
+    public Vehicle(Coordinate position, double speed, Line onLine, String identifier) {
         this.position = position;
         this.speed = speed;
         this.onLine = onLine;
+        this.identifier = identifier;
+    }
 
+    public String getName() {
+        return this.identifier;
+    }
+
+    public Line getLine() {
+        return this.onLine;
     }
 
     protected void setStops() {
         LinkedHashMap<String, Coordinate> tempPath = this.onLine.getPath();
 
         tempPath.forEach((k,v)->{
-            System.out.println(v.getX() + " " + v.getY());
             this.path.add(v);
         });
     }
 
     // TODO
     private void modifyGUI(Coordinate coordinate) {
+
         for(Shape shape : GUI) {
             shape.setTranslateX(coordinate.getX() - position.getX() + shape.getTranslateX());
             shape.setTranslateY(coordinate.getY() - position.getY() + shape.getTranslateY());
@@ -87,6 +96,13 @@ public class Vehicle implements Drawable, UpdateState {
         }
 
         Coordinate newC = getNewCoord(distance, path);
+        for(Stop stopOnRoute : this.onLine.getStopList()) {
+            //System.out.println("DIFF: " +  stopOnRoute.getCoordinate().diffX(newC) + " " + stopOnRoute.getCoordinate().diffY(newC));
+            if(Math.abs(stopOnRoute.getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(stopOnRoute.getCoordinate().diffY(newC)) < this.speed/2) {
+                // MAKE IT PAUSE RIGHT HERE
+                System.out.println("Teraz by mala byt pauza na zastavke " + stopOnRoute.getName());
+            }
+        }
         modifyGUI(newC);
         position = newC;
     }
