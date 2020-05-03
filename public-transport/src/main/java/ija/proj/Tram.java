@@ -6,8 +6,10 @@ import javafx.scene.shape.Polygon;
 import java.util.ArrayList;
 
 public class Tram extends Vehicle {
-    public Tram(Coordinate position, double speed) {
-        super(position, speed);
+    public Tram(Coordinate position, double speed, Line onLine) {
+        super(position, speed, onLine);
+
+        super.setStops();
 
         super.GUI = new ArrayList<>();
         Polygon polygon = new Polygon();

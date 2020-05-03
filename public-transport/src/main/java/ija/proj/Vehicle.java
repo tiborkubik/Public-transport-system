@@ -1,28 +1,36 @@
 package ija.proj;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Vehicle implements Drawable, UpdateState {
     private Coordinate position;
     private double speed = 1;
     private double distance = 0;
-    private List<Coordinate> path = new ArrayList();
-
+    private Line onLine;
     protected List<Shape> GUI;
+    private List<Coordinate> path = new ArrayList<>();
 
-    public Vehicle(Coordinate position, double speed) {
+
+    public Vehicle(Coordinate position, double speed, Line onLine) {
         this.position = position;
         this.speed = speed;
+        this.onLine = onLine;
 
-        this.path.add(new Coordinate(50, 400));
-        this.path.add(new Coordinate(400, 900));
-        this.path.add(new Coordinate(800, 900));
+    }
+
+    protected void setStops() {
+        LinkedHashMap<String, Coordinate> tempPath = this.onLine.getPath();
+
+        tempPath.forEach((k,v)->{
+            System.out.println(v.getX() + " " + v.getY());
+            this.path.add(v);
+        });
     }
 
     // TODO
@@ -82,4 +90,5 @@ public class Vehicle implements Drawable, UpdateState {
         modifyGUI(newC);
         position = newC;
     }
+
 }

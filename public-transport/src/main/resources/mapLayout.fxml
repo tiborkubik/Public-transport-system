@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.proj.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.proj.Controller">
     <center>
         <ScrollPane pannable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <content>
@@ -31,7 +31,7 @@
     <right>
         <AnchorPane prefHeight="1000.0" prefWidth="361.0" BorderPane.alignment="CENTER">
          <children>
-            <Slider fx:id="speedChange" layoutX="111.0" layoutY="26.0" max="1.75" min="0.25" onDragDone="#speedChanged" showTickLabels="true" showTickMarks="true" value="1.0" />
+            <Slider fx:id="speedChange" layoutX="111.0" layoutY="26.0" max="50.0" onMouseClicked="#speedChanged" showTickLabels="true" showTickMarks="true" value="1.0" />
             <Text fontSmoothingType="LCD" layoutX="87.0" layoutY="951.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Public Transport System Tracker for IJA/2019L course by Andrej Jezik and Tibor Kubik" textAlignment="CENTER" wrappingWidth="188.13671875" />
             <Accordion id="linesInfo" fx:id="linesInfo" layoutX="150.0" layoutY="137.0" prefHeight="727.0" prefWidth="202.0" />
             <Line fx:id="vehicleRoute" endX="-40.0" endY="643.0" layoutX="72.0" layoutY="270.0" opacity="0.5" startX="-40.0" startY="-159.0" stroke="#323232" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="5.0" />
