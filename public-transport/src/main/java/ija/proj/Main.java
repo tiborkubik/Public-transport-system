@@ -1,13 +1,14 @@
 package ija.proj;
 
+import javafx.animation.PathTransition;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,26 +37,25 @@ public class Main extends Application {
 
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loader.loadLinesData(allElements, streets);
-        controller.setLines(lines);
-        controller.setDefaultLineColors(lines);
 
-        Subway sub = new Subway(new Coordinate(50, 80),12);
-        Bus bus = new Bus(new Coordinate(50, 250), 30);
+        Subway sub = new Subway(new Coordinate(50, 80),2);
+
+        Bus bus = new Bus(new Coordinate(50, 400), 10);
+
         Tram tram = new Tram(new Coordinate(800, 100), 10);
 
-        allElements.add(sub);
+     //   allElements.add(sub);
         allElements.add(bus);
-        allElements.add(tram);
-
+      //  allElements.add(tram);
         // Setting list into gui
         controller.setGUIelements(allElements);
 
         controller.setLinesInfo(lines);
+        controller.setCursor();
 
-        controller.setCursor(lines);
-
-        controller.setBasicSettings(lines);
-        controller.showVehicleRoute();
+        controller.ChangeLineColor(lines.get(0), Color.ORCHID);
+        controller.ChangeLineColor(lines.get(1), Color.TURQUOISE);
+        controller.ChangeLineColor(lines.get(2), Color.CRIMSON);
 
         controller.startTimer(1);
     }
