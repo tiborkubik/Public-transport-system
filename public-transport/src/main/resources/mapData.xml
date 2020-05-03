@@ -305,10 +305,10 @@
   </street>
 
   <street id="Ocean Ave A">
-    <start_x>1950</start_x>
-    <start_y>100</start_y>
-    <end_x>2100</end_x>
-    <end_y>300</end_y>
+    <start_x>2100</start_x>
+    <start_y>300</start_y>
+    <end_x>1950</end_x>
+    <end_y>100</end_y>
   </street>
 
   <street id="Brooklyn St">

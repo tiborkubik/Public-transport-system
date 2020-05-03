@@ -152,7 +152,26 @@ public class Street implements Drawable {
     @Override
     public List<Shape> getGUI() {
         Line singleStreet = new Line(start.getX(), start.getY(), end.getX(), end.getY());
-        Text streetName = new Text(start.getX() + 10 + (Math.abs(start.diffX(end))/2), start.getY() - 10 + Math.abs(start.diffY(end))/2, identifier);
+
+        Text streetName = new Text();
+        if(start.getY() == end.getY()) {
+            streetName = new Text( (start.getX()+end.getX())/2 - 20, (start.getY()+end.getY())/2 - 10, identifier);
+        }
+        else if(start.getX() == end.getX()) {
+            streetName = new Text( (start.getX()+end.getX())/2 + 20, (start.getY()+end.getY())/2 - 10, identifier);
+        }
+        else if(start.getX() > end.getX() && start.getY() > end.getY()) {
+            streetName = new Text( (start.getX()+end.getX())/2 + 20, (start.getY()+end.getY())/2 - 10, identifier);
+        }
+        else if(start.getX() > end.getX() && start.getY() < end.getY()) {
+            streetName = new Text( (start.getX()+end.getX())/2 + 30, (start.getY()+end.getY())/2 - 10, identifier);
+        }
+        else if(start.getX() < end.getX() && start.getY() > end.getY()) {
+            streetName = new Text( (start.getX()+end.getX())/2 + 40, (start.getY()+end.getY())/2 - 10, identifier);
+        }
+        else {
+            streetName = new Text( (start.getX()+end.getX())/2 + 10, (start.getY()+end.getY())/2 - 10, identifier);
+        }
         streetName.setFont(Font.font ("SimSun", 12));
 //        List<String> a = Font.getFamilies();
 //        for(String fam : a) {
