@@ -122,15 +122,11 @@ public class Vehicle implements Drawable, UpdateState {
 
         for(Street s : this.onLine.getStreetList()) {
             if(Math.abs(s.begin().diffX(newC)) < this.speed/2 && Math.abs(s.begin().diffY(newC)) < this.speed/2) {
-                if(s.getSlope() == 1.0)
-                    GUI.get(0).setRotate(0.0);
-                if(s.getSlope() == 0.0)
-                    GUI.get(0).setRotate(90.0);
+                GUI.get(0).setRotate(90-90*s.getSlope());
+                System.out.println(s.getSlope());
             }
         }
-
         modifyGUI(newC);
-
         position = newC;
     }
 

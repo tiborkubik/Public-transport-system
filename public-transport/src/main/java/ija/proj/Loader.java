@@ -5,6 +5,9 @@ import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class Loader {
      */
     public List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
-            File fXmlFile = new File("src/main/resources/mapData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/mapData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -62,7 +65,7 @@ public class Loader {
         List<Line> allLines = new ArrayList<>();
 
         try {
-            File fXmlFile = new File("src/main/resources/lineData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/lineData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -193,5 +196,51 @@ public class Loader {
         }
 
         return allLines;
+    }
+
+
+    /**
+     * Method loads timetables for all lines
+     * @param lines list of lines
+     */
+    public void loadTimetableData(List<Line> lines) {
+        List<Line> allLines = new ArrayList<>();
+
+        try {
+            File fXmlFile = new File("public-transport/src/main/resources/timetable.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+            doc.getDocumentElement().normalize();
+
+            // All timetables
+            NodeList timeTableList = doc.getElementsByTagName("line");
+
+            // Iterating through lines
+            for (int temp = 0; temp < timeTableList.getLength(); temp++) {
+                Node singleLine = timeTableList.item(temp);
+                if (singleLine.getNodeType() == Node.ELEMENT_NODE) {
+
+                    // id of the line
+                    String lineId = singleLine.getAttributes().item(0).getNodeValue();
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    List<LocalDateTime> departureTimes = new ArrayList<>();
+
+                    NodeList times = singleLine.getChildNodes();
+
+                    // Iterating through all times
+                    for (int i = 0; i < times.getLength(); i++) {
+                        Node singleTime = times.item(i);
+
+                        if(singleTime.getNodeType() == Node.ELEMENT_NODE) {
+                            String temp_start_x = singleTime.getTextContent();
+                            LocalTime dateTime = LocalTime.parse(temp_start_x, formatter);
+                        }
+                }
+            }}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
