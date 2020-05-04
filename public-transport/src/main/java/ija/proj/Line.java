@@ -1,6 +1,5 @@
 package ija.proj;
 
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
@@ -12,9 +11,9 @@ import java.util.*;
 public class Line implements Drawable  {
     private String identifier;
     private String type;  // tram, sub, bus..
-    private List<Street> streetList = new ArrayList<>();
-    private List<Stop> stopList = new ArrayList<>();
-    private LinkedHashMap path = new LinkedHashMap<>();
+    private List<Street> streetList;
+    private List<Stop> stopList;
+    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();
 
     private List<Coordinate> start_c = new ArrayList<>();
     private List<Coordinate> end_c = new ArrayList<>();

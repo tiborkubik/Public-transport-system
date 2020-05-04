@@ -40,8 +40,8 @@ public class Main extends Application {
         List<Vehicle> allVehicles = new ArrayList<>();
 
         Bus bus = new Bus(new Coordinate(lines.get(0).getStreetList().get(0).begin().getX(), lines.get(0).getStreetList().get(0).begin().getY()), 0.5, lines.get(0), "Bus#45001");
-        Tram tram = new Tram(new Coordinate(lines.get(1).getStreetList().get(0).begin().getX(), lines.get(1).getStreetList().get(0).begin().getY()), 1, lines.get(1), "Tram#45000");
-        Subway sub = new Subway(new Coordinate(lines.get(2).getStreetList().get(0).begin().getX(), lines.get(2).getStreetList().get(0).begin().getY()), 2, lines.get(2), "Sub#693");
+        Tram tram = new Tram(new Coordinate(lines.get(2).getStreetList().get(0).begin().getX(), lines.get(2).getStreetList().get(0).begin().getY()), 1, lines.get(2), "Tram#45000");
+        Subway sub = new Subway(new Coordinate(lines.get(1).getStreetList().get(0).begin().getX(), lines.get(1).getStreetList().get(0).begin().getY()), 2, lines.get(1), "Sub#693");
         //Tram tram = new Tram(new Coordinate(800, 100), 10);
         allVehicles.add(bus);
         allVehicles.add(tram);

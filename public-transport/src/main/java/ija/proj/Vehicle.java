@@ -13,7 +13,7 @@ public class Vehicle implements Drawable, UpdateState {
     private double distance = 0;
     private String identifier;
     private Line onLine;
-    protected List<Shape> GUI;
+    protected List<Shape> GUI = new ArrayList<>();
     private List<Coordinate> path = new ArrayList<>();
     private int cnt_time = 0;
 
@@ -43,9 +43,13 @@ public class Vehicle implements Drawable, UpdateState {
 
     // TODO
     private void modifyGUI(Coordinate coordinate) {
-        for(Shape shape : GUI) {
-            shape.setTranslateX(coordinate.getX() - position.getX() + shape.getTranslateX());
-            shape.setTranslateY(coordinate.getY() - position.getY() + shape.getTranslateY());
+        try{
+            for(Shape shape : GUI) {
+                shape.setTranslateX(coordinate.getX() - position.getX() + shape.getTranslateX());
+                shape.setTranslateY(coordinate.getY() - position.getY() + shape.getTranslateY());
+            }
+        } catch (Exception e) {
+            System.out.println("Accessing unexisting element");
         }
     }
 
@@ -88,7 +92,7 @@ public class Vehicle implements Drawable, UpdateState {
 
     @Override
     public void update(LocalTime time) {
-        //System.out.println(time.getHour() + " " + time.getMinute() + " " + time.getSecond());
+
         if (cnt_time >= 0){
             cnt_time--;
             if(cnt_time == 0){
@@ -116,7 +120,17 @@ public class Vehicle implements Drawable, UpdateState {
                 }
         }
 
+        for(Street s : this.onLine.getStreetList()) {
+            if(Math.abs(s.begin().diffX(newC)) < this.speed/2 && Math.abs(s.begin().diffY(newC)) < this.speed/2) {
+                if(s.getSlope() == 1.0)
+                    GUI.get(0).setRotate(0.0);
+                if(s.getSlope() == 0.0)
+                    GUI.get(0).setRotate(90.0);
+            }
+        }
+
         modifyGUI(newC);
+
         position = newC;
     }
 

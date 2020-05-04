@@ -153,7 +153,7 @@ public class Street implements Drawable {
     public List<Shape> getGUI() {
         Line singleStreet = new Line(start.getX(), start.getY(), end.getX(), end.getY());
 
-        Text streetName = new Text();
+        Text streetName;
         if(start.getY() == end.getY()) {
             streetName = new Text( (start.getX()+end.getX())/2 - 20, (start.getY()+end.getY())/2 - 10, identifier);
         }
@@ -172,11 +172,8 @@ public class Street implements Drawable {
         else {
             streetName = new Text( (start.getX()+end.getX())/2 + 10, (start.getY()+end.getY())/2 - 10, identifier);
         }
+
         streetName.setFont(Font.font ("SimSun", 12));
-//        List<String> a = Font.getFamilies();
-//        for(String fam : a) {
-//            System.out.println(fam);
-//        }
         streetName.setFill(Color.GRAY);
         singleStreet.setStroke(Color.rgb(150, 150, 150));
         singleStreet.setStrokeWidth(6);

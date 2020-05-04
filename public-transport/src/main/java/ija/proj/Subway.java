@@ -12,7 +12,7 @@ public class Subway extends Vehicle {
 
         super.setStops();
 
-        super.GUI = new ArrayList<>();
+        //super.GUI = new ArrayList<>();
         Rectangle singleSub = new Rectangle();
         singleSub.setX(position.getX() - 6);
         singleSub.setY(position.getY() - 12);

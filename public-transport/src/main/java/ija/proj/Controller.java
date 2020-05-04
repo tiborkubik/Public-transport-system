@@ -103,13 +103,12 @@ public class Controller {
             linesInfo.setExpandedPane(null);
             vehicleRoute.setStroke(Color.rgb(50,50,50));
             vehicleRoute.setOpacity(0.5);
-            vehicleOnRoute.setRadius(8);
-            vehicleOnRoute.setLayoutY(113);
+            vehicleOnRoute.setLayoutY(0);
+
             for(int i = 0; i < lines.size(); i++) {
                 ChangeLineColor(lines.get(i), colorsForLines.get(i));
             }
 
-            ObservableList<Node> x = sideWindow.getChildren();
             sideWindow.getChildren().removeIf(sg -> sg.getId().contains("RouteStop"));
         });
     }

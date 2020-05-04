@@ -11,7 +11,7 @@ public class Bus extends Vehicle {
         super(position, speed, onLine, identifier);
 
         super.setStops();
-        super.GUI = new ArrayList<>();
+        //super.GUI = new ArrayList<>();
         Circle singleBus = new Circle(position.getX(), position.getY(), 8, Color.rgb(50, 50, 50));
         singleBus.setId(super.getName());
         super.GUI.add(singleBus);
