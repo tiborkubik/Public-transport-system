@@ -30,6 +30,18 @@ public class Line implements Drawable  {
         setPath();
     }
 
+    public double totalPathLength() {
+        double total = 0;
+
+        Collection<Coordinate> c = path.values();
+        ArrayList<Coordinate> coords = new ArrayList<>(c);
+
+        for(int i = 0; i < coords.size()-1; i++) {
+            total += coords.get(i).coordDistance(coords.get(i+1));
+        }
+        return total;
+    }
+
     private void setPath(){
 
         int n_places = stopList.size()+streetList.size();

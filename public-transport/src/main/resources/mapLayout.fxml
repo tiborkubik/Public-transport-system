@@ -11,42 +11,82 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ija.proj.Controller">
     <center>
         <ScrollPane pannable="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <content>
-            <Group>
-               <children>
-                  <Pane fx:id="mapContent" onScroll="#zooming" prefHeight="1110.0" prefWidth="1437.0">
-                     <children>
-                        <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#f0f0f0b1" height="3000.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="3000.0" />
-                     </children></Pane>
-               </children>
-            </Group>
-         </content>
+            <content>
+                <Group>
+                    <children>
+                        <Pane fx:id="mapContent" onScroll="#zooming" prefHeight="1110.0" prefWidth="1437.0">
+                            <children>
+                                <Rectangle fx:id="background" arcHeight="5.0" arcWidth="5.0" fill="#f0f0f0b1" height="3000.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="3000.0" />
+                            </children>
+                        </Pane>
+                    </children>
+                </Group>
+            </content>
         </ScrollPane>
     </center>
     <right>
         <AnchorPane prefHeight="1000.0" prefWidth="361.0" BorderPane.alignment="CENTER">
-         <children>
-            <Group>
-               <children>
-                  <Pane fx:id="sideWindow" layoutX="9.0" layoutY="4.0" prefHeight="998.0" prefWidth="363.0">
-                     <children>
-                        <Slider fx:id="speedChange" layoutX="110.0" layoutY="35.0" max="50.0" onMouseClicked="#speedChanged" showTickLabels="true" showTickMarks="true" value="1.0" />
-                        <Line fx:id="vehicleRoute" endX="25.0" endY="800.0" opacity="0.5" startX="25.0" startY="150.0" stroke="#323232" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="5.0" strokeWidth="6.0" />
-                        <Circle fx:id="vehicleOnRoute" centerX="25.0" centerY="150.0" fill="#646464" radius="8.0" stroke="#323232" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" />
-                        <Accordion id="linesInfo" fx:id="linesInfo" layoutX="144.0" layoutY="143.0" prefHeight="707.0" prefWidth="198.0" />
-                     </children>
-                  </Pane>
-               </children>
-            </Group>
-            <Text fontSmoothingType="LCD" layoutX="97.0" layoutY="946.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Public Transport System Tracker for IJA/2019L course by Andrej Jezik and Tibor Kubik" textAlignment="CENTER" wrappingWidth="188.13671875" />
-         </children>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor></AnchorPane>
+            <children>
+                <Group>
+                    <children>
+                        <Pane fx:id="sideWindow" layoutX="9.0" layoutY="108.0" prefHeight="790.0" prefWidth="363.0">
+                            <children>
+                                <Slider fx:id="speedChange" layoutX="110.0" layoutY="35.0" max="50.0" onMouseClicked="#speedChanged" showTickLabels="true" showTickMarks="true" value="1.0" />
+                                <Accordion id="linesInfo" fx:id="linesInfo" layoutX="84.0" layoutY="80.0" prefHeight="707.0" prefWidth="198.0" />
+                            </children>
+                        </Pane>
+                    </children>
+                </Group>
+            </children>
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor></AnchorPane>
     </right>
+    <bottom>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Group>
+                    <children>
+                        <Pane fx:id="bottomWindow" prefHeight="200.0" prefWidth="1601.0">
+                            <children>
+                                <Line fx:id="vehicleRoute" endX="900.0" endY="150.0" opacity="0.5" startX="50.0" startY="150.0" stroke="#323232" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="5.0" strokeWidth="6.0" />
+                                <Circle fx:id="vehicleOnRoute" centerX="50.0" centerY="150.0" fill="#646464" radius="8.0" stroke="#323232" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Text fx:id="nextStopInfo" layoutX="954.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Next station:" wrappingWidth="176.13671875">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="finalStopInfo" layoutX="954.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Final station:" wrappingWidth="234.13671875">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="delayText" layoutX="954.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delay: 0 min" wrappingWidth="234.13671875">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="nextStopText" layoutX="1124.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="257.13671875">
+                           <font>
+                              <Font name="Impact" size="30.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="finalStopText" layoutX="1124.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="257.13671875">
+                           <font>
+                              <Font name="Impact" size="30.0" />
+                           </font>
+                        </Text>
+                            </children>
+                        </Pane>
+                    </children>
+                </Group>
+            </children>
+        </AnchorPane>
+    </bottom>
 </BorderPane>
