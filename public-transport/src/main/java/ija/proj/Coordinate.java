@@ -21,14 +21,8 @@ public class Coordinate extends java.lang.Object {
         this.y = inputY;
     }
 
-    public static Coordinate create(double inputX, double inputY) {
-
-        if(inputX >= 0 && inputY >= 0) {
-            Coordinate c = new Coordinate(inputX, inputY);
-            return c;
-        } else {
-            return null;
-        }
+    public double coordDistance(Coordinate b) {
+        return Math.sqrt(Math.pow(this.getX() - b.getX(), 2) + Math.pow(this.getY() - b.getY(), 2));
     }
 
     public boolean change(double inputX, double inputY){

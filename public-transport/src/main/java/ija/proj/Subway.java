@@ -19,5 +19,6 @@ public class Subway extends Vehicle {
         singleSub.setWidth(12);
         singleSub.setHeight(24);
         singleSub.setFill(Color.rgb(50, 50, 50));
+        singleSub.setId(super.getName());
         super.GUI.add(singleSub);
     }}

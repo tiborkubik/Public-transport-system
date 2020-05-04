@@ -12,12 +12,13 @@ public class Tram extends Vehicle {
         super.setStops();
 
         super.GUI = new ArrayList<>();
-        Polygon polygon = new Polygon();
-        polygon.getPoints().addAll(new Double[]{
+        Polygon singleTram = new Polygon();
+        singleTram.getPoints().addAll(new Double[]{
                 (double)position.getX(), (double)position.getY() + 10.0,
                 (double)position.getX() - 8.0, (double)position.getY() - 10.0,
                 (double)position.getX() + 8.0, (double)position.getY() - 10.0 });
-        polygon.setFill(Color.rgb(50, 50, 50));
-        super.GUI.add(polygon);
+        singleTram.setFill(Color.rgb(50, 50, 50));
+        singleTram.setId(super.getName());
+        super.GUI.add(singleTram);
     }
 }

@@ -54,9 +54,6 @@ public class Vehicle implements Drawable, UpdateState {
         return GUI;
     }
 
-    public double coordDistance(Coordinate a, Coordinate b) {
-        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
-    }
 
     public Coordinate getNewCoord(double distance, List<Coordinate> path) {
         double length = 0;
@@ -67,7 +64,7 @@ public class Vehicle implements Drawable, UpdateState {
         for(int i = 0; i < path.size() - 1; i++) {
             a = path.get(i);
             b = path.get(i + 1);
-            currentLength = coordDistance(a, b);
+            currentLength = a.coordDistance(b);
             if(length + currentLength >= distance) {
                 break;
             }
@@ -81,9 +78,17 @@ public class Vehicle implements Drawable, UpdateState {
         return new Coordinate(a.getX() + (b.getX() - a.getX()) * driven, a.getY() + (b.getY() - a.getY()) * driven);
     }
 
+    public double totalPathLength() {
+        double total = 0;
+        for(int i = 0; i < this.path.size()-1; i++) {
+            total += this.path.get(i).coordDistance(this.path.get(i+1));
+        }
+        return total;
+    }
+
     @Override
     public void update(LocalTime time) {
-        //System.out.println(cnt_time);
+        //System.out.println(time.getHour() + " " + time.getMinute() + " " + time.getSecond());
         if (cnt_time >= 0){
             cnt_time--;
             if(cnt_time == 0){
@@ -99,11 +104,7 @@ public class Vehicle implements Drawable, UpdateState {
 
         distance += speed;
 
-        double total = 0;
-        for(int i = 0; i < path.size()-1; i++) {
-            total += coordDistance(path.get(i), path.get(i+1));
-        }
-
+        double total = totalPathLength();
         if(distance > total) {
             return;
         }

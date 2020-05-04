@@ -8,12 +8,12 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -26,6 +26,9 @@ public class Controller {
     // GUI elements
     @FXML
     private Pane mapContent;
+
+    @FXML
+    private Pane sideWindow;
 
     @FXML
     private Rectangle background;
@@ -41,8 +44,6 @@ public class Controller {
 
     @FXML
     private javafx.scene.shape.Line vehicleRoute;
-
-    private List<Drawable> GUIelements = new ArrayList<>();
 
     public Timer timer;
 
@@ -88,7 +89,6 @@ public class Controller {
      * @param GUIelements - list of elements to display
      */
     public void setGUIelements(List<Drawable> GUIelements) {
-        this.GUIelements = GUIelements;
         for(Drawable obj : GUIelements) {
             mapContent.getChildren().addAll(obj.getGUI());
 
@@ -108,6 +108,9 @@ public class Controller {
             for(int i = 0; i < lines.size(); i++) {
                 ChangeLineColor(lines.get(i), colorsForLines.get(i));
             }
+
+            ObservableList<Node> x = sideWindow.getChildren();
+            sideWindow.getChildren().removeIf(sg -> sg.getId().contains("RouteStop"));
         });
     }
 
@@ -206,17 +209,60 @@ public class Controller {
         }
     }
 
+    public void generateStopsOnPath(Vehicle singleV) {
+        double realToImPath = singleV.totalPathLength()/650;
+        double distFromStart = singleV.getLine().getStopList().get(0).getCoordinate().coordDistance(singleV.getLine().getStreetList().get(0).begin());
+
+        for(int i = 1; i < singleV.getLine().getStopList().size()-1; i++) {
+            if(i == 1) {
+                javafx.scene.shape.Line stopLine = new javafx.scene.shape.Line(vehicleRoute.getStartX(), vehicleRoute.getStartY()+distFromStart/realToImPath, vehicleRoute.getStartX() + 10, vehicleRoute.getStartY()+distFromStart/realToImPath - 10);
+                stopLine.setStroke(Color.rgb(50,50,50));
+                stopLine.setStrokeLineCap(StrokeLineCap.ROUND);
+                stopLine.setStrokeLineJoin(StrokeLineJoin.ROUND);
+                stopLine.setStrokeWidth(4);
+                stopLine.setId("RouteStop");
+
+                Text stopName = new Text(stopLine.getEndX() + 5, stopLine.getEndY() - 5, singleV.getLine().getStopList().get(i-1).getName());
+                stopName.setFont(Font.font ("Impact", 12));
+                stopName.setFill(Color.rgb(50, 50, 50));
+                stopName.setId("RouteStopName");
+                sideWindow.getChildren().add(stopLine);
+                sideWindow.getChildren().add(stopName);
+            }
+
+            distFromStart += singleV.getLine().getStopList().get(i).getCoordinate().coordDistance(singleV.getLine().getStopList().get(i+1).getCoordinate());
+
+            javafx.scene.shape.Line stopLine = new javafx.scene.shape.Line(vehicleRoute.getStartX(), vehicleRoute.getStartY()+distFromStart/realToImPath, vehicleRoute.getStartX() + 10, vehicleRoute.getStartY()+distFromStart/realToImPath - 10);
+            stopLine.setStroke(Color.rgb(50,50,50));
+            stopLine.setStrokeLineCap(StrokeLineCap.ROUND);
+            stopLine.setStrokeLineJoin(StrokeLineJoin.ROUND);
+            stopLine.setStrokeWidth(4);
+            stopLine.setId("RouteStop");
+
+            Text stopName = new Text(stopLine.getEndX() + 5, stopLine.getEndY() - 5, singleV.getLine().getStopList().get(i).getName());
+            stopName.setFont(Font.font ("Impact", 12));
+            stopName.setFill(Color.rgb(50, 50, 50));
+            stopName.setId("RouteStopName");
+            sideWindow.getChildren().add(stopLine);
+            sideWindow.getChildren().add(stopName);
+        }
+    }
+
     public void showVehicleRoute(List<Vehicle> allVehicles) {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
-            if(sg instanceof Circle) {
+            if(sg instanceof Circle || sg instanceof Polygon || (sg instanceof Rectangle && !sg.equals(background))) {
                 sg.setOnMouseClicked(event ->{
                         for(Vehicle singleV : allVehicles) {
                             if(singleV.getName().equals(sg.getId())) {
+
+                                generateStopsOnPath(singleV);
+
                                 vehicleRoute.setStroke(singleV.getLine().getColor().saturate().saturate());
                                 vehicleRoute.setOpacity(1.0);
-                                vehicleOnRoute.setRadius(12);
-                                vehicleOnRoute.setLayoutY(699);
+                                vehicleOnRoute.setLayoutY(100);
+                                vehicleOnRoute.setFill(Color.rgb(50,50,50));
+
                                 for(Line otherLine : lines) {
                                     if (otherLine.getName() != singleV.getLine().getName()) {
                                         ChangeLineColor(otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
@@ -225,6 +271,7 @@ public class Controller {
                                     }
                                 }
                             }
+
                             ObservableList<TitledPane> panes = linesInfo.getPanes();
                             for(TitledPane pane : panes) {
                                 if(singleV.getLine().getName().contains(pane.getId()))
