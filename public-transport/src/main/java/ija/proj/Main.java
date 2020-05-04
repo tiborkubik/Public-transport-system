@@ -23,6 +23,9 @@ public class Main extends Application {
         primaryStage.show();
 
         Controller controller = layoutLoader.getController();
+        TimeManager timeManager = new TimeManager();
+
+        View view = new View();
 
         // allElements containg all Drawable elements such as streets, stops, etc
         List<Drawable> allElements = new ArrayList<>();
@@ -34,7 +37,8 @@ public class Main extends Application {
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loader.loadLinesData(allElements, streets);
         controller.setLines(lines);
-        controller.setDefaultLineColors(lines);
+
+        view.setDefaultLineColors(lines);
 
         loader.loadTimetableData(lines);
 
@@ -52,7 +56,7 @@ public class Main extends Application {
             allElements.add(v);
 
         // Setting list into gui
-        controller.setGUIelements(allElements);
+        controller.setGUIelements(allElements, 1.0);
 
         controller.setCurrentTime();
 
@@ -63,7 +67,5 @@ public class Main extends Application {
         controller.setBasicSettings(lines);
         controller.showVehicleRoute(allVehicles);
 
-
-        controller.startTimer(1);
     }
 }
