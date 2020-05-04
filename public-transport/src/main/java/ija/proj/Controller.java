@@ -1,5 +1,6 @@
 package ija.proj;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -82,10 +83,6 @@ public class Controller {
         mapContent.layout();
     }
 
-    private Circle getVehicleOnRoute() {
-        return this.vehicleOnRoute;
-    }
-
     /***
      * displays gui elements
      * @param GUIelements - list of elements to display
@@ -99,11 +96,6 @@ public class Controller {
                 updates.add((UpdateState) obj);
             }
         }
-    }
-
-    public void vehicleSpeed(double scale) {
-        timer.cancel();
-        startTimer(scale);
     }
 
     public void setBasicSettings(List<Line> lines) {
@@ -166,16 +158,18 @@ public class Controller {
      * @param scale
      */
     public void startTimer(double scale) {
-        timer = new Timer(false);
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                currentTime = currentTime.plusSeconds(1);
-                for(UpdateState update : updates) {
-                    update.update(currentTime);
+        Platform.runLater(() -> {
+            timer = new Timer(false);
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    currentTime = currentTime.plusSeconds(1);
+                    for (UpdateState update : updates) {
+                        update.update(currentTime);
+                    }
                 }
-            }
-        }, 0, (long) (1000 / scale));
+            }, 0, (long) (1000 / scale));
+        });
     }
 
     /***

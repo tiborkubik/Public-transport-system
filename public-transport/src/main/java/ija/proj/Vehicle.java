@@ -43,7 +43,6 @@ public class Vehicle implements Drawable, UpdateState {
 
     // TODO
     private void modifyGUI(Coordinate coordinate) {
-
         for(Shape shape : GUI) {
             shape.setTranslateX(coordinate.getX() - position.getX() + shape.getTranslateX());
             shape.setTranslateY(coordinate.getY() - position.getY() + shape.getTranslateY());
@@ -84,7 +83,7 @@ public class Vehicle implements Drawable, UpdateState {
 
     @Override
     public void update(LocalTime time) {
-        System.out.println(cnt_time);
+        //System.out.println(cnt_time);
         if (cnt_time >= 0){
             cnt_time--;
             if(cnt_time == 0){
@@ -113,8 +112,9 @@ public class Vehicle implements Drawable, UpdateState {
         for(Stop stopOnRoute : this.onLine.getStopList()) {
             if(Math.abs(stopOnRoute.getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(stopOnRoute.getCoordinate().diffY(newC)) < this.speed/2) {
                 cnt_time = stopOnRoute.getTime();
-            }
+                }
         }
+
         modifyGUI(newC);
         position = newC;
     }

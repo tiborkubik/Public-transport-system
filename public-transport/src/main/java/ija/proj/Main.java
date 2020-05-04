@@ -1,6 +1,7 @@
 package ija.proj;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -38,17 +39,16 @@ public class Main extends Application {
 
         List<Vehicle> allVehicles = new ArrayList<>();
 
-        Bus bus = new Bus(new Coordinate(50, 50), 1, lines.get(0), "Bus#45001");
-        Tram tram = new Tram(new Coordinate(50, 50), 1, lines.get(1), "Tram#45000");
-
+        Bus bus = new Bus(new Coordinate(lines.get(0).getStreetList().get(0).begin().getX(), lines.get(0).getStreetList().get(0).begin().getY()), 0.5, lines.get(0), "Bus#45001");
+        Tram tram = new Tram(new Coordinate(lines.get(1).getStreetList().get(0).begin().getX(), lines.get(1).getStreetList().get(0).begin().getY()), 1, lines.get(1), "Tram#45000");
+        Subway sub = new Subway(new Coordinate(lines.get(2).getStreetList().get(0).begin().getX(), lines.get(2).getStreetList().get(0).begin().getY()), 2, lines.get(2), "Sub#693");
         //Tram tram = new Tram(new Coordinate(800, 100), 10);
         allVehicles.add(bus);
         allVehicles.add(tram);
+        allVehicles.add(sub);
 
-       // allElements.add(sub);
-        allElements.add(bus);
-        allElements.add(tram);
-       // allElements.add(tram);
+        for(Vehicle v : allVehicles)
+            allElements.add(v);
 
         // Setting list into gui
         controller.setGUIelements(allElements);
@@ -59,6 +59,7 @@ public class Main extends Application {
 
         controller.setBasicSettings(lines);
         controller.showVehicleRoute(allVehicles);
+
 
         controller.startTimer(1);
     }
