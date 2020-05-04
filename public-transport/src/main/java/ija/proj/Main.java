@@ -54,6 +54,8 @@ public class Main extends Application {
         // Setting list into gui
         controller.setGUIelements(allElements);
 
+        controller.setCurrentTime();
+
         controller.setLinesInfo(lines);
 
         controller.setCursor(lines);

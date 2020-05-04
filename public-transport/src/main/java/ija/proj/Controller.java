@@ -43,6 +43,9 @@ public class Controller {
     private Text delayText;
 
     @FXML
+    private Text timeGUI;
+
+    @FXML
     private Pane sideWindow;
 
     @FXML
@@ -165,6 +168,14 @@ public class Controller {
         colorsForLines.add(Color.SANDYBROWN);
         colorsForLines.add(Color.ROYALBLUE);
         colorsForLines.add(Color.OLIVE);
+    }
+
+    public void setDefaultTime() {
+        timeGUI.setText("00:00:00");
+    }
+
+    public void setCurrentTime() {
+        timeGUI.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
     }
 
     public void setDefaultLineColors(List<Line> lines) {
