@@ -18,7 +18,7 @@ import java.util.TimerTask;
 public class TimeManager {
     LocalTime currentTime = LocalTime.now();
     double scaleForSpeed = 1.0;
-    Drawable vehicleToAdd;
+    List<Drawable> vehiclesToAdd = new ArrayList<>();
     View view;
     //Timer timer;
     Timeline timer;
@@ -46,26 +46,26 @@ public class TimeManager {
     /***
      * Starts timer
      */
-
-    public void changeSpeed(Timetable timeTable, Pane mapContent) {
+    public void changeSpeed(Timetable timeTable) {
         TimeManager thisTM = this;
 
         timer.setRate(scaleForSpeed);
 
-        if(currentTime.getSecond() == 0) {
-            vehicleToAdd = timeTable.checkTimeTable(thisTM, mapContent);
-        } else {
-            vehicleToAdd = null;
-        }
+//        if(currentTime.getSecond() == 0) {
+//            vehiclesToAdd.add(timeTable.checkTimeTable(thisTM));
+//        } else {
+//            vehiclesToAdd = null;
+//        }
     }
 
     public void startTimer(List<UpdateState> updates, Text timeGUI, Timetable timeTable, Pane mapContent) {
             TimeManager thisTM = this;
 
-            timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+            List<Drawable> vehiclesToAddT = this.vehiclesToAdd;
+            timer = new Timeline(new KeyFrame(Duration.millis(1000/20), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    currentTime = currentTime.plusSeconds(1);
+                    currentTime = currentTime.plusNanos(1000000000/20);
 
                     timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
 
@@ -74,36 +74,49 @@ public class TimeManager {
                     }
 
                     if(currentTime.getSecond() == 0) {
-                        vehicleToAdd = timeTable.checkTimeTable(thisTM, mapContent);
-                        if(vehicleToAdd != null)
-                            view.addElement(vehicleToAdd, mapContent);
-                        System.out.println(vehicleToAdd);
-                    } else {
-                        vehicleToAdd = null;
+                        Drawable a = timeTable.checkTimeTable(thisTM, "bus");
+                        Drawable b = timeTable.checkTimeTable(thisTM, "tram");
+                        Drawable c = timeTable.checkTimeTable(thisTM, "sub");
+
+                        if(!(a == null && b == null && c == null)) {
+                            try {
+                                vehiclesToAddT.add(a);
+                            } catch (Exception e){
+
+                            }
+                            try {
+                                vehiclesToAddT.add(b);
+                            } catch (Exception e){
+
+                            }
+                            try {
+                                vehiclesToAddT.add(c);
+                            } catch (Exception e){
+
+                            }
+                            try{
+
+                                for(Drawable x : vehiclesToAddT){
+                                    view.addElement(x, mapContent);
+                                    updates.add((UpdateState)x);
+                                }
+                            }
+                            catch (Exception e){
+
+                            }
+                        }
                     }
                 }
             }));
+            this.vehiclesToAdd = vehiclesToAddT;
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
+            this.vehiclesToAdd =  new ArrayList<>();
     }
 
-    public Drawable getVehicleToAdd() {
-        return  this.vehicleToAdd;
+    public List<Drawable> getVehicleToAdd() {
+        return  this.vehiclesToAdd;
     }
-
-//    public void startTimer(List<UpdateState> updates, Text timeGUI) {
-//        timer = new Timer(false);
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                currentTime = currentTime.plusSeconds(1);
-//                for (UpdateState update : updates) {
-//                    update.update(currentTime);
-//                }
-//                timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
-//            }
-//        }, 0, (long) (1000 / scaleForSpeed));
-//    }
 
     public void moveInTime(String newTime) {
         this.currentTime = LocalTime.parse(newTime);

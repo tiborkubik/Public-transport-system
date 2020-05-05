@@ -240,6 +240,7 @@ public class Loader {
                             LocalTime dateTime = LocalTime.parse(temp_start_x);
 
                             if (line != null) {
+                                System.out.println(line);
                                 line.addToTimetable(dateTime);
                             }
                         }

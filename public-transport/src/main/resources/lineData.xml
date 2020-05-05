@@ -56,7 +56,7 @@
     </street>
   </line>
 
-  <line id="Metro Line A" type="subway">
+  <line id="Metro Line A" type="sub">
     <street id="Bercley St A">
       <stop id="Bc W1">
         <time>50</time>

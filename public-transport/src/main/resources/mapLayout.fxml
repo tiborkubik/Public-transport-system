@@ -95,7 +95,7 @@
                               </Button>
                            </children>
                         </Pane>
-                                <Slider fx:id="speedChange" layoutX="29.0" layoutY="162.0" majorTickUnit="50.0" max="200.0" onMouseClicked="#speedChanged" prefHeight="37.0" prefWidth="306.0" showTickLabels="true" showTickMarks="true" value="1.0">
+                                <Slider fx:id="speedChange" layoutX="29.0" layoutY="162.0" majorTickUnit="10.0" max="50.0" minorTickCount="4" onMouseClicked="#speedChanged" prefHeight="37.0" prefWidth="306.0" showTickLabels="true" showTickMarks="true" value="1.0">
                            <cursor>
                               <Cursor fx:constant="W_RESIZE" />
                            </cursor></Slider>

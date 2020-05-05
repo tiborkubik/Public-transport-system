@@ -23,24 +23,25 @@ public class Timetable {
             //checkTimeTable(timeManager);
     }
 
-    public Drawable checkTimeTable(TimeManager timeManager, Pane mapContent) {
+    public Drawable checkTimeTable(TimeManager timeManager, String type) {
         for(Line line : lines) {
             for(LocalTime time : line.getTimetable()) {
                 if( time.getHour() == timeManager.getCurrentTime().getHour() &&
                     time.getMinute() == timeManager.getCurrentTime().getMinute()
                 ) {
-                    if(line.getType().equals("bus")) {
-                        Bus bus = new Bus(new Coordinate(lines.get(0).getStreetList().get(0).begin().getX(), lines.get(0).getStreetList().get(0).begin().getY()), 0.5, lines.get(0), "Bus#45001");
-
-                        return  bus;
+                    if(line.getType().equals("bus") && type.equals("bus")) {
+                        System.out.println("bus");
+                        Bus bus = new Bus(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.5, line, "Bus#45001");
+                        return bus;
                     }
-                    if(line.getType().equals("tram")) {
-                        Tram tram = new Tram(new Coordinate(lines.get(2).getStreetList().get(0).begin().getX(), lines.get(2).getStreetList().get(0).begin().getY()), 1, lines.get(2), "Tram#45001");
-                        System.out.println("1: " + tram);
+                    if(line.getType().equals("tram") && type.equals("tram")) {
+                        System.out.println("tram");
+                        Tram tram = new Tram(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 1, line, "Tram#45001");
                         return tram;
                     }
-                    if(line.getType().equals("sub")) {
-                        Subway sub = new Subway(new Coordinate(100, 100), 2, lines.get(1), "Sub#693");
+                    if(line.getType().equals("sub") && type.equals("sub")) {
+                        System.out.println("sub");
+                        Subway sub = new Subway(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()),2, line, "Sub#693");
                         return  sub;
                     }
                 }
