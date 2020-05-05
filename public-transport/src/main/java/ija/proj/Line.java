@@ -5,6 +5,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -17,12 +18,11 @@ public class Line implements Drawable  {
 
     private List<Coordinate> start_c = new ArrayList<>();
     private List<Coordinate> end_c = new ArrayList<>();
+    private List<LocalTime> timetable = new ArrayList<>();
+
     private javafx.scene.paint.Color col;
 
-
-
     public Line(String identifier, String type, List<Street> streetList, List<Stop> stopList) {
-
         this.identifier = identifier;
         this.type = type;
         this.streetList = streetList;
@@ -227,4 +227,11 @@ public class Line implements Drawable  {
         return line;
     }
 
+    public void addToTimetable(LocalTime l){
+        timetable.add(l);
+    }
+
+    public List<LocalTime> getTimetable(){
+        return timetable;
+    }
 }

@@ -215,6 +215,7 @@ public class Loader {
 
             // All timetables
             NodeList timeTableList = doc.getElementsByTagName("line");
+            Line line = null;
 
             // Iterating through lines
             for (int temp = 0; temp < timeTableList.getLength(); temp++) {
@@ -224,10 +225,13 @@ public class Loader {
                     // id of the line
                     String lineId = singleLine.getAttributes().item(0).getNodeValue();
 
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    List<LocalDateTime> departureTimes = new ArrayList<>();
-
                     NodeList times = singleLine.getChildNodes();
+
+                    for (Line l : lines) {
+                        if(l.getName().equals(lineId)) {
+                            line = l;
+                        }
+                    }
 
                     // Iterating through all times
                     for (int i = 0; i < times.getLength(); i++) {
@@ -235,10 +239,15 @@ public class Loader {
 
                         if(singleTime.getNodeType() == Node.ELEMENT_NODE) {
                             String temp_start_x = singleTime.getTextContent();
-                            LocalTime dateTime = LocalTime.parse(temp_start_x, formatter);
+                            LocalTime dateTime = LocalTime.parse(temp_start_x);
+
+                            if (line != null) {
+                                line.addToTimetable(dateTime);
+                            }
                         }
+                    }
                 }
-            }}
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

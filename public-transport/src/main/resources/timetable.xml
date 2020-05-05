@@ -1,6 +1,6 @@
-<line id="Tram Line B" type="tram">
-    <begin>00:00:00</begin>
-    <begin>07:00:00</begin>
+<line id="Tram Line 1" type="tram">
+    <begin>00:00:02</begin>
+    <begin>07:00:04</begin>
     <begin>07:20:00</begin>
     <begin>07:40:00</begin>
     <begin>08:00:00</begin>
