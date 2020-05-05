@@ -10,9 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
@@ -174,5 +172,63 @@ public class View {
         stopName.setId("RouteStopName");
         bottomWindow.getChildren().add(stopLine);
         bottomWindow.getChildren().add(stopName);
+    }
+
+    public void generateStopsOnPath(Vehicle singleV, javafx.scene.shape.Line vehicleRoute, Pane bottomWindow) {
+        double realToImPath = singleV.totalPathLength()/850;
+
+        double distFromStart = singleV.getLine().getStopList().get(0).getCoordinate().coordDistance(singleV.getLine().getStreetList().get(0).begin());
+
+        for(int i = 1; i < singleV.getLine().getStopList().size()-1; i++) {
+            if(i == 1) {
+                addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
+            }
+
+            distFromStart += singleV.getLine().getStopList().get(i).getCoordinate().coordDistance(singleV.getLine().getStopList().get(i+1).getCoordinate());
+
+            addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
+        }
+    }
+
+    public void showVehicleRoute(Pane mapContent,
+                                 Rectangle background,
+                                 Pane bottomWindow,
+                                 Text nextStopInfo,
+                                 Text nextStopText,
+                                 Text finalStopInfo,
+                                 Text finalStopText,
+                                 Text delayText,
+                                 List<Vehicle> allVehicles,
+                                 javafx.scene.shape.Line vehicleRoute,
+                                 List<Line> lines) {
+
+        ObservableList<Node> x = mapContent.getChildren();
+        for(Node sg : x) {
+            if(sg instanceof Circle || sg instanceof Polygon || (sg instanceof Rectangle && !sg.equals(background))) {
+                sg.setOnMouseClicked(event ->{
+                    cleanRouteFromStops(bottomWindow);
+
+                    setLineInfoFocused(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText);
+
+                    for(Vehicle singleV : allVehicles) {
+                        if(singleV.getName().equals(sg.getId())) {
+                            finalStopText.setText(singleV.getLine().getStopList().get(singleV.getLine().getStopList().size()-1).getName());
+
+                            generateStopsOnPath(singleV, vehicleRoute, bottomWindow);
+
+                            colorRoute(vehicleRoute, singleV.getLine().getColor().saturate().saturate());
+
+                            for(Line otherLine : lines) {
+                                if (otherLine.getName() != singleV.getLine().getName()) {
+                                    changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
+                                } else {
+                                    changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
     }
 }

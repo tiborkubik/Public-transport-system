@@ -140,7 +140,7 @@ public class Loader {
                                         time_to_stay =Integer.parseInt(temp_time_to_stay );
                                     }
                                     catch(NullPointerException e){
-                                        time_to_stay = 100;
+                                        time_to_stay = 500;
                                     }
                                     Stop newStop = new Stop(stopName, new Coordinate(start_x, start_y), sStreet, time_to_stay);
 

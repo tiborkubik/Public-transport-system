@@ -56,13 +56,14 @@ public class Controller {
     private Button minusS;
 
     private List<Line> lines = new ArrayList<>();
-
     private List<UpdateState> updates = new ArrayList<>();
+    private List<Vehicle> allVehicles = new ArrayList<>();
+
     private Timetable timeTable;
 
     private View view = new View();
 
-    private TimeManager timeManager = new TimeManager(view);
+    private TimeManager timeManager = new TimeManager(view, this);
     /***
      * changes speed
      */
@@ -70,12 +71,13 @@ public class Controller {
     private void speedChanged() {
         float scaleForSpeed = (float) speedChange.getValue();
         timeManager.setScale(scaleForSpeed);
-        //timeManager.timer.stop();
         timeManager.changeSpeed(timeTable);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
-                if (veh != null)  view.addElement(veh, mapContent);
+                if (veh != null)  {
+                    view.addElement(veh, mapContent);
+                }
             }
         }
     }
@@ -83,14 +85,16 @@ public class Controller {
     @FXML
     private void plusHour() {
         LocalTime time = timeManager.getCurrentTime();
-
-        timeManager.moveInTime(timeManager.formatTime(time.getHour()+1, time.getMinute(), time.getSecond()));
-       // timeManager.timer.cancel();
+        timeManager.timer.stop();
+        timeManager.moveInTime(timeManager.formatTime(time.getHour()+1, time.getMinute(), time.getSecond()-1));
         timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        timeManager.changeSpeed(timeTable);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
-                if (veh != null)  view.addElement(veh, mapContent);
+                if (veh != null)  {
+                    view.addElement(veh, mapContent);
+                }
             }
         }
     }
@@ -98,14 +102,16 @@ public class Controller {
     @FXML
     private void minusHour() {
         LocalTime time = timeManager.getCurrentTime();
-
-        timeManager.moveInTime(timeManager.formatTime(time.getHour()-1, time.getMinute(), time.getSecond()));
-        //timeManager.timer.cancel();
+        timeManager.timer.stop();
+        timeManager.moveInTime(timeManager.formatTime(time.getHour()-1, time.getMinute(), time.getSecond()-1));
         timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        timeManager.changeSpeed(timeTable);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
-                if (veh != null)  view.addElement(veh, mapContent);
+                if (veh != null)  {
+                    view.addElement(veh, mapContent);
+                }
             }
         }
     }
@@ -113,14 +119,16 @@ public class Controller {
     @FXML
     private void plusMinute() {
         LocalTime time = timeManager.getCurrentTime();
-
+        timeManager.timer.stop();
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()+1, time.getSecond()));
-        //timeManager.timer.cancel();
         timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        timeManager.changeSpeed(timeTable);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
-                if (veh != null)  view.addElement(veh, mapContent);
+                if (veh != null)  {
+                    view.addElement(veh, mapContent);
+                }
             }
         }
     }
@@ -128,14 +136,16 @@ public class Controller {
     @FXML
     private void minusMinute() {
         LocalTime time = timeManager.getCurrentTime();
-
+        timeManager.timer.stop();
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()-1, time.getSecond()));
-        //timeManager.timer.cancel();
         timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        timeManager.changeSpeed(timeTable);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
-                if (veh != null)  view.addElement(veh, mapContent);
+                if (veh != null)  {
+                    view.addElement(veh, mapContent);
+                }
             }
         }
     }
@@ -143,14 +153,17 @@ public class Controller {
     @FXML
     private void plusSecond() {
         LocalTime time = timeManager.getCurrentTime();
-
+        timeManager.timer.stop();
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()+1));
-        //timeManager.timer.cancel();
         timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        timeManager.changeSpeed(timeTable);
+
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
-                if (veh != null)  view.addElement(veh, mapContent);
+                if (veh != null)  {
+                    view.addElement(veh, mapContent);
+                }
             }
         }
     }
@@ -158,14 +171,16 @@ public class Controller {
     @FXML
     private void minusSecond() {
         LocalTime time = timeManager.getCurrentTime();
-
+        timeManager.timer.stop();
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2));
-       // timeManager.timer.cancel();
         timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        timeManager.changeSpeed(timeTable);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
-                if (veh != null)  view.addElement(veh, mapContent);
+                if (veh != null)  {
+                    view.addElement(veh, mapContent);
+                }
             }
         }
     }
@@ -207,10 +222,16 @@ public class Controller {
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
-                if (veh != null)  view.addElement(veh, mapContent);
+                if (veh != null)  {
+                    view.addElement(veh, mapContent);
+                }
             }
         }
 
+    }
+
+    public void addVehicleToController(Vehicle e) {
+        allVehicles.add(e);
     }
 
     public void setBasicSettings(List<Line> lines) {
@@ -246,8 +267,9 @@ public class Controller {
             if(sg != background)
                 sg.setCursor(Cursor.HAND);
 
-            if(sg instanceof javafx.scene.shape.Line) {
+            if(sg instanceof javafx.scene.shape.Line || sg instanceof Circle) {
                 sg.setOnMouseClicked(event -> {
+                    System.out.println(allVehicles);
                     boolean onLine = false;
                     for(Line line : lines) {
                         for(Street st : line.getStreetList()) {
@@ -307,22 +329,6 @@ public class Controller {
         }
     }
 
-    public void generateStopsOnPath(Vehicle singleV) {
-        double realToImPath = singleV.totalPathLength()/850;
-
-        double distFromStart = singleV.getLine().getStopList().get(0).getCoordinate().coordDistance(singleV.getLine().getStreetList().get(0).begin());
-
-        for(int i = 1; i < singleV.getLine().getStopList().size()-1; i++) {
-            if(i == 1) {
-                view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
-            }
-
-            distFromStart += singleV.getLine().getStopList().get(i).getCoordinate().coordDistance(singleV.getLine().getStopList().get(i+1).getCoordinate());
-
-            view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
-        }
-    }
-
     public void highlightRouteFromList(List<Line> lines) {
         linesInfo.setOnMouseClicked(event ->{
             view.cleanRouteFromStops(bottomWindow);
@@ -346,35 +352,18 @@ public class Controller {
         });
     }
 
-    public void showVehicleRoute(List<Vehicle> allVehicles) {
-        ObservableList<Node> x = mapContent.getChildren();
-        for(Node sg : x) {
-            if(sg instanceof Circle || sg instanceof Polygon || (sg instanceof Rectangle && !sg.equals(background))) {
-                sg.setOnMouseClicked(event ->{
-                    view.cleanRouteFromStops(bottomWindow);
-
-                    view.setLineInfoFocused(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText);
-
-                    for(Vehicle singleV : allVehicles) {
-                        if(singleV.getName().equals(sg.getId())) {
-                            finalStopText.setText(singleV.getLine().getStopList().get(singleV.getLine().getStopList().size()-1).getName());
-
-                            generateStopsOnPath(singleV);
-
-                            view.colorRoute(vehicleRoute, singleV.getLine().getColor().saturate().saturate());
-
-                            for(Line otherLine : lines) {
-                                if (otherLine.getName() != singleV.getLine().getName()) {
-                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
-                                } else {
-                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
-                                }
-                            }
-                        }
-                    }
-                });
-            }
-        }
+    public void showVehicleRoute() {
+        view.showVehicleRoute(mapContent,
+                                background,
+                                bottomWindow,
+                                nextStopInfo,
+                                nextStopText,
+                                finalStopInfo,
+                                finalStopText,
+                                delayText,
+                                allVehicles,
+                                vehicleRoute,
+                                lines);
     }
 
     public void setCurrentTime() {

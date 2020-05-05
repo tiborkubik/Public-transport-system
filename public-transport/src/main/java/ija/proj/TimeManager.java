@@ -20,15 +20,16 @@ public class TimeManager {
     double scaleForSpeed = 1.0;
     List<Drawable> vehiclesToAdd = new ArrayList<>();
     View view;
-    //Timer timer;
+    Controller controller;
     Timeline timer;
 
     public void setDefaultTime(Text timeGUI) {
         timeGUI.setText("00:00:00");
     }
 
-    public TimeManager(View view) {
+    public TimeManager(View view, Controller controller) {
         this.view = view;
+        this.controller = controller;
     }
 
     public void setScale(float scale) {
@@ -62,10 +63,10 @@ public class TimeManager {
             TimeManager thisTM = this;
 
             List<Drawable> vehiclesToAddT = this.vehiclesToAdd;
-            timer = new Timeline(new KeyFrame(Duration.millis(1000/20), new EventHandler<ActionEvent>() {
+            timer = new Timeline(new KeyFrame(Duration.millis(1000/10), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    currentTime = currentTime.plusNanos(1000000000/20);
+                    currentTime = currentTime.plusNanos(1000000000/10);
 
                     timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
 
@@ -99,6 +100,7 @@ public class TimeManager {
                                 for(Drawable x : vehiclesToAddT){
                                     view.addElement(x, mapContent);
                                     updates.add((UpdateState)x);
+                                    controller.addVehicleToController((Vehicle)x);
                                 }
                             }
                             catch (Exception e){
