@@ -10,6 +10,8 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
+
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +39,21 @@ public class Controller {
     @FXML
     private Slider speedChange;
     @FXML
-    private Accordion linesInfo;
+    private ListView linesInfo;
     @FXML
     private javafx.scene.shape.Line vehicleRoute;
+    @FXML
+    private Button plusH;
+    @FXML
+    private Button minusH;
+    @FXML
+    private Button plusM;
+    @FXML
+    private Button minusM;
+    @FXML
+    private Button plusS;
+    @FXML
+    private Button minusS;
 
     private List<Line> lines = new ArrayList<>();
 
@@ -55,8 +69,63 @@ public class Controller {
     @FXML
     private void speedChanged() {
         float scaleForSpeed = (float) speedChange.getValue();
+        timeManager.setScale(scaleForSpeed);
         timeManager.timer.cancel();
-        timeManager.startTimer(scaleForSpeed, updates);
+        timeManager.startTimer(updates, timeGUI);
+    }
+
+    @FXML
+    private void plusHour() {
+        LocalTime time = timeManager.getCurrentTime();
+
+        timeManager.moveInTime(timeManager.formatTime(time.getHour()+1, time.getMinute(), time.getSecond()));
+        timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI);
+    }
+
+    @FXML
+    private void minusHour() {
+        LocalTime time = timeManager.getCurrentTime();
+
+        timeManager.moveInTime(timeManager.formatTime(time.getHour()-1, time.getMinute(), time.getSecond()));
+        timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI);
+    }
+
+    @FXML
+    private void plusMinute() {
+        LocalTime time = timeManager.getCurrentTime();
+
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()+1, time.getSecond()));
+        timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI);
+    }
+
+    @FXML
+    private void minusMinute() {
+        LocalTime time = timeManager.getCurrentTime();
+
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()-1, time.getSecond()));
+        timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI);
+    }
+
+    @FXML
+    private void plusSecond() {
+        LocalTime time = timeManager.getCurrentTime();
+
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()+1));
+        timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI);
+    }
+
+    @FXML
+    private void minusSecond() {
+        LocalTime time = timeManager.getCurrentTime();
+
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2));
+        timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI);
     }
 
     @FXML
@@ -78,8 +147,8 @@ public class Controller {
      * displays gui elements
      * @param GUIelements - list of elements to display
      */
-    public void setGUIelements(List<Drawable> GUIelements, double scale) {
-        view.setLineInfoDefault(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText, vehicleRoute, linesInfo);
+    public void setGUIelements(List<Drawable> GUIelements) {
+        view.setLineInfoDefault(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText, vehicleRoute);
         view.showMapContent(GUIelements, mapContent);
 
         for(Drawable obj : GUIelements) {
@@ -88,12 +157,12 @@ public class Controller {
             }
         }
 
-        timeManager.startTimer(scale, updates);
+        timeManager.startTimer(updates, timeGUI);
     }
 
     public void setBasicSettings(List<Line> lines) {
         background.setOnMouseClicked(event -> {
-            view.setLineInfoDefault(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText, vehicleRoute, linesInfo);
+            view.setLineInfoDefault(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText, vehicleRoute);
             for(int i = 0; i < lines.size(); i++) {
                 view.changeLineColor(mapContent, lines.get(i), view.colorsForLines.get(i));
             }
@@ -106,7 +175,6 @@ public class Controller {
         this.lines = lines;
     }
 
-
     /***
      * Adds information about line to the navigation
      * @param lines
@@ -114,7 +182,6 @@ public class Controller {
     public void setLinesInfo(List<Line> lines) {
         view.viewLinesInfo(lines, linesInfo);
     }
-
 
     /***
      * changes cursor according it's position + expanding of line information after clicking
@@ -162,12 +229,6 @@ public class Controller {
                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
                                }
                            }
-
-                         ObservableList<TitledPane> panes = linesInfo.getPanes();
-                         for(TitledPane pane : panes) {
-                             if(line.getName().contains(pane.getId()))
-                                 linesInfo.setExpandedPane(pane);
-                         }
                        }
                    }
                 });
@@ -209,6 +270,29 @@ public class Controller {
         }
     }
 
+    public void highlightRouteFromList(List<Line> lines) {
+        linesInfo.setOnMouseClicked(event ->{
+            view.cleanRouteFromStops(bottomWindow);
+
+            for(Line line : lines) {
+                if(line.getName().equals(linesInfo.getSelectionModel().getSelectedItem())) {
+                    generateStopsOnPath(line);
+                    view.colorRoute(vehicleRoute, line.getColor().saturate().saturate());
+                    finalStopText.setOpacity(1.0);
+                    view.changeFinalStopText(finalStopText, line);
+
+                    for(Line otherLine : lines) {
+                        if (otherLine.getName() != line.getName()) {
+                            view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
+                        } else {
+                            view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     public void showVehicleRoute(List<Vehicle> allVehicles) {
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
@@ -233,12 +317,6 @@ public class Controller {
                                     view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
                                 }
                             }
-                        }
-
-                        ObservableList<TitledPane> panes = linesInfo.getPanes();
-                        for(TitledPane pane : panes) {
-                            if(singleV.getLine().getName().contains(pane.getId()))
-                                linesInfo.setExpandedPane(pane);
                         }
                     }
                 });

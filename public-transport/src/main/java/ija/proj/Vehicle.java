@@ -92,7 +92,6 @@ public class Vehicle implements Drawable, UpdateState {
 
     @Override
     public void update(LocalTime time) {
-
         if (cnt_time >= 0){
             cnt_time--;
             if(cnt_time == 0){
@@ -117,7 +116,7 @@ public class Vehicle implements Drawable, UpdateState {
         for(Stop stopOnRoute : this.onLine.getStopList()) {
             if(Math.abs(stopOnRoute.getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(stopOnRoute.getCoordinate().diffY(newC)) < this.speed/2) {
                 cnt_time = stopOnRoute.getTime();
-                }
+            }
         }
 
         for(Street s : this.onLine.getStreetList()) {

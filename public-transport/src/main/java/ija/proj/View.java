@@ -56,7 +56,7 @@ public class View {
         vehicleRoute.setOpacity(1.0);
     }
 
-    public void setLineInfoDefault(Text nextStopInfo, Text nextStopText, Text finalStopInfo, Text finalStopText, Text delayText, javafx.scene.shape.Line route, Accordion linesInfo){
+    public void setLineInfoDefault(Text nextStopInfo, Text nextStopText, Text finalStopInfo, Text finalStopText, Text delayText, javafx.scene.shape.Line route){
         nextStopInfo.setId("nextStopInfo");
         nextStopText.setId("nextStopText");
         finalStopInfo.setId("finalStopInfo");
@@ -74,8 +74,6 @@ public class View {
 
         route.setStroke(Color.rgb(50,50,50));
         route.setOpacity(0.5);
-
-        linesInfo.setExpandedPane(null);
     }
 
     /***
@@ -106,25 +104,11 @@ public class View {
         mapContent.setScaleY(zoomValue * mapContent.getScaleY());
     }
 
-    public void viewLinesInfo(List<Line> lines, Accordion linesInfo) {
+    public void viewLinesInfo(List<Line> lines, ListView linesInfo) {
         for(Line line : lines) {
-            String name = line.getName();
-            ListView<String> list = new ListView<>();
-            ObservableList<String> items = FXCollections.observableArrayList();
-
-            TitledPane pane1 = new TitledPane(name, new Label("Stops in line " + name + " are following:\n"));
-            pane1.setFont(Font.font ("Impact", 14));
-
-            for(Stop stop : line.getStopList()) {
-                String stopName = stop.getName();
-                items.add(stopName);
-            }
-
-            list.setItems(items);
-            pane1.setContent(list);
-            pane1.setId(name);
-            linesInfo.getPanes().add(pane1);
+            linesInfo.getItems().add(line.getName());
         }
+
     }
 
     public void clickedOnLine(Text finalStopInfo, Text finalStopText) {

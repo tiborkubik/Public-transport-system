@@ -56,13 +56,15 @@ public class Main extends Application {
             allElements.add(v);
 
         // Setting list into gui
-        controller.setGUIelements(allElements, 1.0);
+        controller.setGUIelements(allElements);
 
         controller.setCurrentTime();
 
         controller.setLinesInfo(lines);
 
         controller.setCursor(lines);
+
+        controller.highlightRouteFromList(lines);
 
         controller.setBasicSettings(lines);
         controller.showVehicleRoute(allVehicles);
