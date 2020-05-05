@@ -1,8 +1,7 @@
 package ija.proj;
 
-import javafx.application.Platform;
-import javafx.scene.text.Text;
 
+import javafx.scene.text.Text;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Timer;

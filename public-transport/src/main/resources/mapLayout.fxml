@@ -40,44 +40,65 @@
                             <children>
                         <Pane layoutX="58.0" layoutY="14.0">
                            <children>
-                              <Text fx:id="timeGUI" fill="#323232" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00">
+                              <Text fx:id="timeGUI" fill="#323232" layoutX="12.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00">
                                  <font>
-                                    <Font name="SansSerif Bold" size="60.0" />
+                                    <Font name="SansSerif Bold" size="54.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="plusH" layoutX="11.0" mnemonicParsing="false" onAction="#plusHour" style="-fx-background-color: none;" text="▲" textFill="#4b4b4b">
+                              <Button fx:id="plusH" layoutX="11.0" mnemonicParsing="false" onAction="#plusHour" opacity="0.75" style="-fx-background-color: none;" text="▲" textFill="#4b4b4b">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button fx:id="plusM" layoutX="93.0" mnemonicParsing="false" onAction="#plusMinute" style="-fx-background-color: none;" text="▲" textFill="#4b4b4b">
+                              <Button fx:id="plusM" layoutX="93.0" mnemonicParsing="false" onAction="#plusMinute" opacity="0.75" style="-fx-background-color: none;" text="▲" textFill="#4b4b4b">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button fx:id="plusS" layoutX="178.0" mnemonicParsing="false" onAction="#plusSecond" style="-fx-background-color: none;" text="▲" textFill="#4b4b4b">
+                              <Button fx:id="plusS" layoutX="178.0" mnemonicParsing="false" onAction="#plusSecond" opacity="0.75" style="-fx-background-color: none;" text="▲" textFill="#4b4b4b">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button fx:id="minusH" layoutX="11.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusHour" style="-fx-background-color: none;" text="▼" textFill="#4b4b4b">
+                              <Button fx:id="minusH" layoutX="11.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusHour" opacity="0.75" style="-fx-background-color: none;" text="▼" textFill="#4b4b4b">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button fx:id="minusM" layoutX="93.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusMinute" style="-fx-background-color: none;" text="▼" textFill="#4b4b4b">
+                              <Button fx:id="minusM" layoutX="93.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusMinute" opacity="0.75" style="-fx-background-color: none;" text="▼" textFill="#4b4b4b">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
-                              <Button fx:id="minusS" layoutX="178.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusSecond" style="-fx-background-color: none;" text="▼" textFill="#4b4b4b">
+                              <Button fx:id="minusS" layoutX="178.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusSecond" opacity="0.75" style="-fx-background-color: none;" text="▼" textFill="#4b4b4b">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </Button>
                            </children>
                         </Pane>
-                                <Slider fx:id="speedChange" layoutX="29.0" layoutY="162.0" majorTickUnit="50.0" max="200.0" onMouseClicked="#speedChanged" prefHeight="37.0" prefWidth="306.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+                                <Slider fx:id="speedChange" layoutX="29.0" layoutY="162.0" majorTickUnit="50.0" max="200.0" onMouseClicked="#speedChanged" prefHeight="37.0" prefWidth="306.0" showTickLabels="true" showTickMarks="true" value="1.0">
+                           <cursor>
+                              <Cursor fx:constant="W_RESIZE" />
+                           </cursor></Slider>
                         <Text fill="#323232" layoutX="145.0" layoutY="797.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines">
                            <font>
                               <Font name="SansSerif Regular" size="31.0" />
