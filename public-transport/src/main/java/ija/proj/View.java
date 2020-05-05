@@ -99,6 +99,10 @@ public class View {
         }
     }
 
+    public void addElement(Drawable element, Pane mapContent) {
+        mapContent.getChildren().addAll(element.getGUI());
+    }
+
     public void zoom(Pane mapContent, double zoomValue) {
         mapContent.setScaleX(zoomValue * mapContent.getScaleX());
         mapContent.setScaleY(zoomValue * mapContent.getScaleY());

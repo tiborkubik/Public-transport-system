@@ -23,33 +23,38 @@ public class Main extends Application {
         primaryStage.show();
 
         Controller controller = layoutLoader.getController();
-        TimeManager timeManager = new TimeManager();
 
         View view = new View();
+
+        TimeManager timeManager = new TimeManager(view);
 
         // allElements containg all Drawable elements such as streets, stops, etc
         List<Drawable> allElements = new ArrayList<>();
 
         Loader loader = new Loader();
+
         // Loading all streets from XML input into Drawable objects + adding them to all drawable elements
         List<Drawable> streets = loader.loadMapData(allElements);
 
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loader.loadLinesData(allElements, streets);
+        loader.loadTimetableData(lines);
+
+        Timetable timeTable = new Timetable(allElements, lines, view);
+        controller.setTimeTable(timeTable);
+
         controller.setLines(lines);
 
         view.setDefaultLineColors(lines);
 
-        loader.loadTimetableData(lines);
-
         List<Vehicle> allVehicles = new ArrayList<>();
 
         Bus bus = new Bus(new Coordinate(lines.get(0).getStreetList().get(0).begin().getX(), lines.get(0).getStreetList().get(0).begin().getY()), 0.5, lines.get(0), "Bus#45001");
-        Tram tram = new Tram(new Coordinate(lines.get(2).getStreetList().get(0).begin().getX(), lines.get(2).getStreetList().get(0).begin().getY()), 1, lines.get(2), "Tram#45000");
+        //Tram tram = new Tram(new Coordinate(lines.get(2).getStreetList().get(0).begin().getX(), lines.get(2).getStreetList().get(0).begin().getY()), 1, lines.get(2), "Tram#45000");
         Subway sub = new Subway(new Coordinate(lines.get(1).getStreetList().get(0).begin().getX(), lines.get(1).getStreetList().get(0).begin().getY()), 2, lines.get(1), "Sub#693");
         //Tram tram = new Tram(new Coordinate(800, 100), 10);
         allVehicles.add(bus);
-        allVehicles.add(tram);
+        //allVehicles.add(tram);
         allVehicles.add(sub);
 
         for(Vehicle v : allVehicles)
@@ -61,6 +66,8 @@ public class Main extends Application {
         controller.setCurrentTime();
 
         controller.setLinesInfo(lines);
+
+        timeTable.generateNewVehicle(timeManager);
 
         controller.setCursor(lines);
 

@@ -58,11 +58,11 @@ public class Controller {
     private List<Line> lines = new ArrayList<>();
 
     private List<UpdateState> updates = new ArrayList<>();
+    private Timetable timeTable;
 
-    TimeManager timeManager = new TimeManager();
+    private View view = new View();
 
-    View view = new View();
-
+    private TimeManager timeManager = new TimeManager(view);
     /***
      * changes speed
      */
@@ -70,8 +70,10 @@ public class Controller {
     private void speedChanged() {
         float scaleForSpeed = (float) speedChange.getValue();
         timeManager.setScale(scaleForSpeed);
-        timeManager.timer.cancel();
-        timeManager.startTimer(updates, timeGUI);
+        //timeManager.timer.stop();
+        timeManager.changeSpeed(timeTable, mapContent);
+        Drawable veh = timeManager.getVehicleToAdd();
+        if (veh != null)  view.addElement(veh, mapContent);
     }
 
     @FXML
@@ -79,8 +81,10 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
 
         timeManager.moveInTime(timeManager.formatTime(time.getHour()+1, time.getMinute(), time.getSecond()));
-        timeManager.timer.cancel();
-        timeManager.startTimer(updates, timeGUI);
+       // timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        Drawable veh = timeManager.getVehicleToAdd();
+        if (veh != null)  view.addElement(veh, mapContent);
     }
 
     @FXML
@@ -88,8 +92,11 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
 
         timeManager.moveInTime(timeManager.formatTime(time.getHour()-1, time.getMinute(), time.getSecond()));
-        timeManager.timer.cancel();
-        timeManager.startTimer(updates, timeGUI);
+        //timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        Drawable veh = timeManager.getVehicleToAdd();
+        System.out.println("3: " + veh);
+        if (veh != null)  view.addElement(veh, mapContent);
     }
 
     @FXML
@@ -97,8 +104,14 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
 
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()+1, time.getSecond()));
-        timeManager.timer.cancel();
-        timeManager.startTimer(updates, timeGUI);
+        //timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        Drawable veh = timeManager.getVehicleToAdd();
+        System.out.println("3: " + veh);
+        if (veh != null)  {
+            System.out.println("skaokosafko");
+            view.addElement(veh, mapContent);
+        }
     }
 
     @FXML
@@ -106,8 +119,11 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
 
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()-1, time.getSecond()));
-        timeManager.timer.cancel();
-        timeManager.startTimer(updates, timeGUI);
+        //timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        Drawable veh = timeManager.getVehicleToAdd();
+        System.out.println("3: " + veh);
+        if (veh != null)  view.addElement(veh, mapContent);
     }
 
     @FXML
@@ -115,8 +131,11 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
 
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()+1));
-        timeManager.timer.cancel();
-        timeManager.startTimer(updates, timeGUI);
+        //timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        Drawable veh = timeManager.getVehicleToAdd();
+        System.out.println("3: " + veh);
+        if (veh != null)  view.addElement(veh, mapContent);
     }
 
     @FXML
@@ -124,8 +143,11 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
 
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2));
-        timeManager.timer.cancel();
-        timeManager.startTimer(updates, timeGUI);
+       // timeManager.timer.cancel();
+        timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        Drawable veh = timeManager.getVehicleToAdd();
+        System.out.println("3: " + veh);
+        if (veh != null)  view.addElement(veh, mapContent);
     }
 
     @FXML
@@ -143,6 +165,10 @@ public class Controller {
         mapContent.layout();
     }
 
+    public void setTimeTable(Timetable timeTable) {
+        this.timeTable = timeTable;
+    }
+
     /***
      * displays gui elements
      * @param GUIelements - list of elements to display
@@ -157,7 +183,10 @@ public class Controller {
             }
         }
 
-        timeManager.startTimer(updates, timeGUI);
+        timeManager.startTimer(updates, timeGUI, timeTable, mapContent);
+        Drawable veh = timeManager.getVehicleToAdd();
+        System.out.println("3: " + veh);
+        if (veh != null)  view.addElement(veh, mapContent);
     }
 
     public void setBasicSettings(List<Line> lines) {

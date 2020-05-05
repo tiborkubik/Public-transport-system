@@ -30,6 +30,10 @@ public class Line implements Drawable  {
         setPath();
     }
 
+    public String getType() {
+        return type;
+    }
+
     public double totalPathLength() {
         double total = 0;
 

@@ -204,8 +204,6 @@ public class Loader {
      * @param lines list of lines
      */
     public void loadTimetableData(List<Line> lines) {
-        List<Line> allLines = new ArrayList<>();
-
         try {
             File fXmlFile = new File("src/main/resources/timetable.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
