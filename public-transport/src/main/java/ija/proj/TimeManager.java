@@ -1,30 +1,29 @@
 package ija.proj;
 
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class TimeManager {
     LocalTime currentTime = LocalTime.now();
     double scaleForSpeed = 1.0;
     List<Drawable> vehiclesToAdd = new ArrayList<>();
+    List<Line> lines = new ArrayList<>();
     View view;
     Controller controller;
     Timeline timer;
 
     public void setDefaultTime(Text timeGUI) {
         timeGUI.setText("00:00:00");
+    }
+
+    public void setLines(List<Line> lines) {
+        this.lines = lines;
     }
 
     public TimeManager(View view, Controller controller) {
@@ -47,65 +46,54 @@ public class TimeManager {
     /***
      * Starts timer
      */
-    public void changeSpeed(Timetable timeTable) {
-        TimeManager thisTM = this;
-
+    public void changeSpeed() {
         timer.setRate(scaleForSpeed);
-
-//        if(currentTime.getSecond() == 0) {
-//            vehiclesToAdd.add(timeTable.checkTimeTable(thisTM));
-//        } else {
-//            vehiclesToAdd = null;
-//        }
     }
 
-    public void startTimer(List<UpdateState> updates, Text timeGUI, Timetable timeTable, Pane mapContent) {
+    public void startTimer(List<UpdateState> updates, Text timeGUI, Timetable timeTable, Pane mapContent, List<Line> xxx) {
             TimeManager thisTM = this;
-
             List<Drawable> vehiclesToAddT = this.vehiclesToAdd;
-            timer = new Timeline(new KeyFrame(Duration.millis(1000/10), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    currentTime = currentTime.plusNanos(1000000000/10);
 
-                    timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
+            timer = new Timeline(new KeyFrame(Duration.millis(1000/15), event -> {
+                currentTime = currentTime.plusNanos(1000000000/15);
 
-                    for (UpdateState update : updates) {
-                        update.update(currentTime);
-                    }
+                timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
 
-                    if(currentTime.getSecond() == 0) {
-                        Drawable a = timeTable.checkTimeTable(thisTM, "bus");
-                        Drawable b = timeTable.checkTimeTable(thisTM, "tram");
-                        Drawable c = timeTable.checkTimeTable(thisTM, "sub");
+                for (UpdateState update : updates) {
+                    update.update(currentTime);
+                }
 
-                        if(!(a == null && b == null && c == null)) {
-                            try {
-                                vehiclesToAddT.add(a);
-                            } catch (Exception e){
+                if(currentTime.getSecond() == 0) {
+                    Drawable a = timeTable.checkTimeTable(thisTM, "bus");
+                    Drawable b = timeTable.checkTimeTable(thisTM, "tram");
+                    Drawable c = timeTable.checkTimeTable(thisTM, "sub");
 
+                    if(!(a == null && b == null && c == null)) {
+                        try {
+                            vehiclesToAddT.add(a);
+                        } catch (Exception e){
+
+                        }
+                        try {
+                            vehiclesToAddT.add(b);
+                        } catch (Exception e){
+
+                        }
+                        try {
+                            vehiclesToAddT.add(c);
+                        } catch (Exception e){
+
+                        }
+                        try{
+
+                            for(Drawable x : vehiclesToAddT){
+                                view.addElement(x, mapContent);
+                                updates.add((UpdateState)x);
+                                controller.addVehicleToController((Vehicle)x);
                             }
-                            try {
-                                vehiclesToAddT.add(b);
-                            } catch (Exception e){
+                        }
+                        catch (Exception e){
 
-                            }
-                            try {
-                                vehiclesToAddT.add(c);
-                            } catch (Exception e){
-
-                            }
-                            try{
-
-                                for(Drawable x : vehiclesToAddT){
-                                    view.addElement(x, mapContent);
-                                    updates.add((UpdateState)x);
-                                    controller.addVehicleToController((Vehicle)x);
-                                }
-                            }
-                            catch (Exception e){
-
-                            }
                         }
                     }
                 }
@@ -118,6 +106,12 @@ public class TimeManager {
 
     public List<Drawable> getVehicleToAdd() {
         return  this.vehiclesToAdd;
+    }
+
+    public void setVehiclesToAdd(List<Line> lines) {
+        for(Line line : lines) {
+
+        }
     }
 
     public void moveInTime(String newTime) {

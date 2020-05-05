@@ -26,8 +26,6 @@ public class Main extends Application {
 
         View view = new View();
 
-        TimeManager timeManager = new TimeManager(view, controller);
-
         // allElements containg all Drawable elements such as streets, stops, etc
         List<Drawable> allElements = new ArrayList<>();
 
@@ -39,6 +37,10 @@ public class Main extends Application {
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loader.loadLinesData(allElements, streets);
         loader.loadTimetableData(lines);
+
+        TimeManager timeManager = new TimeManager(view, controller);
+
+        timeManager.setLines(lines);
 
         Timetable timeTable = new Timetable(allElements, lines, view);
         controller.setTimeTable(timeTable);
@@ -61,6 +63,5 @@ public class Main extends Application {
         controller.setBasicSettings(lines);
 
         controller.showVehicleRoute();
-
     }
 }

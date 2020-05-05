@@ -111,39 +111,35 @@
 </line>
 
 <line id="Bus Line 41" type="bus">
-    <begin>00:00:00</begin>
-    <begin>07:00:00</begin>
-    <begin>07:20:00</begin>
-    <begin>07:40:00</begin>
-    <begin>08:00:00</begin>
-    <begin>08:20:00</begin>
-    <begin>08:40:00</begin>
-    <begin>09:00:00</begin>
-    <begin>09:20:00</begin>
-    <begin>09:40:00</begin>
-    <begin>10:00:00</begin>
-    <begin>10:30:00</begin>
-    <begin>11:00:00</begin>
-    <begin>12:00:00</begin>
-    <begin>12:30:00</begin>
-    <begin>13:00:00</begin>
-    <begin>13:30:00</begin>
-    <begin>14:00:00</begin>
-    <begin>14:30:00</begin>
-    <begin>15:00:00</begin>
-    <begin>15:30:00</begin>
-    <begin>16:00:00</begin>
-    <begin>16:30:00</begin>
-    <begin>17:00:00</begin>
-    <begin>17:30:00</begin>
-    <begin>18:00:00</begin>
-    <begin>18:30:00</begin>
-    <begin>19:00:00</begin>
-    <begin>19:30:00</begin>
-    <begin>20:00:00</begin>
-    <begin>20:30:00</begin>
-    <begin>21:00:00</begin>
-    <begin>23:00:00</begin>
+    <begin>00:01:00</begin>
+    <begin>07:01:00</begin>
+    <begin>07:21:00</begin>
+    <begin>07:41:00</begin>
+    <begin>08:01:00</begin>
+    <begin>08:21:00</begin>
+    <begin>08:41:00</begin>
+    <begin>09:01:00</begin>
+    <begin>09:21:00</begin>
+    <begin>09:41:00</begin>
+    <begin>10:01:00</begin>
+    <begin>10:31:00</begin>
+    <begin>11:01:00</begin>
+    <begin>12:01:00</begin>
+    <begin>12:31:00</begin>
+    <begin>13:01:00</begin>
+    <begin>13:31:00</begin>
+    <begin>14:01:00</begin>
+    <begin>14:31:00</begin>
+    <begin>15:01:00</begin>
+    <begin>15:31:00</begin>
+    <begin>16:01:00</begin>
+    <begin>16:31:00</begin>
+    <begin>17:01:00</begin>
+    <begin>17:31:00</begin>
+    <begin>18:01:00</begin>
+    <begin>18:31:00</begin>
+    <begin>19:01:00</begin>
+    <begin>19:31:00</begin>
 </line>
 
 </lines>

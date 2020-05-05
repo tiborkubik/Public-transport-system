@@ -6,6 +6,10 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -40,12 +44,12 @@
                             <children>
                         <Pane layoutX="62.0" layoutY="14.0">
                            <children>
-                              <Text fx:id="timeGUI" fill="#414141" layoutX="12.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00">
+                              <Text fx:id="timeGUI" fill="#505050" layoutX="12.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00:00">
                                  <font>
                                     <Font name="SansSerif Bold" size="54.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="plusH" layoutX="14.0" mnemonicParsing="false" onAction="#plusHour" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#4b4b4b">
+                              <Button fx:id="plusH" layoutX="14.0" mnemonicParsing="false" onAction="#plusHour" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#555555">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -53,7 +57,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="plusM" layoutX="93.0" mnemonicParsing="false" onAction="#plusMinute" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#4b4b4b">
+                              <Button fx:id="plusM" layoutX="93.0" mnemonicParsing="false" onAction="#plusMinute" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#555555">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -61,7 +65,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="plusS" layoutX="178.0" mnemonicParsing="false" onAction="#plusSecond" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#4b4b4b">
+                              <Button fx:id="plusS" layoutX="178.0" mnemonicParsing="false" onAction="#plusSecond" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#555555">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -69,7 +73,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="minusH" layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusHour" opacity="0.75" style="-fx-background-color: none;" text="🢓" textFill="#4b4b4b">
+                              <Button fx:id="minusH" layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusHour" opacity="0.75" style="-fx-background-color: none;" text="🢓" textFill="#555555">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -77,7 +81,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="minusM" layoutX="93.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusMinute" opacity="0.75" style="-fx-background-color: none;" text="🢓" textFill="#4b4b4b">
+                              <Button fx:id="minusM" layoutX="93.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusMinute" opacity="0.75" style="-fx-background-color: none;" text="🢓" textFill="#555555">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -85,7 +89,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="minusS" layoutX="178.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusSecond" opacity="0.75" style="-fx-background-color: none;" text="🢓" textFill="#4b4b4b">
+                              <Button fx:id="minusS" layoutX="178.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusSecond" opacity="0.75" style="-fx-background-color: none;" text="🢓" textFill="#555555">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -95,10 +99,13 @@
                               </Button>
                            </children>
                         </Pane>
-                                <Slider fx:id="speedChange" layoutX="23.0" layoutY="162.0" majorTickUnit="10.0" max="50.0" minorTickCount="4" onMouseClicked="#speedChanged" prefHeight="37.0" prefWidth="306.0" showTickLabels="true" showTickMarks="true" value="1.0">
+                                <Slider fx:id="speedChange" layoutX="101.0" layoutY="162.0" majorTickUnit="10.0" max="50.0" minorTickCount="4" onMouseClicked="#speedChanged" prefHeight="37.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" value="1.0">
                            <cursor>
                               <Cursor fx:constant="W_RESIZE" />
-                           </cursor></Slider>
+                           </cursor>
+                           <effect>
+                              <ColorAdjust contrast="0.05" />
+                           </effect></Slider>
                         <Text fill="#323232" layoutX="139.0" layoutY="796.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines">
                            <font>
                               <Font name="SansSerif Regular" size="31.0" />
@@ -109,6 +116,23 @@
                               <Font name="SansSerif Regular" size="31.0" />
                            </font>
                         </Text>
+                        <TableView fx:id="stopSearchField" layoutX="24.0" layoutY="308.0" prefHeight="445.0" prefWidth="294.0">
+                          <columns>
+                            <TableColumn prefWidth="188.0" text="C1" />
+                            <TableColumn minWidth="0.0" prefWidth="105.0" text="C2" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="stopSearchInput" layoutX="23.0" layoutY="283.0" prefHeight="25.0" prefWidth="270.0" />
+                        <Button layoutX="293.0" layoutY="283.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="🔎">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="restartTimeButton" layoutX="285.0" layoutY="50.0" mnemonicParsing="false" onAction="#setTimeDefault" prefHeight="29.0" prefWidth="16.0" scaleX="0.4" scaleY="0.2" style="-fx-background-color: red;">
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor>
+                        </Button>
                             </children>
                         </Pane>
                     </children>
@@ -142,12 +166,12 @@
                               <Font name="SansSerif Regular" size="18.0" />
                            </font>
                         </Text>
-                        <Text fx:id="nextStopText" layoutX="1070.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="183.13671875">
+                        <Text fx:id="nextStopText" layoutX="1063.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="183.13671875">
                            <font>
                               <Font name="Impact" size="24.0" />
                            </font>
                         </Text>
-                        <Text fx:id="finalStopText" layoutX="1070.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="184.13671875">
+                        <Text fx:id="finalStopText" layoutX="1062.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="184.13671875">
                            <font>
                               <Font name="Impact" size="24.0" />
                            </font>
