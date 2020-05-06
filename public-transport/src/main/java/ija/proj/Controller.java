@@ -1,8 +1,12 @@
 package ija.proj;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -10,6 +14,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -20,6 +25,8 @@ public class Controller {
     private Pane mapContent;
     @FXML
     private Text nextStopInfo;
+    @FXML
+    private ScrollPane scrollP;
     @FXML
     private Text nextStopText;
     @FXML
@@ -66,6 +73,8 @@ public class Controller {
     private View view = new View();
 
     private TimeManager timeManager = new TimeManager(view, this);
+
+
     /***
      * changes speed
      */
@@ -191,21 +200,43 @@ public class Controller {
     private void setTimeDefault() {
         timeManager.setDefaultTime(timeGUI);
         timeManager.moveInTime("00:00:00");
+
+
     }
 
     @FXML
     private void zooming(ScrollEvent event) {
-        event.consume();                    // to ensure that only the part of map will be zoomed, not whole window
-        double zoomValue;
-
-        if(event.getDeltaY() > 0) {
-            zoomValue = 1.2;
-        } else {
-            zoomValue = 0.8;
+        event.consume();
+        mapContent.layout();
+        double zoomFactor = 1.5;
+        if (event.getDeltaY() <= 0) {
+            // zoom out
+            zoomFactor = 1 / zoomFactor;
         }
 
-        Platform.runLater(() -> view.zoom(mapContent, zoomValue));
-        mapContent.layout();
+        double oldScale = mapContent.getScaleX();
+        double scale = oldScale * zoomFactor;
+        double f = (scale / oldScale) - 1;
+
+        // determine offset that we will have to move the node
+        Bounds bounds = mapContent.localToScene(mapContent.getBoundsInLocal());
+
+        double dx = (event.getSceneX() - (bounds.getWidth() / 2 + bounds.getMinX()));
+        double dy = (event.getSceneY() - (bounds.getHeight() / 2 + bounds.getMinY()));
+        System.out.println(dx + " " + dy);
+        Timeline timeline = new Timeline(60);
+
+        scrollP.setFitToHeight(true);
+        scrollP.setFitToWidth(true);
+        // timeline that scales and moves the node
+        timeline.getKeyFrames().clear();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.translateXProperty(), mapContent.getTranslateX() - f * dx)),
+                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.translateYProperty(), mapContent.getTranslateY() - f * dy)),
+                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.scaleXProperty(), scale)),
+                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.scaleYProperty(), scale))
+        );
+        timeline.play();
     }
 
     public void setTimeTable(Timetable timeTable) {
