@@ -3,16 +3,18 @@ package ija.proj;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -97,9 +99,7 @@ public class Controller {
     private void plusHour() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour()+1, time.getMinute(), time.getSecond()-1));
-        timeManager.startTimer(updates, timeGUI, timeTable, mapContent, lines);
-        timeManager.changeSpeed();
+        timeManager.moveInTime(timeManager.formatTime(time.getHour()+1, time.getMinute(), time.getSecond()-1),updates, timeGUI, timeTable, mapContent,1, speedChange);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
@@ -114,9 +114,7 @@ public class Controller {
     private void minusHour() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour()-1, time.getMinute(), time.getSecond()-1));
-        timeManager.startTimer(updates, timeGUI, timeTable, mapContent, lines);
-        timeManager.changeSpeed();
+        timeManager.moveInTime(timeManager.formatTime(time.getHour()-1, time.getMinute(), time.getSecond()-1),updates, timeGUI, timeTable, mapContent,1, speedChange);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {
@@ -131,8 +129,7 @@ public class Controller {
     private void plusMinute() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()+1, time.getSecond()));
-        timeManager.startTimer(updates, timeGUI, timeTable, mapContent, lines);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()+1, time.getSecond()),updates, timeGUI, timeTable, mapContent,2, speedChange);
         timeManager.changeSpeed();
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
@@ -148,8 +145,9 @@ public class Controller {
     private void minusMinute() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()-1, time.getSecond()));
-        timeManager.startTimer(updates, timeGUI, timeTable, mapContent, lines);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()-1, time.getSecond()),updates, timeGUI, timeTable, mapContent,2, speedChange);
+        float scaleForSpeed = (float) speedChange.getValue();
+        timeManager.setScale(scaleForSpeed);
         timeManager.changeSpeed();
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
@@ -165,8 +163,9 @@ public class Controller {
     private void plusSecond() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()+1));
-        timeManager.startTimer(updates, timeGUI, timeTable, mapContent, lines);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()+1),updates, timeGUI, timeTable, mapContent,3, speedChange);
+        float scaleForSpeed = (float) speedChange.getValue();
+        timeManager.setScale(scaleForSpeed);
         timeManager.changeSpeed();
 
         List<Drawable> vehList = timeManager.getVehicleToAdd();
@@ -183,8 +182,9 @@ public class Controller {
     private void minusSecond() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2));
-        timeManager.startTimer(updates, timeGUI, timeTable, mapContent, lines);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2),updates, timeGUI, timeTable, mapContent,3, speedChange);
+        float scaleForSpeed = (float) speedChange.getValue();
+        timeManager.setScale(scaleForSpeed);
         timeManager.changeSpeed();
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
@@ -199,9 +199,10 @@ public class Controller {
     @FXML
     private void setTimeDefault() {
         timeManager.setDefaultTime(timeGUI);
-        timeManager.moveInTime("00:00:00");
-
-
+        timeManager.timer.stop();
+        timeManager.moveInTime("23:59:59",updates, timeGUI, timeTable, mapContent,1, speedChange);
+        float scaleForSpeed = (float) speedChange.getValue();
+        timeManager.setScale(scaleForSpeed);
     }
 
     @FXML
@@ -256,7 +257,7 @@ public class Controller {
             }
         }
 
-        timeManager.startTimer(updates, timeGUI, timeTable, mapContent, lines);
+        timeManager.startTimer(updates, timeGUI, timeTable, mapContent, 15, speedChange);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
             for(Drawable veh : vehList) {

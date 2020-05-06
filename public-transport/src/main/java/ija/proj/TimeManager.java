@@ -2,9 +2,10 @@ package ija.proj;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,17 @@ public class TimeManager {
     double scaleForSpeed = 1.0;
     List<Drawable> vehiclesToAdd = new ArrayList<>();
     List<Line> lines = new ArrayList<>();
+    double timeMultiplier = 15;
     View view;
     Controller controller;
     Timeline timer;
+    LocalTime timeToJump;
+    long elapse_time = 0;
+
+    LocalTime begin;
 
     public void setDefaultTime(Text timeGUI) {
-        timeGUI.setText("00:00:00");
+        timeGUI.setText("23:59:59");
     }
 
     public void setLines(List<Line> lines) {
@@ -50,17 +56,21 @@ public class TimeManager {
         timer.setRate(scaleForSpeed);
     }
 
-    public void startTimer(List<UpdateState> updates, Text timeGUI, Timetable timeTable, Pane mapContent, List<Line> xxx) {
+
+    public void startTimer(List<UpdateState> updates, Text timeGUI, Timetable timeTable, Pane mapContent, double coefficient, Slider speedChange) {
             TimeManager thisTM = this;
             List<Drawable> vehiclesToAddT = this.vehiclesToAdd;
 
-            timer = new Timeline(new KeyFrame(Duration.millis(1000/15), event -> {
+            double d_coefficient = 1000/coefficient;
+        System.out.println(d_coefficient);
+            timer = new Timeline(new KeyFrame(javafx.util.Duration.millis(d_coefficient), event -> {
+
                 currentTime = currentTime.plusNanos(1000000000/15);
 
                 timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
 
                 for (UpdateState update : updates) {
-                    update.update(currentTime);
+                    update.update(currentTime,15/this.timeMultiplier);
                 }
 
                 if(currentTime.getSecond() == 0) {
@@ -96,12 +106,41 @@ public class TimeManager {
 
                         }
                     }
+
+
+                }
+                if (timeToJump != null){
+                    if (elapse_time == 1)
+                        setScale(10);
+                    else if(elapse_time == 2)
+                        setScale(1000);
+
+                    changeSpeed();
+                    System.out.println(timeToJump + " " + currentTime);
+                    if (    timeToJump.getHour() == currentTime.getHour() &&
+                            timeToJump.getMinute() == currentTime.getMinute() &&
+                            timeToJump.getSecond() == currentTime.getSecond() &&
+                            this.elapse_time != 0
+                    )
+                    {
+                        timer.stop();
+                        startTimer(updates, timeGUI, timeTable, mapContent, 15, speedChange);
+
+                        float scaleForSpeed = (float) speedChange.getValue();
+                        setScale(scaleForSpeed);
+                        changeSpeed();
+
+                        this.elapse_time = 0;
+                        timeToJump = null;
+                    }
                 }
             }));
             this.vehiclesToAdd = vehiclesToAddT;
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
             this.vehiclesToAdd =  new ArrayList<>();
+
+
     }
 
     public List<Drawable> getVehicleToAdd() {
@@ -114,8 +153,35 @@ public class TimeManager {
         }
     }
 
-    public void moveInTime(String newTime) {
-        this.currentTime = LocalTime.parse(newTime);
+    public void moveInTime(String newTime,List <UpdateState> updates, Text timeGUI,Timetable timeTable, Pane mapContent,int flag, Slider speedChange) {
+
+        this.timeToJump = LocalTime.parse(newTime);
+        this.begin = currentTime;
+        this.elapse_time = 1;
+        if (flag == 1){
+            if (timeToJump.getHour() < currentTime.getHour())
+                elapse_time = 2;
+            startTimer(updates, timeGUI, timeTable, mapContent, 12000.0, speedChange);
+
+        }
+
+        else if (flag == 2){
+            if (timeToJump.getMinute() < currentTime.getMinute()){
+                elapse_time = 2;
+                startTimer(updates, timeGUI, timeTable, mapContent, 12000.0, speedChange);
+            }
+            else startTimer(updates, timeGUI, timeTable, mapContent, 1000.0, speedChange);
+        }
+
+        else if (flag == 3){
+            if (timeToJump.getSecond() < currentTime.getSecond()){
+                elapse_time = 2;
+                startTimer(updates, timeGUI, timeTable, mapContent, 12000.0, speedChange);
+            }
+            else startTimer(updates, timeGUI, timeTable, mapContent, 25.0, speedChange);
+        }
+
+
     }
 
     public String formatTime(int hour, int minute, int second) {

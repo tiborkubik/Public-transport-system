@@ -1,12 +1,7 @@
 package ija.proj;
 
-import javafx.scene.layout.Pane;
-
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.time.*;
-import java.util.TimerTask;
 
 public class Timetable {
     List<Drawable> allElemets;

@@ -5,9 +5,7 @@ import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class Loader {
      */
     public List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
-            File fXmlFile = new File("src/main/resources/mapData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/mapData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -65,7 +63,7 @@ public class Loader {
         List<Line> allLines = new ArrayList<>();
 
         try {
-            File fXmlFile = new File("src/main/resources/lineData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/lineData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -205,7 +203,7 @@ public class Loader {
      */
     public void loadTimetableData(List<Line> lines) {
         try {
-            File fXmlFile = new File("src/main/resources/timetable.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/timetable.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);

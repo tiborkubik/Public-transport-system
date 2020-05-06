@@ -41,6 +41,14 @@ public class Vehicle implements Drawable, UpdateState {
         });
     }
 
+    public void changeSpeed(double speed){
+        this.speed = speed;
+    }
+    public void setDefaultSpeed(){
+        this.speed = this.constantSpeed;
+    }
+
+
     // TODO
     private void modifyGUI(Coordinate coordinate) {
         try{
@@ -91,7 +99,8 @@ public class Vehicle implements Drawable, UpdateState {
     }
 
     @Override
-    public void update(LocalTime time) {
+    public void update(LocalTime time, double speedMultiplier) {
+        this.speed = this.constantSpeed * speedMultiplier;
         if (cnt_time >= 0){
             cnt_time--;
             if(cnt_time == 0){
