@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class View {
-    private static final double MAX_SCALE = 10.0d;
-    private static final double MIN_SCALE = .1d;
     List<Color> colorsForLines = new ArrayList<>();
 
     public View() {
@@ -99,36 +97,6 @@ public class View {
 
     public void addElement(Drawable element, Pane mapContent) {
         mapContent.getChildren().addAll(element.getGUI());
-    }
-
-    public void zoom(Pane mapContent, double zoomValue, ScrollEvent event) {
-
-        double scale = mapContent.getScaleY();
-        double oldScale = scale;
-
-        mapContent.setScaleX(zoomValue * mapContent.getScaleX());
-        mapContent.setScaleY(zoomValue * mapContent.getScaleY());
-
-        scale = clamp( scale, MIN_SCALE, MAX_SCALE);
-
-        double f = (scale / oldScale)-1;
-
-        double dx = (event.getSceneX() - (mapContent.getBoundsInParent().getWidth()/2 + mapContent.getBoundsInParent().getMinX()));
-        double dy = (event.getSceneY() - (mapContent.getBoundsInParent().getHeight()/2 + mapContent.getBoundsInParent().getMinY()));
-        System.out.println(dx + " " + dy);
-        mapContent.setTranslateX(mapContent.getTranslateX() - f*dx);
-        mapContent.setTranslateY(mapContent.getTranslateY() - f*dy);
-    }
-
-    public static double clamp( double value, double min, double max) {
-
-        if( Double.compare(value, min) < 0)
-            return min;
-
-        if( Double.compare(value, max) > 0)
-            return max;
-
-        return value;
     }
 
     public void viewLinesInfo(List<Line> lines, ListView linesInfo) {

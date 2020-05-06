@@ -24,6 +24,8 @@ public class Main extends Application {
 
         Controller controller = layoutLoader.getController();
 
+        controller.setBackground();
+
         View view = new View();
 
         // allElements containg all Drawable elements such as streets, stops, etc

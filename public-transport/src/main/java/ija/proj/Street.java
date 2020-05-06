@@ -34,10 +34,6 @@ public class Street implements Drawable {
 
     }
 
-    public void setN_lines(int value) {
-        this.n_lines = value;
-    }
-
     public Street() {
 
     }

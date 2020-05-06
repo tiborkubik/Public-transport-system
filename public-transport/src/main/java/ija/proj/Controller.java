@@ -10,8 +10,9 @@ import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -65,7 +66,11 @@ public class Controller {
     private Text linesSign;
     @FXML
     private Button saveExitEditing;
+    @FXML
+    private BorderPane rootElement;
 
+    Image bg = new Image("mapa1.jpg");
+    BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
 
     private List<Line> lines = new ArrayList<>();
     private List<UpdateState> updates = new ArrayList<>();
@@ -150,14 +155,6 @@ public class Controller {
         float scaleForSpeed = (float) speedChange.getValue();
         timeManager.setScale(scaleForSpeed);
         timeManager.changeSpeed();
-        List<Drawable> vehList = timeManager.getVehicleToAdd();
-        if (vehList != null) {
-            for(Drawable veh : vehList) {
-                if (veh != null)  {
-                    view.addElement(veh, mapContent);
-                }
-            }
-        }
     }
 
     @FXML
@@ -302,6 +299,14 @@ public class Controller {
                 new KeyFrame(Duration.millis(200), new KeyValue(mapContent.scaleYProperty(), scale))
         );
         timeline.play();
+    }
+
+    public void setBackground() {
+        mapContent.setBackground(new Background(new BackgroundImage(bg,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                bSize)));
     }
 
     public void setTimeTable(Timetable timeTable) {

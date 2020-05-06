@@ -15,19 +15,20 @@ public class Timetable {
         this.view = view;
     }
 
-    public void generateNewVehicle(TimeManager timeManager) {
-            //checkTimeTable(timeManager);
-    }
 
     public List <Drawable> checkTimeTable(TimeManager timeManager) {
         List <Drawable> vehiclesToAdd= new ArrayList<>();
         int id = 41999;
         List <String> names = new ArrayList<>();
-        boolean flag = true ;
+        boolean flag;
         for(Line line : lines) {
             for(LocalTime time : line.getTimetable()) {
-                flag = true ;
-                if(time.getHour() == timeManager.getCurrentTime().getHour() && time.getMinute() == timeManager.getCurrentTime().getMinute()) {
+                flag = true;
+
+                if(time.getHour() == timeManager.getCurrentTime().getHour() &&
+                        time.getMinute() == timeManager.getCurrentTime().getMinute() &&
+                        time.getSecond() == timeManager.getCurrentTime().getSecond() &&
+                        timeManager.getCurrentTime().getNano() < 100000000){
                         id++;
                         while (flag){
                             flag = false;
@@ -50,7 +51,7 @@ public class Timetable {
                 }
             }
         }
-        System.out.println("mali by byt: " + vehiclesToAdd);
+
         return  vehiclesToAdd;
     }
 }
