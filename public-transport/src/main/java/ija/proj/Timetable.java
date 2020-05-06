@@ -1,6 +1,7 @@
 package ija.proj;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Timetable {
@@ -18,19 +19,38 @@ public class Timetable {
             //checkTimeTable(timeManager);
     }
 
-    public Drawable checkTimeTable(TimeManager timeManager, String type) {
+    public List <Drawable> checkTimeTable(TimeManager timeManager) {
+        List <Drawable> vehiclesToAdd= new ArrayList<>();
+        int id = 41999;
+        List <String> names = new ArrayList<>();
+        boolean flag = true ;
         for(Line line : lines) {
             for(LocalTime time : line.getTimetable()) {
+                flag = true ;
                 if(time.getHour() == timeManager.getCurrentTime().getHour() && time.getMinute() == timeManager.getCurrentTime().getMinute()) {
-                    if(line.getType().equals("bus") && type.equals("bus"))
-                        return new Bus(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.3, line, "Bus#45001");
-                    if(line.getType().equals("tram") && type.equals("tram"))
-                        return new Tram(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.5, line, "Tram#45001");
-                    if(line.getType().equals("sub") && type.equals("sub"))
-                        return new Subway(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()),1.2, line, "Sub#693");
+                        id++;
+                        while (flag){
+                            flag = false;
+                            if (line.getType().equals("bus") && !names.contains(line.getName())){
+                                flag = true;
+                                names.add(line.getName());
+                                vehiclesToAdd.add(new Bus(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.3, line, "#" +line.getType() + id));
+                            }
+                            if (line.getType().equals("tram") && !names.contains(line.getName())){
+                                flag = true;
+                                names.add(line.getName());
+                                vehiclesToAdd.add(new Tram(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.6, line, "#" +line.getType() + id));
+                            }
+                            if (line.getType().equals("sub") && !names.contains(line.getName())){
+                                flag = true;
+                                names.add(line.getName());
+                                vehiclesToAdd.add(new Subway(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 1, line, "#" +line.getType() + id));
+                            }
+                        }
                 }
             }
         }
-        return  null;
+        System.out.println("mali by byt: " + vehiclesToAdd);
+        return  vehiclesToAdd;
     }
 }

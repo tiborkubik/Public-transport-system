@@ -62,6 +62,7 @@ public class TimeManager {
             List<Drawable> vehiclesToAddT = this.vehiclesToAdd;
 
             double d_coefficient = 1000/coefficient;
+        System.out.println(d_coefficient);
             timer = new Timeline(new KeyFrame(javafx.util.Duration.millis(d_coefficient), event -> {
 
                 currentTime = currentTime.plusNanos(1000000000/15);
@@ -73,47 +74,27 @@ public class TimeManager {
                 }
 
                 if(currentTime.getSecond() == 0) {
-                    Drawable a = timeTable.checkTimeTable(thisTM, "bus");
-                    Drawable b = timeTable.checkTimeTable(thisTM, "tram");
-                    Drawable c = timeTable.checkTimeTable(thisTM, "sub");
-
-                    if(!(a == null && b == null && c == null)) {
                         try {
-                            vehiclesToAddT.add(a);
+                            this.vehiclesToAdd = timeTable.checkTimeTable(thisTM);
+                            System.out.println("Je: " +  this.vehiclesToAdd);
                         } catch (Exception e){
-
+                            System.out.println("exception");
                         }
-                        try {
-                            vehiclesToAddT.add(b);
-                        } catch (Exception e){
-
-                        }
-                        try {
-                            vehiclesToAddT.add(c);
-                        } catch (Exception e){
-
-                        }
-                        try{
-
-                            for(Drawable x : vehiclesToAddT){
-                                view.addElement(x, mapContent);
-                                updates.add((UpdateState)x);
-                                controller.addVehicleToController((Vehicle)x);
-                            }
-                        }
-                        catch (Exception e){
-
-                        }
+                    for(Drawable x : vehiclesToAdd){
+                        view.addElement(x, mapContent);
+                        updates.add((UpdateState)x);
+                        controller.addVehicleToController((Vehicle)x);
                     }
                 }
+
                 if (timeToJump != null){
                     if (elapse_time == 1)
                         setScale(10);
                     else if(elapse_time == 2)
-                        setScale(300);
+                        setScale(1000);
 
                     changeSpeed();
-
+//                    System.out.println(timeToJump + " " + currentTime);
                     if (    timeToJump.getHour() == currentTime.getHour() &&
                             timeToJump.getMinute() == currentTime.getMinute() &&
                             timeToJump.getSecond() == currentTime.getSecond() &&

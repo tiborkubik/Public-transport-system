@@ -16,7 +16,7 @@ public class Loader {
      */
     public List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
-            File fXmlFile = new File("src/main/resources/mapData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/mapData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -63,7 +63,7 @@ public class Loader {
         List<Line> allLines = new ArrayList<>();
 
         try {
-            File fXmlFile = new File("src/main/resources/lineData.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/lineData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -203,7 +203,7 @@ public class Loader {
      */
     public void loadTimetableData(List<Line> lines) {
         try {
-            File fXmlFile = new File("src/main/resources/timetable.xml");
+            File fXmlFile = new File("public-transport/src/main/resources/timetable.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);

@@ -101,6 +101,8 @@ public class Controller {
                                 speedChange,
                                 bottomWindow,
                                 saveExitEditing);
+
+
     }
 
     @FXML
