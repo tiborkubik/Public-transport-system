@@ -62,7 +62,6 @@ public class TimeManager {
             List<Drawable> vehiclesToAddT = this.vehiclesToAdd;
 
             double d_coefficient = 1000/coefficient;
-        System.out.println(d_coefficient);
             timer = new Timeline(new KeyFrame(javafx.util.Duration.millis(d_coefficient), event -> {
 
                 currentTime = currentTime.plusNanos(1000000000/15);
@@ -106,17 +105,15 @@ public class TimeManager {
 
                         }
                     }
-
-
                 }
                 if (timeToJump != null){
                     if (elapse_time == 1)
                         setScale(10);
                     else if(elapse_time == 2)
-                        setScale(1000);
+                        setScale(300);
 
                     changeSpeed();
-                    System.out.println(timeToJump + " " + currentTime);
+
                     if (    timeToJump.getHour() == currentTime.getHour() &&
                             timeToJump.getMinute() == currentTime.getMinute() &&
                             timeToJump.getSecond() == currentTime.getSecond() &&
