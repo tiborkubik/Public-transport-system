@@ -3,15 +3,13 @@ package ija.proj;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -40,8 +38,6 @@ public class Controller {
     @FXML
     private Text timeGUI;
     @FXML
-    private Pane sideWindow;
-    @FXML
     private Pane bottomWindow;
     @FXML
     private Rectangle background;
@@ -52,19 +48,24 @@ public class Controller {
     @FXML
     private javafx.scene.shape.Line vehicleRoute;
     @FXML
-    private Button plusH;
+    private TableView stopSearchField;
     @FXML
-    private Button minusH;
+    private TextField stopSearchInput;
     @FXML
-    private Button plusM;
+    private Button searchStopsButton;
     @FXML
-    private Button minusM;
+    private Rectangle rightBlur1;
     @FXML
-    private Button plusS;
+    private Rectangle rightBlur11;
     @FXML
-    private Button minusS;
+    private Rectangle rightBlur111;
     @FXML
-    private Button restartTimeButton;
+    private Text stopsSign;
+    @FXML
+    private Text linesSign;
+    @FXML
+    private Button saveExitEditing;
+
 
     private List<Line> lines = new ArrayList<>();
     private List<UpdateState> updates = new ArrayList<>();
@@ -77,6 +78,68 @@ public class Controller {
     private TimeManager timeManager = new TimeManager(view, this);
 
 
+    @FXML
+    private void exitProgram() {
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    private void startEditingTraffic() {
+        timeManager.setScale(1);
+        timeManager.changeSpeed();
+
+        view.prepareGUIforAdmin(stopSearchField,
+                                stopSearchInput,
+                                searchStopsButton,
+                                rightBlur1,
+                                rightBlur11,
+                                rightBlur111,
+                                stopsSign,
+                                linesInfo,
+                                linesSign,
+                                speedChange,
+                                bottomWindow,
+                                saveExitEditing);
+    }
+
+    @FXML
+    private void startEditingDetours() {
+        timeManager.setScale(1);
+        timeManager.changeSpeed();
+
+        view.prepareGUIforAdmin(stopSearchField,
+                stopSearchInput,
+                searchStopsButton,
+                rightBlur1,
+                rightBlur11,
+                rightBlur111,
+                stopsSign,
+                linesInfo,
+                linesSign,
+                speedChange,
+                bottomWindow,
+                saveExitEditing);
+    }
+
+    @FXML
+    private void exitEditing() {
+        timeManager.setScale((float)speedChange.getValue());
+        timeManager.changeSpeed();
+
+        view.exitGUIAdmin(stopSearchField,
+                stopSearchInput,
+                searchStopsButton,
+                rightBlur1,
+                rightBlur11,
+                rightBlur111,
+                stopsSign,
+                linesInfo,
+                linesSign,
+                speedChange,
+                bottomWindow,
+                saveExitEditing);
+    }
     /***
      * changes speed
      */

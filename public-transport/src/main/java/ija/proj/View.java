@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -216,6 +213,60 @@ public class View {
 
             addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
         }
+    }
+
+    public void prepareGUIforAdmin(TableView stopSearchField,
+                                   TextField stopSearchInput,
+                                   Button searchStopsButton,
+                                   Rectangle rightBlur1,
+                                   Rectangle rightBlur11,
+                                   Rectangle rightBlur111,
+                                   Text stopsSign,
+                                   ListView linesInfo,
+                                   Text linesSign,
+                                   Slider speedChange,
+                                   Pane bottomWindow,
+                                   Button saveExitEditing) {
+
+        stopSearchField.setVisible(false);
+        stopSearchInput.setVisible(false);
+        searchStopsButton.setVisible(false);
+        rightBlur11.setVisible(false);
+        rightBlur111.setVisible(false);
+        stopsSign.setVisible(false);
+        linesInfo.setVisible(false);
+        linesSign.setVisible(false);
+        speedChange.setVisible(false);
+        bottomWindow.setVisible(false);
+        rightBlur1.setLayoutY(-145);
+        saveExitEditing.setVisible(true);
+    }
+
+    public void exitGUIAdmin(TableView stopSearchField,
+                                   TextField stopSearchInput,
+                                   Button searchStopsButton,
+                                   Rectangle rightBlur1,
+                                   Rectangle rightBlur11,
+                                   Rectangle rightBlur111,
+                                   Text stopsSign,
+                                   ListView linesInfo,
+                                   Text linesSign,
+                                   Slider speedChange,
+                                   Pane bottomWindow,
+                                   Button saveExitEditing) {
+
+        stopSearchField.setVisible(true);
+        stopSearchInput.setVisible(true);
+        searchStopsButton.setVisible(true);
+        rightBlur11.setVisible(true);
+        rightBlur111.setVisible(true);
+        stopsSign.setVisible(true);
+        linesInfo.setVisible(true);
+        linesSign.setVisible(true);
+        speedChange.setVisible(true);
+        bottomWindow.setVisible(true);
+        rightBlur1.setLayoutY(-101);
+        saveExitEditing.setVisible(false);
     }
 
     public void showVehicleRoute(Pane mapContent,
