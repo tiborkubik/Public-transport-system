@@ -223,7 +223,6 @@ public class Controller {
 
         double dx = (event.getSceneX() - (bounds.getWidth() / 2 + bounds.getMinX()));
         double dy = (event.getSceneY() - (bounds.getHeight() / 2 + bounds.getMinY()));
-        System.out.println(dx + " " + dy);
         Timeline timeline = new Timeline(60);
 
         scrollP.setFitToHeight(true);
@@ -274,7 +273,7 @@ public class Controller {
     }
 
     public void setBasicSettings(List<Line> lines) {
-        background.setOnMouseClicked(event -> {
+        background.setOnMousePressed(event -> {
             view.setLineInfoDefault(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText, vehicleRoute);
             for(int i = 0; i < lines.size(); i++) {
                 view.changeLineColor(mapContent, lines.get(i), view.colorsForLines.get(i));
