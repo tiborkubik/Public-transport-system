@@ -132,6 +132,9 @@ public class Vehicle implements Drawable, UpdateState {
 
         double total = totalPathLength();
         if(distance > total) {
+            for(Shape x : GUI) {
+                // VYMAZANIE VOZIDLA HERE
+            }
             return;
         }
 

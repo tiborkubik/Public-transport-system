@@ -16,6 +16,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -93,6 +94,7 @@ public class Controller {
     private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
     private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm();
     private View view = new View(this);
+    private Tooltip densityInfo = new Tooltip();
 
     private TimeManager timeManager = new TimeManager(view, this);
 
@@ -436,11 +438,22 @@ public class Controller {
 
             if(sg != background)
                 sg.setCursor(Cursor.HAND);
+            else
+
 
             if(sg instanceof javafx.scene.shape.Line) {
 
                 // Traffic density on given street on hover
                 sg.setOnMouseEntered(event -> {
+                    for(Line line : lines) {
+                        for(Street st : line.getStreetList()) {
+                            if(sg.getId().contains(st.getName())) {
+                                densityInfo.setText("Traffic density on "+ line.getName() + " on " + st.getName() + ": " + st.getTrafficDensity());
+                                densityInfo.setFont(Font.font ("SansSerif", 14));
+                                Tooltip.install(sg, densityInfo);
+                            }
+                        }
+                    }
 
                 });
                 sg.setOnMouseExited(event -> {
@@ -526,15 +539,19 @@ public class Controller {
 
         double distFromStart = allStops.get(0).getCoordinate().coordDistance(line.getStreetList().get(0).begin());
 
-        for(int i = 1; i < allStops.size()-1; i++) {
+        for(int i = 1; i < allStops.size(); i++) {
             if(i == 1) {
-                view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, allStops, bottomWindow);
+                view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i-1, allStops, bottomWindow);
             }
 
-            distFromStart += allStops.get(i).getCoordinate().coordDistance(allStops.get(i+1).getCoordinate());
+            distFromStart += allStops.get(i-1).getCoordinate().coordDistance(allStops.get(i).getCoordinate());
 
             view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, allStops, bottomWindow);
         }
+
+//        distFromStart += allStops.get(allStops.size()-2).getCoordinate().coordDistance(allStops.get(allStops.size()-1).getCoordinate());
+//
+//        view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, allStops.size()-1, allStops, bottomWindow);
     }
 
     public void highlightRouteFromList(List<Line> lines) {

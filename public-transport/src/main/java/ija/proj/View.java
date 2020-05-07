@@ -183,6 +183,9 @@ public class View {
 
             addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
         }
+
+        distFromStart += singleV.getLine().getStopList().get(singleV.getLine().getStopList().size()-1).getCoordinate().coordDistance(singleV.getLine().getStopList().get(singleV.getLine().getStopList().size()).getCoordinate());
+        addStopToRoute(vehicleRoute, distFromStart, realToImPath, singleV.getLine().getStopList().size(), singleV, bottomWindow);
     }
 
     public void prepareGUIforAdmin(
@@ -287,6 +290,7 @@ public class View {
 
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
+            System.out.println(sg.getId());
             if(sg instanceof Circle || sg instanceof Polygon || (sg instanceof Rectangle && !sg.equals(background))) {
                 sg.setOnMouseClicked(event ->{
                     cleanRouteFromStops(bottomWindow);
