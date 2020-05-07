@@ -1,11 +1,11 @@
 package ija.proj;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.input.ScrollEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -99,6 +99,13 @@ public class View {
 
     public void addElement(Drawable element, Pane mapContent) {
         mapContent.getChildren().addAll(element.getGUI());
+    }
+
+    public void deleteElement(Drawable element,Pane mapContent){
+        System.out.println("vehicle : " + element + "should be deleted");
+        boolean removed = mapContent.getChildren().remove(element.getGUI());
+        System.out.println("removed from mapContent: " + removed);
+        controller.deleteVeh(element);
     }
 
     public void viewLinesInfo(List<Line> lines, ListView linesInfo) {
@@ -290,7 +297,7 @@ public class View {
 
         ObservableList<Node> x = mapContent.getChildren();
         for(Node sg : x) {
-            System.out.println(sg.getId());
+            //System.out.println(sg.getId());
             if(sg instanceof Circle || sg instanceof Polygon || (sg instanceof Rectangle && !sg.equals(background))) {
                 sg.setOnMouseClicked(event ->{
                     cleanRouteFromStops(bottomWindow);

@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -102,6 +101,13 @@ public class Controller {
     private void exitProgram() {
         Platform.exit();
         System.exit(0);
+    }
+
+    public void deleteVeh(Drawable vehicle){
+        boolean removed = updates.remove(vehicle);
+        System.out.println("removed from updates: " + removed);
+        removed = allVehicles.remove(vehicle);
+        System.out.println("removed from allVehicles: " + removed);
     }
 
     @FXML

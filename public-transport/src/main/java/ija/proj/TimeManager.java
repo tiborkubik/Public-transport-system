@@ -14,6 +14,7 @@ public class TimeManager {
     LocalTime currentTime = LocalTime.now();
     double scaleForSpeed = 1.0;
     List<Drawable> vehiclesToAdd = new ArrayList<>();
+    List<Drawable> vehiclesToDelete = new ArrayList<>();
     List<Line> lines = new ArrayList<>();
     double timeMultiplier = 15;
     View view;
@@ -73,6 +74,10 @@ public class TimeManager {
                     Vehicle currentV = (Vehicle)update;
                     int trafficCoeff = currentV.getCurrentStreet().getTrafficDensity();
                     update.update(currentTime,15/this.timeMultiplier, trafficCoeff);
+                    if (currentV.getLine().getStreetList().get(currentV.getLine().getStreetList().size()-1).end().equals(currentV.getPosition())){
+                        vehiclesToDelete.add(currentV);
+                        System.out.println("here I am");
+                    }
                 }
 
                 if(currentTime.getSecond() == 0) {
@@ -117,6 +122,9 @@ public class TimeManager {
             timer.play();
             this.vehiclesToAdd =  new ArrayList<>();
 
+            for (Drawable veh : vehiclesToDelete){
+                view.deleteElement(veh, mapContent);
+            }
 
     }
 

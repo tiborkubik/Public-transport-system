@@ -18,6 +18,10 @@ public class Vehicle implements Drawable, UpdateState {
     private List<Coordinate> path = new ArrayList<>();
     private int cnt_time = 0;
 
+    public Coordinate getPosition(){
+        return this.position;
+    }
+
     public Vehicle(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop) {
         this.position = position;
         this.speed = speed;
@@ -113,7 +117,6 @@ public class Vehicle implements Drawable, UpdateState {
             this.speed = this.constantSpeed * speedMultiplier;
 
         if(this.getLine().getName().contains("Line B"))
-            System.out.println(this.nextStop.getName());
 
         if (cnt_time >= 0){
             cnt_time--;
@@ -149,7 +152,25 @@ public class Vehicle implements Drawable, UpdateState {
 
         for(Street s : this.onLine.getStreetList()) {
             if(Math.abs(s.begin().diffX(newC)) < this.speed/2 && Math.abs(s.begin().diffY(newC)) < this.speed/2) {
-                GUI.get(0).setRotate(90-90*s.getSlope());
+                double slope = s.getSlope();
+                if (s.begin().getX() < s.end().getX() ){
+                    if (s.begin().getY() < s.end().getY()){
+                        GUI.get(0).setRotate(180-90*slope);
+                    }
+                    else{
+                        //vodorovne z lava do prava
+                        GUI.get(0).setRotate(90+90*slope);
+                    }
+                }
+                else{
+                    if (s.begin().getY() < s.end().getY()){
+                        //ked ide hore doprava
+                        GUI.get(0).setRotate(180+90*slope);
+                    }
+                    else{
+                        GUI.get(0).setRotate(90-90*slope);
+                    }
+                }
                 this.currentStreet = s;
             }
         }
