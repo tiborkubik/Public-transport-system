@@ -438,8 +438,6 @@ public class Controller {
 
             if(sg != background)
                 sg.setCursor(Cursor.HAND);
-            else
-
 
             if(sg instanceof javafx.scene.shape.Line) {
 
