@@ -89,7 +89,7 @@ public class TimeManager {
                     if (elapse_time == 1)
                         setScale(10);
                     else if(elapse_time == 2)
-                        setScale(300);
+                        setScale(100);
 
                     changeSpeed();
                     if (    timeToJump.getHour() == currentTime.getHour() &&

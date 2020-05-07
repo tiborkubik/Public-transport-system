@@ -16,8 +16,11 @@ public class Main extends Application {
 
         // Loading resource for map layout
         FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml"));
+        String extraThemes = getClass().getResource("/themes.css").toExternalForm();
+
         BorderPane rootElement = layoutLoader.load();
         Scene mainScene = new Scene(rootElement);       // loads root element from GUI
+        mainScene.getStylesheets().add(extraThemes);
 
         primaryStage.setScene(mainScene);               // setting scene into stage
         primaryStage.show();
@@ -26,7 +29,7 @@ public class Main extends Application {
 
         controller.setBackground();
 
-        View view = new View();
+        View view = new View(controller);
 
         // allElements containg all Drawable elements such as streets, stops, etc
         List<Drawable> allElements = new ArrayList<>();
@@ -59,6 +62,7 @@ public class Main extends Application {
         controller.setLinesInfo(lines);
 
         controller.setCursor(lines);
+        controller.editTrafficLine(lines);
 
         controller.highlightRouteFromList(lines);
 

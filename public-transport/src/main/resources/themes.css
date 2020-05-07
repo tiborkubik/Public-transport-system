@@ -1,0 +1,7 @@
+.dashedLine{
+    -fx-stroke-dash-array: 5 10 5 10;
+}
+
+.normalLine{
+    -fx-stroke-dash-array: none;
+}

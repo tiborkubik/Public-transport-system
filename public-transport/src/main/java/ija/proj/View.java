@@ -18,8 +18,10 @@ import java.util.List;
 
 public class View {
     List<Color> colorsForLines = new ArrayList<>();
+    Controller controller;
 
-    public View() {
+    public View(Controller controller) {
+        this.controller = controller;
         setColorsForLines();
     }
 
@@ -183,58 +185,92 @@ public class View {
         }
     }
 
-    public void prepareGUIforAdmin(TableView stopSearchField,
-                                   TextField stopSearchInput,
-                                   Button searchStopsButton,
+    public void prepareGUIforAdmin(
                                    Rectangle rightBlur1,
-                                   Rectangle rightBlur11,
                                    Rectangle rightBlur111,
-                                   Text stopsSign,
                                    ListView linesInfo,
                                    Text linesSign,
                                    Slider speedChange,
                                    Pane bottomWindow,
-                                   Button saveExitEditing) {
+                                   Button saveExitEditing,
+                                   Rectangle saveBackground,
+                                   Button plusH,
+                                   Button plusM,
+                                   Button plusS,
+                                   Button minusH,
+                                   Button minusM,
+                                   Button minusS,
+                                   TextArea editJamsInfo) {
 
-        stopSearchField.setVisible(false);
-        stopSearchInput.setVisible(false);
-        searchStopsButton.setVisible(false);
-        rightBlur11.setVisible(false);
         rightBlur111.setVisible(false);
-        stopsSign.setVisible(false);
         linesInfo.setVisible(false);
         linesSign.setVisible(false);
         speedChange.setVisible(false);
         bottomWindow.setVisible(false);
+
+        plusH.setVisible(false);
+        plusH.setDisable(true);
+        plusM.setVisible(false);
+        plusM.setDisable(true);
+        plusS.setVisible(false);
+        plusS.setDisable(true);
+        minusH.setVisible(false);
+        minusH.setDisable(true);
+        minusM.setVisible(false);
+        minusM.setDisable(true);
+        minusS.setVisible(false);
+        minusS.setDisable(true);
+
+        saveBackground.setVisible(true);
         rightBlur1.setLayoutY(-145);
         saveExitEditing.setVisible(true);
+
+        if(this.controller.inEditTrafficMode())
+            editJamsInfo.setVisible(true);
+
     }
 
-    public void exitGUIAdmin(TableView stopSearchField,
-                                   TextField stopSearchInput,
-                                   Button searchStopsButton,
-                                   Rectangle rightBlur1,
-                                   Rectangle rightBlur11,
-                                   Rectangle rightBlur111,
-                                   Text stopsSign,
+    public void exitGUIAdmin(Rectangle rightBlur1,
+                                Rectangle rightBlur111,
                                    ListView linesInfo,
                                    Text linesSign,
                                    Slider speedChange,
                                    Pane bottomWindow,
-                                   Button saveExitEditing) {
+                                   Button saveExitEditing,
+                                   Rectangle saveBackground,
+                                   Button plusH,
+                                   Button plusM,
+                                   Button plusS,
+                                   Button minusH,
+                                   Button minusM,
+                                   Button minusS,
+                                   TextArea editJamsInfo) {
 
-        stopSearchField.setVisible(true);
-        stopSearchInput.setVisible(true);
-        searchStopsButton.setVisible(true);
-        rightBlur11.setVisible(true);
         rightBlur111.setVisible(true);
-        stopsSign.setVisible(true);
         linesInfo.setVisible(true);
         linesSign.setVisible(true);
         speedChange.setVisible(true);
         bottomWindow.setVisible(true);
+
+        plusH.setVisible(true);
+        plusH.setDisable(false);
+        plusM.setVisible(true);
+        plusM.setDisable(false);
+        plusS.setVisible(true);
+        plusS.setDisable(false);
+        minusH.setVisible(true);
+        minusH.setDisable(false);
+        minusM.setVisible(true);
+        minusM.setDisable(false);
+        minusS.setVisible(true);
+        minusS.setDisable(false);
+
+        saveBackground.setVisible(false);
         rightBlur1.setLayoutY(-101);
         saveExitEditing.setVisible(false);
+
+        if(controller.inEditTrafficMode())
+            editJamsInfo.setVisible(false);
     }
 
     public void showVehicleRoute(Pane mapContent,

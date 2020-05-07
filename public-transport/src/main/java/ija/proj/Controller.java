@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -49,25 +50,36 @@ public class Controller {
     @FXML
     private javafx.scene.shape.Line vehicleRoute;
     @FXML
-    private TableView stopSearchField;
-    @FXML
-    private TextField stopSearchInput;
-    @FXML
-    private Button searchStopsButton;
-    @FXML
     private Rectangle rightBlur1;
     @FXML
-    private Rectangle rightBlur11;
-    @FXML
     private Rectangle rightBlur111;
-    @FXML
-    private Text stopsSign;
     @FXML
     private Text linesSign;
     @FXML
     private Button saveExitEditing;
     @FXML
-    private BorderPane rootElement;
+    private  Rectangle saveBackground;
+    @FXML
+    private Button plusH;
+    @FXML
+    private Button plusM;
+    @FXML
+    private Button plusS;
+    @FXML
+    private Button minusH;
+    @FXML
+    private Button minusM;
+    @FXML
+    private Button minusS;
+    @FXML
+    private TextArea editJamsInfo;
+    @FXML
+    private Spinner trafficSpinner;
+    @FXML
+    private Button setIntensity;
+
+
+    SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
 
     Image bg = new Image("mapa1.jpg");
     BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
@@ -75,13 +87,12 @@ public class Controller {
     private List<Line> lines = new ArrayList<>();
     private List<UpdateState> updates = new ArrayList<>();
     private List<Vehicle> allVehicles = new ArrayList<>();
-
+    private boolean inEditTrafficMode = false;
     private Timetable timeTable;
 
-    private View view = new View();
+    private View view = new View(this);
 
     private TimeManager timeManager = new TimeManager(view, this);
-
 
     @FXML
     private void exitProgram() {
@@ -94,20 +105,26 @@ public class Controller {
         timeManager.setScale(1);
         timeManager.changeSpeed();
 
-        view.prepareGUIforAdmin(stopSearchField,
-                                stopSearchInput,
-                                searchStopsButton,
+        inEditTrafficMode = true;
+
+        trafficSpinner.setValueFactory(spinnerVal);
+
+        view.prepareGUIforAdmin(
                                 rightBlur1,
-                                rightBlur11,
                                 rightBlur111,
-                                stopsSign,
                                 linesInfo,
                                 linesSign,
                                 speedChange,
                                 bottomWindow,
-                                saveExitEditing);
-
-
+                                saveExitEditing,
+                                saveBackground,
+                                plusH,
+                                plusM,
+                                plusS,
+                                minusH,
+                                minusM,
+                                minusS,
+                                editJamsInfo);
     }
 
     @FXML
@@ -115,18 +132,24 @@ public class Controller {
         timeManager.setScale(1);
         timeManager.changeSpeed();
 
-        view.prepareGUIforAdmin(stopSearchField,
-                stopSearchInput,
-                searchStopsButton,
+        inEditTrafficMode = false;
+
+        view.prepareGUIforAdmin(
                 rightBlur1,
-                rightBlur11,
                 rightBlur111,
-                stopsSign,
                 linesInfo,
                 linesSign,
                 speedChange,
                 bottomWindow,
-                saveExitEditing);
+                saveExitEditing,
+                saveBackground,
+                plusH,
+                plusM,
+                plusS,
+                minusH,
+                minusM,
+                minusS,
+                editJamsInfo);
     }
 
     @FXML
@@ -134,18 +157,22 @@ public class Controller {
         timeManager.setScale((float)speedChange.getValue());
         timeManager.changeSpeed();
 
-        view.exitGUIAdmin(stopSearchField,
-                stopSearchInput,
-                searchStopsButton,
+        view.exitGUIAdmin(
                 rightBlur1,
-                rightBlur11,
                 rightBlur111,
-                stopsSign,
                 linesInfo,
                 linesSign,
                 speedChange,
                 bottomWindow,
-                saveExitEditing);
+                saveExitEditing,
+                saveBackground,
+                plusH,
+                plusM,
+                plusS,
+                minusH,
+                minusM,
+                minusS,
+                editJamsInfo);
     }
     /***
      * changes speed
@@ -301,6 +328,30 @@ public class Controller {
         timeline.play();
     }
 
+    public boolean inEditTrafficMode() {
+        return this.inEditTrafficMode;
+    }
+
+    public void editTrafficLine(List<Line> lines) {
+        System.out.println("true");
+        ObservableList<Node> x = mapContent.getChildren();
+
+//        for(Node sg : x) {
+//            if(sg instanceof javafx.scene.shape.Line) {
+//                sg.setOnMouseClicked(event -> {
+//                    for(Line line : lines) {
+//                        for(Street st : line.getStreetList()) {
+//                            if(sg.getId().contains(st.getName())) {
+//                                bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
+//                            }
+//                            ((javafx.scene.shape.Line) sg).setFill(Color.ORANGE);
+//                        }
+//                    }
+//                });
+//            }
+//        }
+    }
+
     public void setBackground() {
         mapContent.setBackground(new Background(new BackgroundImage(bg,
                 BackgroundRepeat.NO_REPEAT,
@@ -381,11 +432,21 @@ public class Controller {
                     boolean onLine = false;
                     for(Line line : lines) {
                         for(Street st : line.getStreetList()) {
-                            if(sg.getId().contains(st.getName())) {
-                                bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
+                            if(!inEditTrafficMode){
+                                if(sg.getId().contains(st.getName())) {
+                                    bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
+                                }
+                                view.clickedOnLine(finalStopInfo, finalStopText);
+                                onLine = true;
+                            } else {
+                                if(sg.getId().contains(st.getName())) {
+                                    sg.getStyleClass().add("dashedLine");
+                                    trafficSpinner.setVisible(true);
+                                    //spinnerVal.setValue();
+                                    setIntensity.setVisible(true);
+                                }
                             }
-                            view.clickedOnLine(finalStopInfo, finalStopText);
-                            onLine = true;
+
                         }
                     }
 
