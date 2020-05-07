@@ -23,6 +23,7 @@ public class Street implements Drawable {
     private List<Stop> stopList= new ArrayList<>();
     private List<Coordinate> coordinatesList= new ArrayList<>();
     private int n_lines = 0;
+    private int trafficDensity = 1;
 
     public Street(String identifier, Coordinate start, Coordinate end) {
         this.identifier = identifier;
@@ -36,6 +37,14 @@ public class Street implements Drawable {
 
     public Street() {
 
+    }
+
+    public int getTrafficDensity() {
+        return trafficDensity;
+    }
+
+    public void setTrafficDensity(int trafficDensity) {
+        this.trafficDensity = trafficDensity;
     }
 
     public int getN_lines(){

@@ -9,7 +9,8 @@ public class Vehicle implements Drawable, UpdateState {
     private Coordinate position;
     private double speed;
     private double constantSpeed;
-
+    private Street currentStreet;
+    private Stop nextStop;
     private double distance = 0;
     private String identifier;
     private Line onLine;
@@ -17,12 +18,14 @@ public class Vehicle implements Drawable, UpdateState {
     private List<Coordinate> path = new ArrayList<>();
     private int cnt_time = 0;
 
-    public Vehicle(Coordinate position, double speed, Line onLine, String identifier) {
+    public Vehicle(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop) {
         this.position = position;
         this.speed = speed;
         this.onLine = onLine;
         this.identifier = identifier;
         this.constantSpeed = speed;
+        this.currentStreet = street;
+        this.nextStop = firstStop;
     }
 
     public String getName() {
@@ -31,6 +34,10 @@ public class Vehicle implements Drawable, UpdateState {
 
     public Line getLine() {
         return this.onLine;
+    }
+
+    public Street getCurrentStreet() {
+        return this.currentStreet;
     }
 
     protected void setStops() {
@@ -99,16 +106,23 @@ public class Vehicle implements Drawable, UpdateState {
     }
 
     @Override
-    public void update(LocalTime time, double speedMultiplier) {
-        this.speed = this.constantSpeed * speedMultiplier;
+    public void update(LocalTime time, double speedMultiplier, int trafficCoefficient) {
+        if(trafficCoefficient != 1)
+            this.speed = this.constantSpeed * speedMultiplier * ((double)1/(trafficCoefficient*2));
+        else
+            this.speed = this.constantSpeed * speedMultiplier;
+
+        if(this.getLine().getName().contains("Line B"))
+            System.out.println(this.nextStop.getName());
+
         if (cnt_time >= 0){
             cnt_time--;
             if(cnt_time == 0){
                 this.speed = this.constantSpeed;
             }
-            else if (cnt_time < 50){
-                this.speed = this.constantSpeed - this.constantSpeed* cnt_time/50;
-            }
+//                else if (cnt_time < 50){
+//                    this.speed = this.constantSpeed - this.constantSpeed* cnt_time/50;
+//                }
             else {
                 return;
             }
@@ -122,15 +136,18 @@ public class Vehicle implements Drawable, UpdateState {
         }
 
         Coordinate newC = getNewCoord(distance, path);
-        for(Stop stopOnRoute : this.onLine.getStopList()) {
-            if(Math.abs(stopOnRoute.getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(stopOnRoute.getCoordinate().diffY(newC)) < this.speed/2) {
-                cnt_time = stopOnRoute.getTime();
+
+        for(int i = 0; i < this.onLine.getStopList().size()-1; i++) {
+            if(Math.abs(this.onLine.getStopList().get(i).getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(this.onLine.getStopList().get(i).getCoordinate().diffY(newC)) < this.speed/2) {
+                cnt_time = this.onLine.getStopList().get(i).getTime();
+                this.nextStop = this.onLine.getStopList().get(i+1);
             }
         }
 
         for(Street s : this.onLine.getStreetList()) {
             if(Math.abs(s.begin().diffX(newC)) < this.speed/2 && Math.abs(s.begin().diffY(newC)) < this.speed/2) {
                 GUI.get(0).setRotate(90-90*s.getSlope());
+                this.currentStreet = s;
             }
         }
 

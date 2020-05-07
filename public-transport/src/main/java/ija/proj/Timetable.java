@@ -35,17 +35,17 @@ public class Timetable {
                             if (line.getType().equals("bus") && !names.contains(line.getName())){
                                 flag = true;
                                 names.add(line.getName());
-                                vehiclesToAdd.add(new Bus(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.3, line, "#" +line.getType() + id));
+                                vehiclesToAdd.add(new Bus(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.3, line, "#" +line.getType() + id, line.getStreetList().get(0), line.getStopList().get(0)));
                             }
                             if (line.getType().equals("tram") && !names.contains(line.getName())){
                                 flag = true;
                                 names.add(line.getName());
-                                vehiclesToAdd.add(new Tram(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.6, line, "#" +line.getType() + id));
+                                vehiclesToAdd.add(new Tram(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.6, line, "#" +line.getType() + id, line.getStreetList().get(0), line.getStopList().get(0)));
                             }
                             if (line.getType().equals("sub") && !names.contains(line.getName())){
                                 flag = true;
                                 names.add(line.getName());
-                                vehiclesToAdd.add(new Subway(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 1, line, "#" +line.getType() + id));
+                                vehiclesToAdd.add(new Subway(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 1, line, "#" +line.getType() + id, line.getStreetList().get(0), line.getStopList().get(0)));
                             }
                         }
                 }

@@ -70,7 +70,9 @@ public class TimeManager {
                 timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
 
                 for (UpdateState update : updates) {
-                    update.update(currentTime,15/this.timeMultiplier);
+                    Vehicle currentV = (Vehicle)update;
+                    int trafficCoeff = currentV.getCurrentStreet().getTrafficDensity();
+                    update.update(currentTime,15/this.timeMultiplier, trafficCoeff);
                 }
 
                 if(currentTime.getSecond() == 0) {

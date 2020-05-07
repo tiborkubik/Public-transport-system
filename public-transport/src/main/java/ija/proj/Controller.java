@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
@@ -80,7 +81,7 @@ public class Controller {
 
 
     SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
-
+    private Scene mainScene;
     Image bg = new Image("mapa1.jpg");
     BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
 
@@ -89,7 +90,8 @@ public class Controller {
     private List<Vehicle> allVehicles = new ArrayList<>();
     private boolean inEditTrafficMode = false;
     private Timetable timeTable;
-
+    private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
+    private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm();
     private View view = new View(this);
 
     private TimeManager timeManager = new TimeManager(view, this);
@@ -150,6 +152,8 @@ public class Controller {
                 minusM,
                 minusS,
                 editJamsInfo);
+
+        inEditTrafficMode = false;
     }
 
     @FXML
@@ -173,6 +177,8 @@ public class Controller {
                 minusM,
                 minusS,
                 editJamsInfo);
+
+        inEditTrafficMode = false;
     }
     /***
      * changes speed
@@ -332,6 +338,10 @@ public class Controller {
         return this.inEditTrafficMode;
     }
 
+    public void setScene(Scene scene) {
+        this.mainScene = scene;
+    }
+
     public void editTrafficLine(List<Line> lines) {
         System.out.println("true");
         ObservableList<Node> x = mapContent.getChildren();
@@ -428,7 +438,16 @@ public class Controller {
                 sg.setCursor(Cursor.HAND);
 
             if(sg instanceof javafx.scene.shape.Line) {
+
+                // Traffic density on given street on hover
+                sg.setOnMouseEntered(event -> {
+
+                });
+                sg.setOnMouseExited(event -> {
+
+                });
                 sg.setOnMouseClicked(event -> {
+                    System.out.println(inEditTrafficMode);
                     boolean onLine = false;
                     for(Line line : lines) {
                         for(Street st : line.getStreetList()) {
@@ -440,13 +459,33 @@ public class Controller {
                                 onLine = true;
                             } else {
                                 if(sg.getId().contains(st.getName())) {
+                                    try {
+                                        mainScene.getStylesheets().remove(normalLine);
+                                    } catch (Exception e){
+                                    }
+                                    mainScene.getStylesheets().add(dashedLine);
                                     sg.getStyleClass().add("dashedLine");
                                     trafficSpinner.setVisible(true);
-                                    //spinnerVal.setValue();
                                     setIntensity.setVisible(true);
+                                    spinnerVal.setValue(st.getTrafficDensity());
+
+                                    setIntensity.setOnMouseClicked(event2 -> {
+                                        st.setTrafficDensity((Integer) trafficSpinner.getValue());
+
+                                        if(st.getTrafficDensity() == 1) {
+                                            mainScene.getStylesheets().add(normalLine);
+                                            sg.getStyleClass().add("normalLine");
+                                            try {
+                                                mainScene.getStylesheets().remove(dashedLine);
+                                            } catch (Exception e){
+                                            }
+                                        }
+
+                                        trafficSpinner.setVisible(false);
+                                        setIntensity.setVisible(false);
+                                    });
                                 }
                             }
-
                         }
                     }
 

@@ -16,11 +16,11 @@ public class Main extends Application {
 
         // Loading resource for map layout
         FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml"));
-        String extraThemes = getClass().getResource("/themes.css").toExternalForm();
+        String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
 
         BorderPane rootElement = layoutLoader.load();
         Scene mainScene = new Scene(rootElement);       // loads root element from GUI
-        mainScene.getStylesheets().add(extraThemes);
+        mainScene.getStylesheets().add(normalLine);
 
         primaryStage.setScene(mainScene);               // setting scene into stage
         primaryStage.show();
@@ -28,6 +28,7 @@ public class Main extends Application {
         Controller controller = layoutLoader.getController();
 
         controller.setBackground();
+        controller.setScene(mainScene);
 
         View view = new View(controller);
 

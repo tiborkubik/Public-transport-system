@@ -9,6 +9,8 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.BorderPane?>
@@ -160,10 +162,21 @@
                         </Text>
                     </children>
                 </Pane>
-            <Rectangle fx:id="saveBackground" arcHeight="10.0" arcWidth="10.0" fill="#32a103b0" height="69.0" layoutX="650.0" layoutY="900.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="331.0" />
-                <Button fx:id="saveExitEditing" layoutX="650.0" layoutY="900.0" mnemonicParsing="false" onAction="#exitEditing" style="-fx-background-color: none;" text="Save and Exit editing" textFill="#323232" visible="false">
+                <Rectangle fx:id="saveBackground" arcHeight="10.0" arcWidth="10.0" fill="#32a103b0" height="69.0" layoutX="650.0" layoutY="900.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="331.0" />
+                <Button fx:id="saveExitEditing" layoutX="650.0" layoutY="900.0" mnemonicParsing="false" onAction="#exitEditing" style="-fx-background-color: none;" text="Exit editing" textAlignment="CENTER" textFill="#323232" visible="false">
                     <font>
                         <Font name="Impact" size="34.0" />
+                    </font>
+                </Button>
+                <TextArea fx:id="editJamsInfo" layoutX="1270.0" layoutY="230.0" prefHeight="370.0" prefWidth="311.0" text="You are in traffic jams edit mode.&#10;&#10;How to edit an intensity of traffic&#10;flow on a street:&#10;&#10;1) Click on 1 specific street. The&#10;    street should be dashed now.&#10;2) in given TextField, specify the&#10;   intensity of traffic.&#10;   Rule: the higher the number the&#10;   worste traffic flow, &#10;   from 1(normal)&#10;   to 9(worst traffic).&#10;3) Confirm edited traffic level.&#10;&#10;" visible="false">
+                    <font>
+                        <Font name="SansSerif Regular" size="18.0" />
+                    </font>
+                </TextArea>
+                <Spinner fx:id="trafficSpinner" editable="true" layoutX="1325.5" layoutY="630.0" prefWidth="200.0" visible="false" />
+                <Button fx:id="setIntensity" layoutX="1340.0" layoutY="660.0" mnemonicParsing="false" text="Set Traffic Intensity" textFill="#323232" visible="false">
+                    <font>
+                        <Font name="SansSerif Bold" size="16.0" />
                     </font>
                 </Button>
             </children>
