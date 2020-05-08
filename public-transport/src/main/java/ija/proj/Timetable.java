@@ -9,7 +9,7 @@ public class Timetable {
     private List<Line> lines;
     private View view;
     private Controller controller;
-
+    private int id = 41999;
     public Timetable(List<Drawable> allElemets, List<Line> lines, View view, Controller controller) {
         this.allElemets = allElemets;
         this.lines = lines;
@@ -20,7 +20,6 @@ public class Timetable {
 
     public List <Drawable> checkTimeTable(TimeManager timeManager) {
         List <Drawable> vehiclesToAdd= new ArrayList<>();
-        int id = 41999;
         List <String> names = new ArrayList<>();
         boolean flag;
         for(Line line : lines) {
@@ -30,24 +29,24 @@ public class Timetable {
                 if(time.getHour() == timeManager.getCurrentTime().getHour() &&
                         time.getMinute() == timeManager.getCurrentTime().getMinute() &&
                         time.getSecond() == timeManager.getCurrentTime().getSecond() &&
-                        timeManager.getCurrentTime().getNano() < 100000000){
+                        timeManager.getCurrentTime().getNano() < 50000000){
                         id++;
                         while (flag){
                             flag = false;
                             if (line.getType().equals("bus") && !names.contains(line.getName())){
                                 flag = true;
                                 names.add(line.getName());
-                                vehiclesToAdd.add(new Bus(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.3, line, "#" +line.getType() + id, line.getStreetList().get(0), line.getStopList().get(0), this.controller));
+                                vehiclesToAdd.add(new Bus(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.3, line, "#" +line.getType() + id + " " + line.getName(), line.getStreetList().get(0), line.getStopList().get(0), this.controller));
                             }
                             if (line.getType().equals("tram") && !names.contains(line.getName())){
                                 flag = true;
                                 names.add(line.getName());
-                                vehiclesToAdd.add(new Tram(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.6, line, "#" +line.getType() + id, line.getStreetList().get(0), line.getStopList().get(0), this.controller));
+                                vehiclesToAdd.add(new Tram(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 0.6, line, "#" +line.getType() + id + " " + line.getName(), line.getStreetList().get(0), line.getStopList().get(0), this.controller));
                             }
                             if (line.getType().equals("sub") && !names.contains(line.getName())){
                                 flag = true;
                                 names.add(line.getName());
-                                vehiclesToAdd.add(new Subway(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 1, line, "#" +line.getType() + id, line.getStreetList().get(0), line.getStopList().get(0), this.controller));
+                                vehiclesToAdd.add(new Subway(new Coordinate(line.getStreetList().get(0).begin().getX(), line.getStreetList().get(0).begin().getY()), 1, line, "#" +line.getType() + id + " " + line.getName(), line.getStreetList().get(0), line.getStopList().get(0), this.controller));
                             }
                         }
                 }

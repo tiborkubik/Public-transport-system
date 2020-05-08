@@ -69,5 +69,7 @@ public class Main extends Application {
         controller.setBasicSettings(lines);
 
         controller.showVehicleRoute();
+
+        controller.setVehicleInfo();
     }
 }

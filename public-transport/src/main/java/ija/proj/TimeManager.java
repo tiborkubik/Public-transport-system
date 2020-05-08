@@ -16,7 +16,8 @@ public class TimeManager {
     LocalTime currentTime = LocalTime.now();
     double scaleForSpeed = 1.0;
     List<Drawable> vehiclesToAdd = new ArrayList<>();
-    List<Drawable> vehiclesToDelete = new ArrayList<>();
+    List<Drawable> routeVehicleToAdd = new ArrayList<>();
+
     List<Line> lines = new ArrayList<>();
     double timeMultiplier = 15;
     View view;
@@ -68,40 +69,26 @@ public class TimeManager {
             double d_coefficient = 1000/coefficient;
 
             timer = new Timeline(new KeyFrame(javafx.util.Duration.millis(d_coefficient), event -> {
-
                 currentTime = currentTime.plusNanos(1000000000/15);
-
                 timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
-
-//                for(UpdateState update : updates) {
-//                    Vehicle currentV = (Vehicle)update;
-//                    if (currentV.getLine().getStreetList().get(currentV.getLine().getStreetList().size()-1).end().equals(currentV.getPosition())){
-//                        updates.remove(update);
-//
-//                        ObservableList<Node> mapNodes = mapContent.getChildren();
-//                        for(Node singleNode : mapNodes) {
-//                            System.out.println(currentV.getName() + "   -   " + singleNode.getId());
-//                            if(currentV.getName().equals(singleNode.getId())){
-//                                System.out.println("koacskoa");
-//                                mapContent.getChildren().remove(singleNode);
-//                            }
-//                        }
-//                        System.out.println("here I am");
-//                    }
-//                }
                 try {
                     for (UpdateState update : updates) {
                         Vehicle currentV = (Vehicle)update;
                         int trafficCoeff = currentV.getCurrentStreet().getTrafficDensity();
                         update.update(currentTime,15/this.timeMultiplier, trafficCoeff);
+                        if(controller.getFocusedVehicle() != null)
+                            controller.getNextStopText().setText(controller.getFocusedVehicle().getNextStop().getName());
+                        else
+                            controller.getNextStopText().setText("-");
                     }
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
 
                 if(currentTime.getSecond() == 0) {
                         try {
                             this.vehiclesToAdd = timeTable.checkTimeTable(thisTM);
-                        } catch (Exception e){
+                            controller.setVehicleInfo();
+                        } catch (Exception ignored){
                         }
                     for(Drawable x : vehiclesToAdd){
                         view.addElement(x, mapContent);
@@ -139,11 +126,6 @@ public class TimeManager {
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
             this.vehiclesToAdd =  new ArrayList<>();
-
-//            for (Drawable veh : vehiclesToDelete){
-//                view.deleteElement(veh, mapContent);
-//            }
-
     }
 
     public List<Drawable> getVehicleToAdd() {

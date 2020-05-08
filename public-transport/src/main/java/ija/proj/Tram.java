@@ -7,6 +7,7 @@ public class Tram extends Vehicle {
     public Tram(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
         super(position, speed, onLine, identifier, street, firstStop, controller);
 
+        super.setInitialStop();
         super.setStops();
 
         //.GUI = new ArrayList<>();
@@ -18,6 +19,7 @@ public class Tram extends Vehicle {
                 (double)position.getX() - 8, (double)position.getY(),
                 });
         singleTram.setFill(Color.rgb(50, 50, 50));
+        singleTram.setStroke(onLine.getColor());
         singleTram.setId(super.getName());
         super.GUI.add(singleTram);
     }

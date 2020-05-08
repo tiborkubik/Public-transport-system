@@ -113,10 +113,11 @@ public class View {
         finalStopText.setOpacity(1);
     }
 
-    public void clickedOnVoid(Text finalStopInfo, Text finalStopText, Pane bottomWindow) {
+    public void clickedOnVoid(Text finalStopInfo, Text finalStopText, Text nextStopText, Pane bottomWindow) {
         finalStopInfo.setOpacity(0.5);
         finalStopText.setOpacity(0.5);
         finalStopText.setText("-");
+        nextStopText.setText("-");
 
         cleanRouteFromStops(bottomWindow);
     }

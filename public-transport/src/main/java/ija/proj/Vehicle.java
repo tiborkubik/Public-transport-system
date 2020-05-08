@@ -35,7 +35,14 @@ public class Vehicle implements Drawable, UpdateState {
         this.currentStreet = street;
         this.nextStop = firstStop;
         this.controller = controller;
+    }
 
+    public void setInitialStop() {
+        this.nextStop = this.onLine.getStopList().get(0);
+    }
+
+    public Stop getNextStop() {
+        return this.nextStop;
     }
 
     public String getName() {
@@ -58,15 +65,6 @@ public class Vehicle implements Drawable, UpdateState {
         });
     }
 
-    public void changeSpeed(double speed){
-        this.speed = speed;
-    }
-    public void setDefaultSpeed(){
-        this.speed = this.constantSpeed;
-    }
-
-
-    // TODO
     private void modifyGUI(Coordinate coordinate) {
         try{
             for(Shape shape : GUI) {

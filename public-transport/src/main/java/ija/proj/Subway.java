@@ -10,6 +10,7 @@ public class Subway extends Vehicle {
     public Subway(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
         super(position, speed, onLine, identifier, street, firstStop, controller);
 
+        super.setInitialStop();
         super.setStops();
 
         //super.GUI = new ArrayList<>();
@@ -18,6 +19,7 @@ public class Subway extends Vehicle {
         singleSub.setY(position.getY() - 12);
         singleSub.setWidth(12);
         singleSub.setHeight(24);
+        singleSub.setStroke(onLine.getColor());
         singleSub.setFill(Color.rgb(50, 50, 50));
         singleSub.setId(super.getName());
         super.GUI.add(singleSub);

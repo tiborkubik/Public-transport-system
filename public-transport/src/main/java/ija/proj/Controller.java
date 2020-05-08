@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -78,6 +80,8 @@ public class Controller {
     private Spinner<Integer> trafficSpinner;
     @FXML
     private Button setIntensity;
+    @FXML
+    private BorderPane rootElement;
 
     private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
     private Scene mainScene;
@@ -93,6 +97,7 @@ public class Controller {
     private View view = new View(this);
     private Tooltip densityInfo = new Tooltip();
     private TimeManager timeManager = new TimeManager(view, this);
+    private Vehicle focusedVehicle = null;
 
     @FXML
     private void exitProgram() {
@@ -378,6 +383,8 @@ public class Controller {
             }
 
             view.cleanRouteFromStops(bottomWindow);
+            view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
+            focusedVehicle = null;
         });
     }
 
@@ -418,11 +425,10 @@ public class Controller {
                     }
 
                 });
-                sg.setOnMouseExited(event -> {
 
-                });
                 sg.setOnMouseClicked(event -> {
-                    System.out.println(inEditTrafficMode);
+                    focusedVehicle = null;
+
                     boolean onLine = false;
                     for(Line line : lines) {
                         for(Street st : line.getStreetList()) {
@@ -465,7 +471,7 @@ public class Controller {
                     }
 
                     if(!onLine) {
-                        view.clickedOnVoid(finalStopInfo, finalStopText, bottomWindow);
+                        view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
                     }
 
                     nextStopInfo.setOpacity(0.5);
@@ -489,6 +495,54 @@ public class Controller {
                            }
                        }
                    }
+                });
+            }
+        }
+    }
+
+    public Text getNextStopText() {
+        return this.nextStopText;
+    }
+
+    public Vehicle getFocusedVehicle() {
+        return focusedVehicle;
+    }
+
+    public void setVehicleInfo() {
+        ObservableList<Node> x = mapContent.getChildren();
+        for(Node sg : x) {
+            if((sg instanceof Rectangle && !(sg.equals(background))) || sg instanceof Circle || sg instanceof Polygon) {
+                sg.setCursor(Cursor.HAND);
+                sg.setOnMouseClicked(event -> {
+
+                    for(Vehicle v : allVehicles) {
+                        if(sg.getId().contains(v.getName())) {
+                            focusedVehicle = v;
+                        }
+                    }
+
+                    for(Line line : lines) {
+                        if(sg.getId().contains(line.getName())) {
+                            bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
+
+                            generateStopsOnPath(line);
+
+                            view.setLineInfoFocused(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText);
+
+                            view.colorRoute(vehicleRoute, line.getColor().saturate().saturate());
+                            view.changeFinalStopText(finalStopText, line);
+
+                            for(Line otherLine : lines) {
+                                if (otherLine.getName() != line.getName()) {
+                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
+                                } else {
+                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
+                                }
+                            }
+                            view.clickedOnLine(finalStopInfo, finalStopText);
+                        }
+                    }
+
                 });
             }
         }
