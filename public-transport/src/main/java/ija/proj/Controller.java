@@ -351,7 +351,6 @@ public class Controller {
     }
 
     public void editTrafficLine(List<Line> lines) {
-        System.out.println("true");
         ObservableList<Node> x = mapContent.getChildren();
 
 //        for(Node sg : x) {

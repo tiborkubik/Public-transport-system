@@ -187,7 +187,7 @@ public class Line implements Drawable  {
             //fix endings when last street was shifted by n*6
             if(i > 0 && streetList.get(i-1).getN_lines() != 0 && streetList.get(i-1).getSlope() != street.getSlope()) {
                 if(streetList.get(i-1).getSlope() == 2.0) {
-                    start.setX(start.getX() + 6 * (streetList.get(i-1).getN_lines()-1));
+                    start.setX(start.getX() + 6 *( streetList.get(i-1).getN_lines()-1));
                 }
                 if(streetList.get(i-1).getSlope() == 0.0) {
                     start.setY(start.getY() - 6 * (streetList.get(i-1).getN_lines()-1));
@@ -216,8 +216,8 @@ public class Line implements Drawable  {
             }
 
             if(street.getSlope() != 0.0 && street.getN_lines() != 0) {
-                boolean s = start.change(start.getX() + (6*n_lines), start.getY());
-                boolean e = end.change(end.getX() + (6*n_lines), end.getY());
+                boolean s = start.change(start.getX() + (6), start.getY());
+                boolean e = end.change(end.getX() + (6), end.getY());
                 if (!s || !e) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
