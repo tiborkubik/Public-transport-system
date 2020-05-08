@@ -74,7 +74,10 @@ public class Line implements Drawable  {
                 this.path.put("street: " + streetList.get(street_id).getName(),streetList.get(street_id).end());
                 street_id++;
             }
+
+//            System.out.println(this.getName() + " " + this.path.get(i).toString());
         }
+
     }
 
     public LinkedHashMap<String, Coordinate> getPath() {
@@ -187,10 +190,10 @@ public class Line implements Drawable  {
             //fix endings when last street was shifted by n*6
             if(i > 0 && streetList.get(i-1).getN_lines() != 0 && streetList.get(i-1).getSlope() != street.getSlope()) {
                 if(streetList.get(i-1).getSlope() == 2.0) {
-                    start.setX(start.getX() + 6 *( streetList.get(i-1).getN_lines()-1));
+                    start.setX(start.getX() + 6 *( streetList.get(i-1).getN_lines()));
                 }
                 if(streetList.get(i-1).getSlope() == 0.0) {
-                    start.setY(start.getY() - 6 * (streetList.get(i-1).getN_lines()-1));
+                    start.setY(start.getY() - 6 * (streetList.get(i-1).getN_lines()));
                 }
             }
 

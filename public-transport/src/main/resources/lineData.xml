@@ -422,43 +422,43 @@
       </stop>
     </street>
 
-    <street id="West 4th St">
-      <stop id="4th+Oxford">
-        <x>300</x>
-        <y>400</y>
-      </stop>
+<!--    <street id="West 4th St">-->
+<!--      <stop id="4th+Oxford">-->
+<!--        <x>300</x>-->
+<!--        <y>400</y>-->
+<!--      </stop>-->
 
-      <stop id="4th+Oxford">
-        <x>60</x>
-        <y>400</y>
-      </stop>
-    </street>
+<!--      <stop id="4th+Oxford">-->
+<!--        <x>60</x>-->
+<!--        <y>400</y>-->
+<!--      </stop>-->
+<!--    </street>-->
 
-    <street id="Bercley St C"/>
-    <street id="Bercley St B"/>
-    <street id="Bercley St A"/>
+<!--    <street id="Bercley St C"/>-->
+<!--    <street id="Bercley St B"/>-->
+<!--    <street id="Bercley St A"/>-->
 
-    <street id="West 1st St">
-      <stop id="Upper Town W">
-        <x>110</x>
-        <y>50</y>
-      </stop>
-      <stop id="Upper Town M">
-        <x>310</x>
-        <y>50</y>
-      </stop>
-      <stop id="Upper Town E">
-        <x>510</x>
-        <y>50</y>
-      </stop>
-    </street>
-    <street id="Lexington Con"/>
-    <street id="Babylon Con">
-      <stop id="3rd+Bab">
-        <x>800</x>
-        <y>240</y>
-      </stop>
-    </street>
+<!--    <street id="West 1st St">-->
+<!--      <stop id="Upper Town W">-->
+<!--        <x>110</x>-->
+<!--        <y>50</y>-->
+<!--      </stop>-->
+<!--      <stop id="Upper Town M">-->
+<!--        <x>310</x>-->
+<!--        <y>50</y>-->
+<!--      </stop>-->
+<!--      <stop id="Upper Town E">-->
+<!--        <x>510</x>-->
+<!--        <y>50</y>-->
+<!--      </stop>-->
+<!--    </street>-->
+<!--    <street id="Lexington Con"/>-->
+<!--    <street id="Babylon Con">-->
+<!--      <stop id="3rd+Bab">-->
+<!--        <x>800</x>-->
+<!--        <y>240</y>-->
+<!--      </stop>-->
+<!--    </street>-->
   </line>
 </lines_data>
 

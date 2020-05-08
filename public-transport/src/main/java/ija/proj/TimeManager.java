@@ -2,8 +2,6 @@ package ija.proj;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -76,8 +74,10 @@ public class TimeManager {
                         Vehicle currentV = (Vehicle)update;
                         int trafficCoeff = currentV.getCurrentStreet().getTrafficDensity();
                         update.update(currentTime,15/this.timeMultiplier, trafficCoeff);
-                        if(controller.getFocusedVehicle() != null)
+                        if(controller.getFocusedVehicle() != null) {
                             controller.getNextStopText().setText(controller.getFocusedVehicle().getNextStop().getName());
+                            controller.getVehicleOnRoute().setCenterX(50+controller.getFocusedVehicle().getPassedDistance()/controller.getFocusedVehicle().getLine().totalPathLength()*850);
+                        }
                         else
                             controller.getNextStopText().setText("-");
                     }

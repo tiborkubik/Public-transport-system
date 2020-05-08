@@ -81,7 +81,7 @@ public class Controller {
     @FXML
     private Button setIntensity;
     @FXML
-    private BorderPane rootElement;
+    private Circle vehicleOnRoute;
 
     private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
     private Scene mainScene;
@@ -98,6 +98,11 @@ public class Controller {
     private Tooltip densityInfo = new Tooltip();
     private TimeManager timeManager = new TimeManager(view, this);
     private Vehicle focusedVehicle = null;
+
+
+    public List<Vehicle> getAllVehicles() {
+        return allVehicles;
+    }
 
     @FXML
     private void exitProgram() {
@@ -382,6 +387,7 @@ public class Controller {
                 view.changeLineColor(mapContent, lines.get(i), view.colorsForLines.get(i));
             }
 
+            vehicleOnRoute.setCenterX(50);
             view.cleanRouteFromStops(bottomWindow);
             view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
             focusedVehicle = null;
@@ -428,6 +434,7 @@ public class Controller {
 
                 sg.setOnMouseClicked(event -> {
                     focusedVehicle = null;
+                    vehicleOnRoute.setCenterX(50);
 
                     boolean onLine = false;
                     for(Line line : lines) {
@@ -500,6 +507,10 @@ public class Controller {
         }
     }
 
+    public Circle getVehicleOnRoute() {
+        return vehicleOnRoute;
+    }
+
     public Text getNextStopText() {
         return this.nextStopText;
     }
@@ -510,6 +521,7 @@ public class Controller {
 
     public void setVehicleInfo() {
         ObservableList<Node> x = mapContent.getChildren();
+
         for(Node sg : x) {
             if((sg instanceof Rectangle && !(sg.equals(background))) || sg instanceof Circle || sg instanceof Polygon) {
                 sg.setCursor(Cursor.HAND);
@@ -517,6 +529,8 @@ public class Controller {
 
                     for(Vehicle v : allVehicles) {
                         if(sg.getId().contains(v.getName())) {
+
+                            System.out.println(v.getPassedDistance());
                             focusedVehicle = v;
                         }
                     }

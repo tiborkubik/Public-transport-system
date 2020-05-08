@@ -57,6 +57,10 @@ public class Vehicle implements Drawable, UpdateState {
         return this.currentStreet;
     }
 
+    public double getPassedDistance() {
+        return this.distance;
+    }
+
     protected void setStops() {
         LinkedHashMap<String, Coordinate> tempPath = this.onLine.getPath();
 
@@ -66,6 +70,9 @@ public class Vehicle implements Drawable, UpdateState {
     }
 
     private void modifyGUI(Coordinate coordinate) {
+
+        //controller.getVehicleOnRoute().setTranslateX(controller.getVehicleOnRoute().getTranslateX());
+
         try{
             for(Shape shape : GUI) {
                 shape.setTranslateX(coordinate.getX() - position.getX() + shape.getTranslateX());
@@ -120,7 +127,7 @@ public class Vehicle implements Drawable, UpdateState {
         else
             this.speed = this.constantSpeed * speedMultiplier;
 
-//        if(this.getLine().getName().contains("Line B"))
+
 
         if (cnt_time >= 0){
             cnt_time--;
@@ -137,8 +144,13 @@ public class Vehicle implements Drawable, UpdateState {
 
         distance += speed;
 
+//        if(this.getLine().getName().contains("Line B"))
+//            System.out.println(this.getName() + " " + distance);
+
         double total = totalPathLength();
+
         if(distance > total) {
+
             for(Shape x : GUI) {
                 Pane mapContent = controller.getMapContent();
 
@@ -148,6 +160,7 @@ public class Vehicle implements Drawable, UpdateState {
                         GUI.remove(x);
                         mapContent.getChildren().remove(singleNode);
                         controller.getUpdates().remove(this);
+                        controller.getAllVehicles().remove(this);
                         return;
                     }
                 }
@@ -166,9 +179,15 @@ public class Vehicle implements Drawable, UpdateState {
         for(Street s : this.onLine.getStreetList()) {
             if(Math.abs(s.begin().diffX(newC)) < this.speed/2 && Math.abs(s.begin().diffY(newC)) < this.speed/2) {
                 double slope = s.getSlope();
+                System.out.println(this.getLine() + " " + slope);
+                double rotation = GUI.get(0).getRotate();
+                GUI.get(0).setRotate(-rotation);
+
                 //vertical lines
-                if(slope == 2.0)
+                if(slope == 2.0){
                     GUI.get(0).setRotate(0);
+                }
+
                 // 45degree lines
                 else if(slope == 1.0) {
                     GUI.get(0).setRotate(-45);
@@ -179,11 +198,11 @@ public class Vehicle implements Drawable, UpdateState {
                     if(this instanceof Subway) {
                         if (s.begin().getX() < s.end().getX()) {
                             if (s.begin().getY() < s.end().getY()){
-                                GUI.get(0).setRotate(180-90*slope);
+                                GUI.get(0).setRotate(90-90*slope);
                             }
                             else{
                                 //vodorovne z lava do prava
-                                GUI.get(0).setRotate(90+90*slope);
+                                GUI.get(0).setRotate(90-90*slope);
                             }
                         }
                         else{
