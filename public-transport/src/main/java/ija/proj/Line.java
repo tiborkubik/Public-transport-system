@@ -28,6 +28,7 @@ public class Line implements Drawable  {
         this.streetList = streetList;
         this.stopList = stopList;
         setPath();
+
     }
 
     public String getType() {
@@ -63,13 +64,13 @@ public class Line implements Drawable  {
             } catch (Exception e) {
                 act_stop.setStreet(streetList.get(0));
             }
-            if(act_stop.getStreet().getName() == act_street.getName()){
-                //System.out.println("stop: " + stopList.get(stop_id).getName());
+            if(act_stop.getStreet().getName().equals(act_street.getName())){
+                System.out.println("stop: " + stopList.get(stop_id).getName());
                 this.path.put("stop: " + stopList.get(stop_id).getName(),stopList.get(stop_id).getCoordinate());
                 stop_id++;
             }
             else {
-                //System.out.println("street: " + streetList.get(street_id).getName());
+                System.out.println("street: " + streetList.get(street_id).getName());
                 this.path.put("street: " + streetList.get(street_id).getName(),streetList.get(street_id).end());
                 street_id++;
             }
@@ -185,11 +186,11 @@ public class Line implements Drawable  {
 
             //fix endings when last street was shifted by n*6
             if(i > 0 && streetList.get(i-1).getN_lines() != 0 && streetList.get(i-1).getSlope() != street.getSlope()) {
-                if(streetList.get(i-1).getSlope() == 1.0) {
-                    start.setX(start.getX() + 6 * streetList.get(i-1).getN_lines());
+                if(streetList.get(i-1).getSlope() == 2.0) {
+                    start.setX(start.getX() + 6 * (streetList.get(i-1).getN_lines()-1));
                 }
                 if(streetList.get(i-1).getSlope() == 0.0) {
-                    start.setY(start.getY() - 6 * streetList.get(i-1).getN_lines());
+                    start.setY(start.getY() - 6 * (streetList.get(i-1).getN_lines()-1));
                 }
             }
 
@@ -201,27 +202,31 @@ public class Line implements Drawable  {
             }
 
             if(i < streetList.size() - 1 && streetList.get(i+1).getN_lines() == 1) {
-                if(streetList.get(i+1).getSlope() != 1.0) {
+                if(streetList.get(i+1).getSlope() != 2.0) {
                     end.setX(end.getX() + 6 * streetList.get(i+1).getN_lines());
                 }
-                if(streetList.get(i+1).getSlope() == 1.0 && streetList.get(i).getSlope() == 0.0) {
+                if(streetList.get(i+1).getSlope() == 2.0 && streetList.get(i).getSlope() == 0.0) {
                     end.setX(end.getX() + 6 * streetList.get(i+1).getN_lines());
                 }
             }
             if(i < streetList.size() - 1 && streetList.get(i+1).getN_lines() != 1) {
-                if (streetList.get(i + 1).getSlope() == 1.0 && streetList.get(i).getSlope() == 0.0) {
+                if (streetList.get(i + 1).getSlope() == 2.0 && streetList.get(i).getSlope() == 0.0) {
                     end.setX(end.getX() + 6 * streetList.get(i + 1).getN_lines());
                 }
             }
 
             if(street.getSlope() != 0.0 && street.getN_lines() != 0) {
-                boolean s = start.change(start.getX() + (6), start.getY());
-                boolean e = end.change(end.getX() + (6), end.getY());
+                boolean s = start.change(start.getX() + (6*n_lines), start.getY());
+                boolean e = end.change(end.getX() + (6*n_lines), end.getY());
                 if (!s || !e) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
             } else {
                 boolean s = start.change(start.getX(), start.getY()-(6*n_lines));
+                boolean e = end.change(end.getX(), end.getY()-(6*n_lines));
+                if (!s || !e) {
+                    System.err.println("Error: failed to change coordinate. (Line.java)");
+                }
             }
 
             javafx.scene.shape.Line singleStreet = new javafx.scene.shape.Line(start.getX(), start.getY(), end.getX(), end.getY());

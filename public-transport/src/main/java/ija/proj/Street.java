@@ -147,9 +147,9 @@ public class Street implements Drawable {
     }
 
     public double getSlope() {
-        // vertical + zero division avoiding
+        // vertical line has special value
         if((this.end.getX() - this.start.getX()) == 0.0) {
-            return 1.0;
+            return 2.0;
         }
         return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
     }

@@ -116,7 +116,7 @@ public class Vehicle implements Drawable, UpdateState {
         else
             this.speed = this.constantSpeed * speedMultiplier;
 
-        if(this.getLine().getName().contains("Line B"))
+//        if(this.getLine().getName().contains("Line B"))
 
         if (cnt_time >= 0){
             cnt_time--;
@@ -153,24 +153,56 @@ public class Vehicle implements Drawable, UpdateState {
         for(Street s : this.onLine.getStreetList()) {
             if(Math.abs(s.begin().diffX(newC)) < this.speed/2 && Math.abs(s.begin().diffY(newC)) < this.speed/2) {
                 double slope = s.getSlope();
-                if (s.begin().getX() < s.end().getX() ){
-                    if (s.begin().getY() < s.end().getY()){
-                        GUI.get(0).setRotate(180-90*slope);
+
+                //vertical lines
+                if(slope == 2.0)
+                    GUI.get(0).setRotate(0);
+                // 45degree lines
+                else if(slope == 1.0) {
+                    GUI.get(0).setRotate(-45);
+                } else {
+                    if(this instanceof Subway) {
+                        if (s.begin().getX() < s.end().getX()) {
+                            if (s.begin().getY() < s.end().getY()){
+                                GUI.get(0).setRotate(180-90*slope);
+                            }
+                            else{
+                                //vodorovne z lava do prava
+                                GUI.get(0).setRotate(90+90*slope);
+                            }
+                        }
+                        else{
+                            if (s.begin().getY() < s.end().getY()){
+                                //ked ide hore doprava
+                                GUI.get(0).setRotate(150+90*slope);
+                            }
+                            else{
+                                GUI.get(0).setRotate(60-90*slope);
+                            }
+                        }
+                    } else {
+                        if (s.begin().getX() < s.end().getX()) {
+                            if (s.begin().getY() < s.end().getY()){
+                                GUI.get(0).setRotate(180-90*slope);
+                            }
+                            else{
+                                //vodorovne z lava do prava
+                                GUI.get(0).setRotate(90+90*slope);
+                            }
+                        }
+                        else{
+                            if (s.begin().getY() < s.end().getY()){
+                                //ked ide hore doprava
+                                GUI.get(0).setRotate(180+90*slope);
+                            }
+                            else{
+                                GUI.get(0).setRotate(90-90*slope);
+                            }
+                        }
                     }
-                    else{
-                        //vodorovne z lava do prava
-                        GUI.get(0).setRotate(90+90*slope);
-                    }
+
                 }
-                else{
-                    if (s.begin().getY() < s.end().getY()){
-                        //ked ide hore doprava
-                        GUI.get(0).setRotate(180+90*slope);
-                    }
-                    else{
-                        GUI.get(0).setRotate(90-90*slope);
-                    }
-                }
+
                 this.currentStreet = s;
             }
         }
