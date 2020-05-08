@@ -1,5 +1,8 @@
 package ija.proj;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
 import java.time.LocalTime;
@@ -17,12 +20,13 @@ public class Vehicle implements Drawable, UpdateState {
     protected List<Shape> GUI = new ArrayList<>();
     private List<Coordinate> path = new ArrayList<>();
     private int cnt_time = 0;
+    private Controller controller;
 
     public Coordinate getPosition(){
         return this.position;
     }
 
-    public Vehicle(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop) {
+    public Vehicle(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
         this.position = position;
         this.speed = speed;
         this.onLine = onLine;
@@ -30,6 +34,8 @@ public class Vehicle implements Drawable, UpdateState {
         this.constantSpeed = speed;
         this.currentStreet = street;
         this.nextStop = firstStop;
+        this.controller = controller;
+
     }
 
     public String getName() {
@@ -136,9 +142,18 @@ public class Vehicle implements Drawable, UpdateState {
         double total = totalPathLength();
         if(distance > total) {
             for(Shape x : GUI) {
-                // VYMAZANIE VOZIDLA HERE
+                Pane mapContent = controller.getMapContent();
+
+                ObservableList<Node> mapNodes = mapContent.getChildren();
+                for(Node singleNode : mapNodes) {
+                    if(x.getId().equals(singleNode.getId())){
+                        GUI.remove(x);
+                        mapContent.getChildren().remove(singleNode);
+                        controller.getUpdates().remove(this);
+                        return;
+                    }
+                }
             }
-            return;
         }
 
         Coordinate newC = getNewCoord(distance, path);
@@ -153,13 +168,15 @@ public class Vehicle implements Drawable, UpdateState {
         for(Street s : this.onLine.getStreetList()) {
             if(Math.abs(s.begin().diffX(newC)) < this.speed/2 && Math.abs(s.begin().diffY(newC)) < this.speed/2) {
                 double slope = s.getSlope();
-
                 //vertical lines
                 if(slope == 2.0)
                     GUI.get(0).setRotate(0);
                 // 45degree lines
                 else if(slope == 1.0) {
                     GUI.get(0).setRotate(-45);
+                }
+                else if(slope == 0.0) {
+                    GUI.get(0).setRotate(90);
                 } else {
                     if(this instanceof Subway) {
                         if (s.begin().getX() < s.end().getX()) {

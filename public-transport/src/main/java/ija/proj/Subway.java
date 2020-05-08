@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Subway extends Vehicle {
 
-    public Subway(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop) {
-        super(position, speed, onLine, identifier, street, firstStop);
+    public Subway(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
+        super(position, speed, onLine, identifier, street, firstStop, controller);
 
         super.setStops();
 

@@ -48,7 +48,7 @@ public class Main extends Application {
 
         timeManager.setLines(lines);
 
-        Timetable timeTable = new Timetable(allElements, lines, view);
+        Timetable timeTable = new Timetable(allElements, lines, view, controller);
         controller.setTimeTable(timeTable);
 
         controller.setLines(lines);
@@ -63,7 +63,6 @@ public class Main extends Application {
         controller.setLinesInfo(lines);
 
         controller.setCursor(lines);
-        controller.editTrafficLine(lines);
 
         controller.highlightRouteFromList(lines);
 

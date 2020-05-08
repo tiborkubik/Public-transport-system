@@ -101,14 +101,7 @@ public class View {
         mapContent.getChildren().addAll(element.getGUI());
     }
 
-    public void deleteElement(Drawable element,Pane mapContent){
-        System.out.println("vehicle : " + element + "should be deleted");
-        boolean removed = mapContent.getChildren().remove(element.getGUI());
-        System.out.println("removed from mapContent: " + removed);
-        controller.deleteVeh(element);
-    }
-
-    public void viewLinesInfo(List<Line> lines, ListView linesInfo) {
+    public void viewLinesInfo(List<Line> lines, ListView<Object> linesInfo) {
         for(Line line : lines) {
             linesInfo.getItems().add(line.getName());
         }
@@ -131,8 +124,7 @@ public class View {
     public void cleanRouteFromStops(Pane bottomWindow) {
         try {
             bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
         }
     }
 

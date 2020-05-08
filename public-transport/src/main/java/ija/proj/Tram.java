@@ -4,8 +4,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
 public class Tram extends Vehicle {
-    public Tram(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop) {
-        super(position, speed, onLine, identifier, street, firstStop);
+    public Tram(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
+        super(position, speed, onLine, identifier, street, firstStop, controller);
 
         super.setStops();
 

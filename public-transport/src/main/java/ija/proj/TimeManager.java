@@ -2,6 +2,8 @@ package ija.proj;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -38,6 +40,7 @@ public class TimeManager {
         this.controller = controller;
     }
 
+
     public void setScale(float scale) {
         this.scaleForSpeed = scale;
     }
@@ -70,14 +73,29 @@ public class TimeManager {
 
                 timeGUI.setText(formatTime(currentTime.getHour(), currentTime.getMinute(), currentTime.getSecond()));
 
-                for (UpdateState update : updates) {
-                    Vehicle currentV = (Vehicle)update;
-                    int trafficCoeff = currentV.getCurrentStreet().getTrafficDensity();
-                    update.update(currentTime,15/this.timeMultiplier, trafficCoeff);
-                    if (currentV.getLine().getStreetList().get(currentV.getLine().getStreetList().size()-1).end().equals(currentV.getPosition())){
-                        vehiclesToDelete.add(currentV);
-                        System.out.println("here I am");
+//                for(UpdateState update : updates) {
+//                    Vehicle currentV = (Vehicle)update;
+//                    if (currentV.getLine().getStreetList().get(currentV.getLine().getStreetList().size()-1).end().equals(currentV.getPosition())){
+//                        updates.remove(update);
+//
+//                        ObservableList<Node> mapNodes = mapContent.getChildren();
+//                        for(Node singleNode : mapNodes) {
+//                            System.out.println(currentV.getName() + "   -   " + singleNode.getId());
+//                            if(currentV.getName().equals(singleNode.getId())){
+//                                System.out.println("koacskoa");
+//                                mapContent.getChildren().remove(singleNode);
+//                            }
+//                        }
+//                        System.out.println("here I am");
+//                    }
+//                }
+                try {
+                    for (UpdateState update : updates) {
+                        Vehicle currentV = (Vehicle)update;
+                        int trafficCoeff = currentV.getCurrentStreet().getTrafficDensity();
+                        update.update(currentTime,15/this.timeMultiplier, trafficCoeff);
                     }
+                } catch (Exception e) {
                 }
 
                 if(currentTime.getSecond() == 0) {
@@ -122,9 +140,9 @@ public class TimeManager {
             timer.play();
             this.vehiclesToAdd =  new ArrayList<>();
 
-            for (Drawable veh : vehiclesToDelete){
-                view.deleteElement(veh, mapContent);
-            }
+//            for (Drawable veh : vehiclesToDelete){
+//                view.deleteElement(veh, mapContent);
+//            }
 
     }
 

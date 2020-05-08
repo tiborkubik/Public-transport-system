@@ -47,7 +47,7 @@ public class Controller {
     @FXML
     private Slider speedChange;
     @FXML
-    private ListView linesInfo;
+    private ListView<Object> linesInfo;
     @FXML
     private javafx.scene.shape.Line vehicleRoute;
     @FXML
@@ -75,16 +75,14 @@ public class Controller {
     @FXML
     private TextArea editJamsInfo;
     @FXML
-    private Spinner trafficSpinner;
+    private Spinner<Integer> trafficSpinner;
     @FXML
     private Button setIntensity;
 
-
-    SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
+    private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
     private Scene mainScene;
-    Image bg = new Image("mapa1.jpg");
-    BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
-
+    private Image bg = new Image("mapa1.jpg");
+    private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
     private List<Line> lines = new ArrayList<>();
     private List<UpdateState> updates = new ArrayList<>();
     private List<Vehicle> allVehicles = new ArrayList<>();
@@ -94,7 +92,6 @@ public class Controller {
     private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm();
     private View view = new View(this);
     private Tooltip densityInfo = new Tooltip();
-
     private TimeManager timeManager = new TimeManager(view, this);
 
     @FXML
@@ -103,11 +100,8 @@ public class Controller {
         System.exit(0);
     }
 
-    public void deleteVeh(Drawable vehicle){
-        boolean removed = updates.remove(vehicle);
-        System.out.println("removed from updates: " + removed);
-        removed = allVehicles.remove(vehicle);
-        System.out.println("removed from allVehicles: " + removed);
+    public List<UpdateState> getUpdates() {
+        return updates;
     }
 
     @FXML
@@ -249,17 +243,7 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()-1, time.getSecond()),updates, timeGUI, timeTable, mapContent,2, speedChange);
-        float scaleForSpeed = (float) speedChange.getValue();
-        timeManager.setScale(scaleForSpeed);
-        timeManager.changeSpeed();
-        List<Drawable> vehList = timeManager.getVehicleToAdd();
-        if (vehList != null) {
-            for(Drawable veh : vehList) {
-                if (veh != null)  {
-                    view.addElement(veh, mapContent);
-                }
-            }
-        }
+        normalizeAfterTimeShift();
     }
 
     @FXML
@@ -267,6 +251,10 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()+1),updates, timeGUI, timeTable, mapContent,3, speedChange);
+        normalizeAfterTimeShift();
+    }
+
+    private void normalizeAfterTimeShift() {
         float scaleForSpeed = (float) speedChange.getValue();
         timeManager.setScale(scaleForSpeed);
         timeManager.changeSpeed();
@@ -286,17 +274,7 @@ public class Controller {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2),updates, timeGUI, timeTable, mapContent,3, speedChange);
-        float scaleForSpeed = (float) speedChange.getValue();
-        timeManager.setScale(scaleForSpeed);
-        timeManager.changeSpeed();
-        List<Drawable> vehList = timeManager.getVehicleToAdd();
-        if (vehList != null) {
-            for(Drawable veh : vehList) {
-                if (veh != null)  {
-                    view.addElement(veh, mapContent);
-                }
-            }
-        }
+        normalizeAfterTimeShift();
     }
 
     @FXML
@@ -348,25 +326,6 @@ public class Controller {
 
     public void setScene(Scene scene) {
         this.mainScene = scene;
-    }
-
-    public void editTrafficLine(List<Line> lines) {
-        ObservableList<Node> x = mapContent.getChildren();
-
-//        for(Node sg : x) {
-//            if(sg instanceof javafx.scene.shape.Line) {
-//                sg.setOnMouseClicked(event -> {
-//                    for(Line line : lines) {
-//                        for(Street st : line.getStreetList()) {
-//                            if(sg.getId().contains(st.getName())) {
-//                                bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
-//                            }
-//                            ((javafx.scene.shape.Line) sg).setFill(Color.ORANGE);
-//                        }
-//                    }
-//                });
-//            }
-//        }
     }
 
     public void setBackground() {
@@ -486,7 +445,7 @@ public class Controller {
                                     spinnerVal.setValue(st.getTrafficDensity());
 
                                     setIntensity.setOnMouseClicked(event2 -> {
-                                        st.setTrafficDensity((Integer) trafficSpinner.getValue());
+                                        st.setTrafficDensity(trafficSpinner.getValue());
 
                                         if(st.getTrafficDensity() == 1) {
                                             mainScene.getStylesheets().add(normalLine);
@@ -596,5 +555,9 @@ public class Controller {
 
     public void setCurrentTime() {
         timeManager.setCurrentTime(timeGUI);
+    }
+
+    public Pane getMapContent() {
+        return this.mapContent;
     }
 }
