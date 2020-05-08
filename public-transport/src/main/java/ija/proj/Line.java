@@ -221,15 +221,61 @@ public class Line implements Drawable  {
             if(street.getSlope() != 0.0 && street.getN_lines() != 0) {
                 boolean s = start.change(start.getX() + (6), start.getY());
                 boolean e = end.change(end.getX() + (6), end.getY());
+
                 if (!s || !e) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
+//                List<String> pathStops = new ArrayList<>();
+//                List<Coordinate> pathVals = new ArrayList<>();
+//
+//                this.path.forEach((k,v)->{
+//                    pathStops.add(k);
+//                    pathVals.add(v);
+//                });
+//
+//                for(int j = 0; j < pathStops.size()-1; j++) {
+//                    if(pathStops.get(j).contains(street.getName())) {
+//                        int k = j-1;
+//                        if (k==-1)
+//                            continue;
+//                        while(!pathStops.get(k).contains("Street:") && k > 0) {
+//                            this.path.put(pathStops.get(k), new Coordinate(pathVals.get(k).getX()+6, pathVals.get(k).getY()));
+//                            --k;
+//                            System.out.println("Toto posun");
+//                        }
+//                    }
+//                }
+
             } else {
                 boolean s = start.change(start.getX(), start.getY()-(6*n_lines));
                 boolean e = end.change(end.getX(), end.getY()-(6*n_lines));
                 if (!s || !e) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
+
+//                List<String> pathStops = new ArrayList<>();
+//                List<Coordinate> pathVals = new ArrayList<>();
+//
+//                this.path.forEach((k,v)->{
+//                    pathStops.add(k);
+//                    pathVals.add(v);
+//                });
+//
+//                for(int j = 0; j < pathStops.size()-1; j++) {
+//                    if(pathStops.get(j).contains(street.getName())) {
+//                        int k = j-1;
+//                        if (k==-1)
+//                            continue;
+//
+//                        while(!pathStops.get(k).contains("Street:") && k > 0) {
+//                            this.path.put(pathStops.get(k), new Coordinate(pathVals.get(k).getX(), pathVals.get(k)getY()-(6*n_lines)));
+//                            --k;
+//                            System.out.println("Toto posun");
+//                        }
+//                    }
+//                }
+
+
             }
 
             javafx.scene.shape.Line singleStreet = new javafx.scene.shape.Line(start.getX(), start.getY(), end.getX(), end.getY());
