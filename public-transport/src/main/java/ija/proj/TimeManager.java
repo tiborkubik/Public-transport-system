@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimeManager {
-    LocalTime currentTime = LocalTime.now();
+    LocalTime currentTime ;
     double scaleForSpeed = 1.0;
     List<Drawable> vehiclesToAdd = new ArrayList<>();
     List<Drawable> routeVehicleToAdd = new ArrayList<>();
@@ -37,6 +37,10 @@ public class TimeManager {
     public TimeManager(View view, Controller controller) {
         this.view = view;
         this.controller = controller;
+        int hours = LocalTime.now().getHour() - 2;
+        int min = LocalTime.now().getMinute();
+        int sec = LocalTime.now().getSecond();
+        this.currentTime = LocalTime.parse(formatTime(hours,min,sec));
     }
 
 
@@ -49,7 +53,7 @@ public class TimeManager {
     }
 
     public void setCurrentTime(Text timeGUI) {
-        timeGUI.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
+        //timeGUI.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
     }
 
     /***

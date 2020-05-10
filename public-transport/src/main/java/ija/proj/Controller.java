@@ -703,7 +703,7 @@ public class Controller {
     }
 
     public void setCurrentTime() {
-        timeManager.setCurrentTime(timeGUI);
+        timeManager.moveInTime( timeManager.formatTime(LocalTime.now().getHour(),LocalTime.now().getMinute(),LocalTime.now().getSecond()), updates, timeGUI,timeTable, mapContent,1, speedChange);
     }
 
     public Pane getMapContent() {

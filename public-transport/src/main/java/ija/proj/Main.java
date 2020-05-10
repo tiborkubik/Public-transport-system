@@ -74,5 +74,6 @@ public class Main extends Application {
 
         controller.setVehicleInfo();
 
+        controller.setCurrentTime();
     }
 }
