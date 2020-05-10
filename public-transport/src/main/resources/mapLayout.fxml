@@ -170,7 +170,7 @@
                         <Font name="Impact" size="34.0" />
                     </font>
                 </Button>
-                <TextArea fx:id="editJamsInfo" layoutX="1270.0" layoutY="230.0" prefHeight="370.0" prefWidth="311.0" text="You are in traffic jams edit mode.&#10;&#10;How to edit an intensity of traffic&#10;flow on a street:&#10;&#10;1) Click on 1 specific street. The&#10;    street should be dashed now.&#10;2) in given TextField, specify the&#10;   intensity of traffic.&#10;   Rule: the higher the number the&#10;   worste traffic flow, &#10;   from 1(normal)&#10;   to 9(worst traffic).&#10;3) Confirm edited traffic level.&#10;&#10;" visible="false">
+                <TextArea fx:id="editDetoursInfo" layoutX="1270.0" layoutY="230.0" prefHeight="370.0" prefWidth="311.0" text="You are detours edit mode.&#10;&#10;How to specify a detour of a street:&#10;&#10;1) Click on 1 specific street. The&#10;    street should be dashed now.&#10;2) Click on streets that will specify&#10;     the detour of the line. &#10;     The streets should follow,&#10;     otherwise editation will not&#10;     be successful.&#10;3) Confirm new route for given line.&#10;&#10;" visible="false">
                     <font>
                         <Font name="SansSerif Regular" size="18.0" />
                     </font>
@@ -181,6 +181,11 @@
                         <Font name="SansSerif Bold" size="16.0" />
                     </font>
                 </Button>
+            <TextArea fx:id="editJamsInfo" layoutX="1270.0" layoutY="230.0" prefHeight="370.0" prefWidth="311.0" text="You are in traffic jams edit mode.&#10;&#10;How to edit an intensity of traffic&#10;flow on a street:&#10;&#10;1) Click on 1 specific street. The&#10;    street should be dashed now.&#10;2) in given TextField, specify the&#10;   intensity of traffic.&#10;   Rule: the higher the number the&#10;   worste traffic flow, &#10;   from 1(normal)&#10;   to 9(worst traffic).&#10;3) Confirm edited traffic level.&#10;&#10;" visible="false">
+               <font>
+                  <Font name="SansSerif Regular" size="18.0" />
+               </font>
+            </TextArea>
             </children>
         </Pane>
     </center>

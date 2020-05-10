@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -77,6 +78,8 @@ public class Controller {
     @FXML
     private TextArea editJamsInfo;
     @FXML
+    private TextArea editDetoursInfo;
+    @FXML
     private Spinner<Integer> trafficSpinner;
     @FXML
     private Button setIntensity;
@@ -91,6 +94,7 @@ public class Controller {
     private List<UpdateState> updates = new ArrayList<>();
     private List<Vehicle> allVehicles = new ArrayList<>();
     private boolean inEditTrafficMode = false;
+    private boolean inEditDetours = false;
     private Timetable timeTable;
     private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
     private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm();
@@ -99,6 +103,11 @@ public class Controller {
     private TimeManager timeManager = new TimeManager(view, this);
     private Vehicle focusedVehicle = null;
 
+    private Street beingDetoured = null;
+    private Line lineDetoured = null;
+
+    private List<Street> streetsToAddToLine = new ArrayList<>();
+    private List<Drawable> allStreets;
 
     public List<Vehicle> getAllVehicles() {
         return allVehicles;
@@ -120,6 +129,7 @@ public class Controller {
         timeManager.changeSpeed();
 
         inEditTrafficMode = true;
+        inEditDetours = false;
 
         trafficSpinner.setValueFactory(spinnerVal);
 
@@ -138,7 +148,8 @@ public class Controller {
                                 minusH,
                                 minusM,
                                 minusS,
-                                editJamsInfo);
+                                editJamsInfo,
+                                editDetoursInfo);
     }
 
     @FXML
@@ -147,6 +158,7 @@ public class Controller {
         timeManager.changeSpeed();
 
         inEditTrafficMode = false;
+        inEditDetours = true;
 
         view.prepareGUIforAdmin(
                 rightBlur1,
@@ -163,7 +175,8 @@ public class Controller {
                 minusH,
                 minusM,
                 minusS,
-                editJamsInfo);
+                editJamsInfo,
+                editDetoursInfo);
 
         inEditTrafficMode = false;
     }
@@ -188,9 +201,11 @@ public class Controller {
                 minusH,
                 minusM,
                 minusS,
-                editJamsInfo);
+                editJamsInfo,
+                editDetoursInfo);
 
         inEditTrafficMode = false;
+        inEditDetours = false;
     }
     /***
      * changes speed
@@ -264,6 +279,10 @@ public class Controller {
         normalizeAfterTimeShift();
     }
 
+    public void setAllStreets(List<Drawable> streets) {
+        this.allStreets = streets;
+    }
+
     private void normalizeAfterTimeShift() {
         float scaleForSpeed = (float) speedChange.getValue();
         timeManager.setScale(scaleForSpeed);
@@ -333,6 +352,8 @@ public class Controller {
     public boolean inEditTrafficMode() {
         return this.inEditTrafficMode;
     }
+
+    public boolean isInEditDetours() { return  this.inEditDetours; }
 
     public void setScene(Scene scene) {
         this.mainScene = scene;
@@ -407,6 +428,7 @@ public class Controller {
         view.viewLinesInfo(lines, linesInfo);
     }
 
+
     /***
      * changes cursor according it's position + expanding of line information after clicking
      */
@@ -439,19 +461,49 @@ public class Controller {
                     vehicleOnRoute.setCenterX(50);
 
                     boolean onLine = false;
+
+                    if(this.beingDetoured != null) {
+                        for(Drawable fromAll : this.allStreets) {
+                            if(fromAll instanceof Street) {
+                                Street s = (Street) fromAll;
+
+                                if(sg.getId().contains(s.getName())) {
+                                    if(this.streetsToAddToLine.size() == 0) {
+                                        if(s.follows(this.beingDetoured)) {
+                                            System.out.println(s.getName() + " Can be used for detour");
+                                            this.streetsToAddToLine.add(s);
+                                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
+                                        } else {
+                                            System.out.println(s.getName() + " Cannot be used for detour");
+                                        }
+                                    } else {
+                                        if(s.follows(this.streetsToAddToLine.get(this.streetsToAddToLine.size()-1))) {
+                                            System.out.println(s.getName() + " Can be used for detour");
+                                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
+                                            this.streetsToAddToLine.add(s);
+                                        } else {
+                                            System.out.println(s.getName() + " Cannot be used for detour");
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
                     for(Line line : lines) {
                         for(Street st : line.getStreetList()) {
-                            if(!inEditTrafficMode){
+                            if(!inEditTrafficMode && !inEditDetours){
                                 if(sg.getId().contains(st.getName())) {
                                     bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
                                 }
                                 view.clickedOnLine(finalStopInfo, finalStopText);
                                 onLine = true;
-                            } else {
+                            } else if(inEditTrafficMode && !inEditDetours) {
                                 if(sg.getId().contains(st.getName())) {
                                     try {
                                         mainScene.getStylesheets().remove(normalLine);
-                                    } catch (Exception e){
+                                    } catch (Exception ignored){
                                     }
                                     mainScene.getStylesheets().add(dashedLine);
                                     sg.getStyleClass().add("dashedLine");
@@ -467,13 +519,26 @@ public class Controller {
                                             sg.getStyleClass().add("normalLine");
                                             try {
                                                 mainScene.getStylesheets().remove(dashedLine);
-                                            } catch (Exception e){
+                                            } catch (Exception ignored){
                                             }
                                         }
 
                                         trafficSpinner.setVisible(false);
                                         setIntensity.setVisible(false);
                                     });
+                                }
+                            } else {
+                                if(sg.getId().contains(st.getName())) {
+                                    if(this.beingDetoured == null) {
+                                        try {
+                                            mainScene.getStylesheets().remove(normalLine);
+                                        } catch (Exception ignored){
+                                        }
+                                        mainScene.getStylesheets().add(dashedLine);
+                                        sg.getStyleClass().add("dashedLine2");
+                                        this.beingDetoured = st;
+                                        this.lineDetoured = line;
+                                    }
                                 }
                             }
                         }
@@ -496,7 +561,7 @@ public class Controller {
                          view.changeFinalStopText(finalStopText, line);
 
                            for(Line otherLine : lines) {
-                               if (otherLine.getName() != line.getName()) {
+                               if (!otherLine.getName().equals(line.getName())) {
                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
                                } else {
                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());

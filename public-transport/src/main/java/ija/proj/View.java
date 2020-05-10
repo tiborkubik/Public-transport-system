@@ -2,10 +2,7 @@ package ija.proj;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -203,7 +200,8 @@ public class View {
                                    Button minusH,
                                    Button minusM,
                                    Button minusS,
-                                   TextArea editJamsInfo) {
+                                   TextArea editJamsInfo,
+                                   TextArea editDetoursInfo) {
 
         rightBlur111.setVisible(false);
         linesInfo.setVisible(false);
@@ -228,26 +226,35 @@ public class View {
         rightBlur1.setLayoutY(-145);
         saveExitEditing.setVisible(true);
 
-        if(this.controller.inEditTrafficMode())
+        if(this.controller.inEditTrafficMode()) {
             editJamsInfo.setVisible(true);
+            editDetoursInfo.setVisible(false);
+        }
+
+
+        if(this.controller.isInEditDetours()) {
+            editJamsInfo.setVisible(false);
+            editDetoursInfo.setVisible(true);
+        }
 
     }
 
     public void exitGUIAdmin(Rectangle rightBlur1,
-                                Rectangle rightBlur111,
-                                   ListView linesInfo,
-                                   Text linesSign,
-                                   Slider speedChange,
-                                   Pane bottomWindow,
-                                   Button saveExitEditing,
-                                   Rectangle saveBackground,
-                                   Button plusH,
-                                   Button plusM,
-                                   Button plusS,
-                                   Button minusH,
-                                   Button minusM,
-                                   Button minusS,
-                                   TextArea editJamsInfo) {
+                             Rectangle rightBlur111,
+                             ListView linesInfo,
+                             Text linesSign,
+                             Slider speedChange,
+                             Pane bottomWindow,
+                             Button saveExitEditing,
+                             Rectangle saveBackground,
+                             Button plusH,
+                             Button plusM,
+                             Button plusS,
+                             Button minusH,
+                             Button minusM,
+                             Button minusS,
+                             TextArea editJamsInfo,
+                             TextArea editDetoursInfo) {
 
         rightBlur111.setVisible(true);
         linesInfo.setVisible(true);
@@ -272,8 +279,8 @@ public class View {
         rightBlur1.setLayoutY(-101);
         saveExitEditing.setVisible(false);
 
-        if(controller.inEditTrafficMode())
-            editJamsInfo.setVisible(false);
+        editJamsInfo.setVisible(false);
+        editDetoursInfo.setVisible(false);
     }
 
     public void showVehicleRoute(Pane mapContent,
@@ -306,7 +313,7 @@ public class View {
                             colorRoute(vehicleRoute, singleV.getLine().getColor().saturate().saturate());
 
                             for(Line otherLine : lines) {
-                                if (!otherLine.getName().equals(singleV.getLine().getName())) {
+                                if (otherLine.getName() != singleV.getLine().getName()) {
                                     changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
                                 } else {
                                     changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());

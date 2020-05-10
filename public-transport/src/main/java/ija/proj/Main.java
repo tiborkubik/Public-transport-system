@@ -40,6 +40,8 @@ public class Main extends Application {
         // Loading all streets from XML input into Drawable objects + adding them to all drawable elements
         List<Drawable> streets = loader.loadMapData(allElements);
 
+        controller.setAllStreets(allElements);
+
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         List<Line> lines = loader.loadLinesData(allElements, streets);
         loader.loadTimetableData(lines);
@@ -71,5 +73,6 @@ public class Main extends Application {
         controller.showVehicleRoute();
 
         controller.setVehicleInfo();
+
     }
 }
