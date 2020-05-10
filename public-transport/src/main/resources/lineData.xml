@@ -147,29 +147,6 @@
         <y>400</y>
       </stop>
     </street>
-
-    <street id="Jobs Ave C">
-      <stop id="3rd+Jobs">
-        <x>1700</x>
-        <y>300</y>
-      </stop>
-    </street>
-
-    <street id="Jobs Ave B">
-    </street>
-
-    <street id="Jobs Ave A">
-      <stop id="2nd+Jobs">
-        <x>1600</x>
-        <y>150</y>
-      </stop>
-
-      <stop id="1st+Jobs">
-        <x>1600</x>
-        <y>50</y>
-      </stop>
-    </street>
-
   </line>
 
 

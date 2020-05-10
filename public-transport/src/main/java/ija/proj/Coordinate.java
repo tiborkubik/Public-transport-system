@@ -2,8 +2,7 @@ package ija.proj;
 
 import java.util.Objects;
 
-public class Coordinate extends java.lang.Object {
-
+public class Coordinate {
     private double x;
     private double y;
 
@@ -21,7 +20,7 @@ public class Coordinate extends java.lang.Object {
         this.y = inputY;
     }
 
-    public double coordDistance(Coordinate b) {
+    public double coordsDistance(Coordinate b) {
         return Math.sqrt(Math.pow(this.getX() - b.getX(), 2) + Math.pow(this.getY() - b.getY(), 2));
     }
 
@@ -66,7 +65,7 @@ public class Coordinate extends java.lang.Object {
         return y1 - y2;
     }
 
-    public void swap_coordinates(Coordinate c){
+    public void swapCoordinates(Coordinate c) {
         Coordinate temp_c = new Coordinate(this.x,this.y);
         this.x = c.getX();
         this.y = c.getY();

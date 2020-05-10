@@ -170,22 +170,22 @@ public class View {
     }
 
     public void generateStopsOnPath(Vehicle singleV, javafx.scene.shape.Line vehicleRoute, Pane bottomWindow) {
-//        double realToImPath = singleV.totalPathLength()/850;
-//
-//        double distFromStart = singleV.getLine().getStopList().get(0).getCoordinate().coordDistance(singleV.getLine().getStreetList().get(0).begin());
-//
-//        for(int i = 1; i < singleV.getLine().getStopList().size()-1; i++) {
-//            if(i == 1) {
-//                addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
-//            }
-//
-//            distFromStart += singleV.getLine().getStopList().get(i).getCoordinate().coordDistance(singleV.getLine().getStopList().get(i+1).getCoordinate());
-//
-//            addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
-//        }
-//
-//        distFromStart += singleV.getLine().getStopList().get(singleV.getLine().getStopList().size()-1).getCoordinate().coordDistance(singleV.getLine().getStopList().get(singleV.getLine().getStopList().size()).getCoordinate());
-//        addStopToRoute(vehicleRoute, distFromStart, realToImPath, singleV.getLine().getStopList().size(), singleV, bottomWindow);
+        double realToImPath = singleV.totalPathLength()/850;
+
+        double distFromStart = singleV.getLine().getStopList().get(0).getCoordinate().coordsDistance(singleV.getLine().getStreetList().get(0).begin());
+
+        for(int i = 1; i < singleV.getLine().getStopList().size()-1; i++) {
+            if(i == 1) {
+                addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
+            }
+
+            distFromStart += singleV.getLine().getStopList().get(i).getCoordinate().coordsDistance(singleV.getLine().getStopList().get(i+1).getCoordinate());
+
+            addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);
+        }
+
+        distFromStart += singleV.getLine().getStopList().get(singleV.getLine().getStopList().size()-1).getCoordinate().coordsDistance(singleV.getLine().getStopList().get(singleV.getLine().getStopList().size()).getCoordinate());
+        addStopToRoute(vehicleRoute, distFromStart, realToImPath, singleV.getLine().getStopList().size(), singleV, bottomWindow);
     }
 
     public void prepareGUIforAdmin(
@@ -306,7 +306,7 @@ public class View {
                             colorRoute(vehicleRoute, singleV.getLine().getColor().saturate().saturate());
 
                             for(Line otherLine : lines) {
-                                if (otherLine.getName() != singleV.getLine().getName()) {
+                                if (!otherLine.getName().equals(singleV.getLine().getName())) {
                                     changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
                                 } else {
                                     changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());

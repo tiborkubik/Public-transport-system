@@ -391,6 +391,7 @@ public class Controller {
             view.cleanRouteFromStops(bottomWindow);
             view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
             focusedVehicle = null;
+            vehicleOnRoute.setVisible(false);
         });
     }
 
@@ -434,6 +435,7 @@ public class Controller {
 
                 sg.setOnMouseClicked(event -> {
                     focusedVehicle = null;
+                    vehicleOnRoute.setVisible(false);
                     vehicleOnRoute.setCenterX(50);
 
                     boolean onLine = false;
@@ -530,8 +532,8 @@ public class Controller {
                     for(Vehicle v : allVehicles) {
                         if(sg.getId().contains(v.getName())) {
 
-                            System.out.println(v.getPassedDistance());
                             focusedVehicle = v;
+                            vehicleOnRoute.setVisible(true);
                         }
                     }
 
@@ -567,14 +569,14 @@ public class Controller {
 
         double realToImPath = line.totalPathLength()/850;
 
-        double distFromStart = allStops.get(0).getCoordinate().coordDistance(line.getStreetList().get(0).begin());
+        double distFromStart = allStops.get(0).getCoordinate().coordsDistance(line.getStreetList().get(0).begin());
 
         for(int i = 1; i < allStops.size(); i++) {
             if(i == 1) {
                 view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i-1, allStops, bottomWindow);
             }
 
-            distFromStart += allStops.get(i-1).getCoordinate().coordDistance(allStops.get(i).getCoordinate());
+            distFromStart += allStops.get(i-1).getCoordinate().coordsDistance(allStops.get(i).getCoordinate());
 
             view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, allStops, bottomWindow);
         }

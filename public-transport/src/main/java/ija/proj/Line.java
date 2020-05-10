@@ -9,16 +9,22 @@ import java.time.LocalTime;
 import java.util.*;
 
 
+/**
+ * Class line defines one line of town, eg. Metro Line A, Bus Line n. 67, etc.
+ * Line is defined by streets and stops together with a timetable of departures.
+ * Each line within one map has special color. Type of line defines what kind of vehicles are used - trams, subways, buses..
+ */
 public class Line implements Drawable  {
-    private String identifier;
-    private String type;  // tram, sub, bus..
-    private List<Street> streetList;
-    private List<Stop> stopList;
-    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();
+    private String identifier;                                                  /**< Unique line identifier */
+    private String type;                                                        /**< Type of line - Bus/Tram/Subway */
+    private javafx.scene.paint.Color col;                                       /**< Unique color of given line */
+    private List<LocalTime> timetable = new ArrayList<>();                      /**< Timetable of scheduled departures */
 
-    private List<Coordinate> start_c = new ArrayList<>();
-    private List<Coordinate> end_c = new ArrayList<>();
-    private List<LocalTime> timetable = new ArrayList<>();
+    private List<Street> streetList;                                            /**< List of all streets that define given line */
+    private List<Stop> stopList;                                                /**< List of all stops that define given line */
+    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();     /**< Path of a line - stops + end of lines */
+    private List<Coordinate> streetsBegins = new ArrayList<>();                 /**< List of all stats of lines */
+    private List<Coordinate> streetsEnds = new ArrayList<>();                   /**< List of all ends of lines */
 
     private javafx.scene.paint.Color col;
 
@@ -42,7 +48,7 @@ public class Line implements Drawable  {
         ArrayList<Coordinate> coords = new ArrayList<>(c);
 
         for(int i = 0; i < coords.size()-1; i++) {
-            total += coords.get(i).coordDistance(coords.get(i+1));
+            total += coords.get(i).coordsDistance(coords.get(i+1));
         }
         return total;
     }
@@ -120,31 +126,20 @@ public class Line implements Drawable  {
         }
     }
 
-    public boolean streetInLineStreets(String streetName) {
-        for(Street s : this.streetList) {
-            if(s.getName() == streetName) {
-                return true;
-            }
-        }
-        return false;
+
+    public void addToTimetable(LocalTime l){
+        timetable.add(l);
     }
 
-    public boolean isCircular() {
-        Coordinate firstStreetStart = this.start_c.get(0);
-        Coordinate lastStreetEnd = this.end_c.get(this.end_c.size());
-
-        return firstStreetStart.equals(lastStreetEnd);
+    public List<LocalTime> getTimetable(){
+        return timetable;
     }
 
     public void addCoordinates(Coordinate start, Coordinate end) {
-        this.start_c.add(start);
-        this.end_c.add(end);
+        this.streetsBegins.add(start);
+        this.streetsEnds.add(end);
     }
 
-    /***
-     * sets type to the line
-     * @param type
-     */
     public void setType(String type) {
         this.type = type;
     }
@@ -182,8 +177,8 @@ public class Line implements Drawable  {
         int i = 0;
         for (Street street : streetList) {
 
-            Coordinate start = start_c.get(i);
-            Coordinate end = end_c.get(i);
+            Coordinate start = streetsBegins.get(i);
+            Coordinate end = streetsEnds.get(i);
             int n_lines = street.getN_lines();
 
 
@@ -292,13 +287,5 @@ public class Line implements Drawable  {
         }
 
         return line;
-    }
-
-    public void addToTimetable(LocalTime l){
-        timetable.add(l);
-    }
-
-    public List<LocalTime> getTimetable(){
-        return timetable;
     }
 }

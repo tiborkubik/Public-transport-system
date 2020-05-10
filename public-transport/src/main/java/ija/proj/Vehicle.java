@@ -8,23 +8,29 @@ import javafx.scene.shape.Shape;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Vehicle implements Drawable, UpdateState {
-    private Coordinate position;
-    private double speed;
-    private double constantSpeed;
-    private Street currentStreet;
-    private Stop nextStop;
-    private double distance = 0;
-    private String identifier;
-    private Line onLine;
-    protected List<Shape> GUI = new ArrayList<>();
-    private List<Coordinate> path = new ArrayList<>();
-    private int cnt_time = 0;
-    private Controller controller;
 
-    public Coordinate getPosition(){
-        return this.position;
-    }
+/**
+ * Class vehicle represents vehicle, which moves on map on certain line.
+ * Contains all important information, which define the movement and dynamics of program
+ */
+public class Vehicle implements Drawable, UpdateState {
+    private String identifier;                              /**< Unique identifier of vehicle */
+    private Coordinate position;                            /**< Position of vehicle on map */
+    private Street currentStreet;                           /**< Street on which a vehicle currently occurs */
+    private Line onLine;                                    /**< Line on which the vehicle transports passengers */
+    private Stop nextStop;                                  /**< Next stop where vehicle stops */
+
+    private Controller controller;                          /**< Main controller */
+
+    private double speed;                                   /**< Speed of movement of vehicle */
+    private double constantSpeed;                           /**< Value of speed not effected by speedUp, etc */
+    private double distance = 0;                            /**< Distance in pixels from the start of vehicle's route */
+
+    protected List<Shape> GUI = new ArrayList<>();          /**< List of GUI elements to be drawn on canvas */
+    private List<Coordinate> path = new ArrayList<>();      /**< List of all stops and ends of lines */
+
+    private int cnt_time = 0;                               /**< Counter that ensures that vehicles stop on stops */
+
 
     public Vehicle(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
         this.position = position;
@@ -64,9 +70,7 @@ public class Vehicle implements Drawable, UpdateState {
     protected void setStops() {
         LinkedHashMap<String, Coordinate> tempPath = this.onLine.getPath();
 
-        tempPath.forEach((k,v)->{
-            this.path.add(v);
-        });
+        tempPath.forEach((k,v)-> this.path.add(v));
     }
 
     private void modifyGUI(Coordinate coordinate) {
@@ -79,7 +83,7 @@ public class Vehicle implements Drawable, UpdateState {
                 shape.setTranslateY(coordinate.getY() - position.getY() + shape.getTranslateY());
             }
         } catch (Exception e) {
-            System.out.println("Accessing unexisting element");
+            System.out.println("Accessing non-existing element");
         }
     }
 
@@ -98,7 +102,7 @@ public class Vehicle implements Drawable, UpdateState {
         for(int i = 0; i < path.size() - 1; i++) {
             a = path.get(i);
             b = path.get(i + 1);
-            currentLength = a.coordDistance(b);
+            currentLength = a.coordsDistance(b);
             if(length + currentLength >= distance) {
                 break;
             }
@@ -115,7 +119,7 @@ public class Vehicle implements Drawable, UpdateState {
     public double totalPathLength() {
         double total = 0;
         for(int i = 0; i < this.path.size()-1; i++) {
-            total += this.path.get(i).coordDistance(this.path.get(i+1));
+            total += this.path.get(i).coordsDistance(this.path.get(i+1));
         }
         return total;
     }
@@ -197,13 +201,7 @@ public class Vehicle implements Drawable, UpdateState {
                 } else {
                     if(this instanceof Subway) {
                         if (s.begin().getX() < s.end().getX()) {
-                            if (s.begin().getY() < s.end().getY()){
-                                GUI.get(0).setRotate(90-90*slope);
-                            }
-                            else{
-                                //vodorovne z lava do prava
-                                GUI.get(0).setRotate(90-90*slope);
-                            }
+                            GUI.get(0).setRotate(90-90*slope);
                         }
                         else{
                             if (s.begin().getY() < s.end().getY()){

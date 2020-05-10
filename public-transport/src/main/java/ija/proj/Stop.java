@@ -7,17 +7,19 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
+
+/**
+ * Class Stop represents stops on line. Stops are located on streets and lines define, whether they stop on them or not when passing
+ * given street. Stops are always connected to specific street and cannot be on their own.
+ */
 public class Stop implements Drawable {
-    private String identifier;
-    private Coordinate location = null;
-    private Street onStreet = null;
-    private javafx.scene.paint.Color col;
-    private int time_to_stay;
+    private String identifier;                 /**< Unique identifier of a stop within given map */
+    private Coordinate location = null;        /**< Location of stop within canvas */
+    private Street onStreet = null;            /**< Definition of street on which a stop lies */
+    private int time_to_stay;                  /**< Time which vehicles spend on given stop */
 
     public Stop(String identifier, Coordinate location, Street onStreet, int time_to_stay) {
         this.identifier = identifier;
@@ -32,17 +34,6 @@ public class Stop implements Drawable {
 
     public int getTime(){
         return this.time_to_stay;
-    }
-    public void set_color() {
-
-        Random random = new Random();
-        final float hue = random.nextFloat();
-        final java.awt.Color color = java.awt.Color.getHSBColor(hue, 1.0f, 1.0f);
-
-        int r = color.getRed();
-        int g = color.getGreen();
-        int b = color.getBlue();
-        this.col = javafx.scene.paint.Color.rgb(r, g, b);
     }
 
     /***

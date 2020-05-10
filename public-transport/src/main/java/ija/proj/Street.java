@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /***
- * class Street represents real life street
+ * class Street represents one street - from start to end point. Each street has unique identifier and stops that are located on it.
  */
 public class Street implements Drawable {
     private String identifier;
