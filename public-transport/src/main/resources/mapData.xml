@@ -244,9 +244,9 @@
 
   <street id="Pitt Con">
     <start_x>400</start_x>
-    <start_y>900</start_y>
+    <start_y>1000</start_y>
     <end_x>400</end_x>
-    <end_y>1000</end_y>
+    <end_y>900</end_y>
   </street>
 
   <street id="Marble Con">

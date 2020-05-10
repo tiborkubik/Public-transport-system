@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -105,10 +104,9 @@ public class Controller {
 
     private Street beingDetoured = null;
     private Line lineDetoured = null;
-
     private List<Street> streetsToAddToLine = new ArrayList<>();
-    private List<Drawable> allStreets;
 
+    private List<Drawable> allStreets;
     public List<Vehicle> getAllVehicles() {
         return allVehicles;
     }
@@ -185,6 +183,22 @@ public class Controller {
     private void exitEditing() {
         timeManager.setScale((float)speedChange.getValue());
         timeManager.changeSpeed();
+
+        if(inEditDetours) {
+            List<Street> newStreets = new ArrayList<>();
+            for (Street s : lineDetoured.getStreetList()){
+                if (s.getName().equals(beingDetoured.getName())){
+                    for (Street n : streetsToAddToLine)
+                        newStreets.add(n);
+                }
+                else {
+                    newStreets.add(s);
+                }
+            }
+            lineDetoured.deleteStops(beingDetoured);
+            lineDetoured.setStreets(newStreets, streetsToAddToLine, beingDetoured);
+
+        }
 
         view.exitGUIAdmin(
                 rightBlur1,
@@ -479,13 +493,13 @@ public class Controller {
                                     } else {
                                         if(s.follows(this.streetsToAddToLine.get(this.streetsToAddToLine.size()-1))) {
                                             System.out.println(s.getName() + " Can be used for detour");
+
                                             ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
                                             this.streetsToAddToLine.add(s);
                                         } else {
                                             System.out.println(s.getName() + " Cannot be used for detour");
                                         }
                                     }
-
                                 }
                             }
                         }

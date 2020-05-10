@@ -2,6 +2,7 @@ package ija.proj;
 
 import java.util.Objects;
 
+
 public class Coordinate {
     private double x;
     private double y;
@@ -22,6 +23,29 @@ public class Coordinate {
 
     public double coordsDistance(Coordinate b) {
         return Math.sqrt(Math.pow(this.getX() - b.getX(), 2) + Math.pow(this.getY() - b.getY(), 2));
+    }
+
+    /***
+     * distance between 2 coordinates
+     * @param a first coordinate
+     * @param b second coordinate
+     * @return distance
+     */
+    private double distance(Coordinate a, Coordinate b){
+        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
+    }
+
+    public boolean liesOn(Street s){
+        Coordinate stop_to_add = this;
+
+        double distance = distance(s.begin(), s.end());     // original distance of the street
+        double distance_with_stop = distance(s.begin(), stop_to_add) + distance(stop_to_add, s.end()); //distance of the street trought the new stop
+        double delta = 0.00001;     // allowed distance from the line (proportional to street length)
+        //check if the distances and approximately the same
+        if (delta> Math.abs(distance- distance_with_stop) / Math.max(Math.abs(distance), Math.abs(distance_with_stop))){
+            return true;
+        }
+        return false;
     }
 
     public boolean change(double inputX, double inputY){

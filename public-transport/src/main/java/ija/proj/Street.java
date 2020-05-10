@@ -39,6 +39,10 @@ public class Street implements Drawable {
 
     }
 
+    public int getNStops(){
+        return this.stopList.size();
+    }
+
     public int getTrafficDensity() {
         return trafficDensity;
     }

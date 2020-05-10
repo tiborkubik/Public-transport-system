@@ -71,6 +71,10 @@ public class Vehicle implements Drawable, UpdateState {
         LinkedHashMap<String, Coordinate> tempPath = this.onLine.getPath();
 
         tempPath.forEach((k,v)-> this.path.add(v));
+
+        System.out.println(this.getName() + " will follow this path:");
+//        tempPath.forEach((k, v) -> System.out.println(k));
+//        System.out.println("-----------------------------\n");
     }
 
     private void modifyGUI(Coordinate coordinate) {
