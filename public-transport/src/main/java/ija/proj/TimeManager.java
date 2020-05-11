@@ -10,28 +10,50 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class TimeManager controls time of  the application and ensures time jumps, and flow of the time of application
+ */
 public class TimeManager {
-    LocalTime currentTime = LocalTime.now().minusHours(1);
-    double scaleForSpeed = 1.0;
-    List<Drawable> vehiclesToAdd = new ArrayList<>();
-    List<Drawable> routeVehicleToAdd = new ArrayList<>();
+    View view;              /**< Instance of the class view */
+    Controller controller;  /**< Instance of the class controller */
+    Timeline timer;         /**< Instance of the class Timeline which keep the time running */
+    LocalTime timeToJump;   /**< Time would like to jump to  */
+    LocalTime begin;        /**< Used for storing current time while time jumping  */
+    LocalTime currentTime = LocalTime.now().minusHours(1); /**< Time of the application (at the start 1hour earlier to ensure that lines will be spawned) */
 
-    List<Line> lines = new ArrayList<>();
-    double timeMultiplier = 15;
-    View view;
-    Controller controller;
-    Timeline timer;
-    LocalTime timeToJump;
-    long elapse_time = 0;
+    List<Drawable> vehiclesToAdd = new ArrayList<>();      /**< Vehicles added to be shown, according timetable */
+    List<Line> lines = new ArrayList<>();                  /**< List of lines */
 
-    LocalTime begin;
+    double scaleForSpeed = 1.0; /**< speed of time */
+    double timeMultiplier = 15; /**< timer is called "timeMultiplier" times per second */
+    long elapse_time = 0;       /**< time of elapse */
 
-    public void setDefaultTime(Text timeGUI) {
-        timeGUI.setText("23:59:59");
+
+    /***
+     * Sets scale for speed
+     *
+     * @param scale scale for time
+     */
+    public void setScale(float scale) {
+        this.scaleForSpeed = scale;
     }
 
+    /***
+     * 
+     *
+     * @param lines
+     */
     public void setLines(List<Line> lines) {
         this.lines = lines;
+    }
+
+    /***
+     * Sets default time for the application "23:59:59"
+     *
+     * @param timeGUI
+     */
+    public void setDefaultTime(Text timeGUI) {
+        timeGUI.setText("23:59:59");
     }
 
     public TimeManager(View view, Controller controller) {
@@ -39,17 +61,12 @@ public class TimeManager {
         this.controller = controller;
     }
 
-
-    public void setScale(float scale) {
-        this.scaleForSpeed = scale;
-    }
-
     public LocalTime getCurrentTime() {
         return this.currentTime;
     }
 
-    public void setCurrentTime(Text timeGUI) {
-        //timeGUI.setText(currentTime.getHour() + ":" + currentTime.getMinute() + ":" + currentTime.getSecond());
+    public List<Drawable> getVehicleToAdd() {
+        return  this.vehiclesToAdd;
     }
 
     /***
@@ -128,9 +145,6 @@ public class TimeManager {
             this.vehiclesToAdd =  new ArrayList<>();
     }
 
-    public List<Drawable> getVehicleToAdd() {
-        return  this.vehiclesToAdd;
-    }
 
     public void moveInTime(String newTime,List <UpdateState> updates, Text timeGUI,Timetable timeTable, Pane mapContent,int flag, Slider speedChange) {
 

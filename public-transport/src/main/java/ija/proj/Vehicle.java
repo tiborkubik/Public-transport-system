@@ -32,6 +32,17 @@ public class Vehicle implements Drawable, UpdateState {
     private int cnt_time = 0;                               /**< Counter that ensures that vehicles stop on stops */
 
 
+    /***
+     * Method creates a new car of public transport in the given city
+     *
+     * @param position initial position of the car
+     * @param speed default speed of the car
+     * @param onLine specifies line of the car
+     * @param identifier car name
+     * @param street initial street of the car
+     * @param firstStop first stop of the car
+     * @param controller instance of controller
+     */
     public Vehicle(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
         this.position = position;
         this.speed = speed;
@@ -43,43 +54,92 @@ public class Vehicle implements Drawable, UpdateState {
         this.controller = controller;
     }
 
+    /***
+     * Returns path of the vehicle
+     *
+     * @return path
+     */
     public List<Coordinate> getPath() {
         return path;
     }
 
+    /***
+     * Sets first stop of the vehicle
+     */
     public void setInitialStop() {
         this.nextStop = this.onLine.getStopList().get(0);
     }
 
-    public Stop getNextStop() {
-        return this.nextStop;
-    }
-
-    public String getName() {
-        return this.identifier;
-    }
-
-    public Line getLine() {
-        return this.onLine;
-    }
-
-    public Street getCurrentStreet() {
-        return this.currentStreet;
-    }
-
-    public double getPassedDistance() {
-        return this.distance;
-    }
-
+    /***
+     * Sets stops of the vehicle
+     */
     protected void setStops() {
         LinkedHashMap<String, Coordinate> tempPath = this.onLine.getPath();
 
         tempPath.forEach((k,v)-> this.path.add(v));
     }
 
+    /***
+     * Returns following stop of the vehicle
+     *
+     * @return next stop of the vehicle
+     */
+    public Stop getNextStop() {
+        return this.nextStop;
+    }
+
+    /***
+     * Returns name the vehicle
+     *
+     * @return returns identifier of the vehicle
+     */
+    public String getName() {
+        return this.identifier;
+    }
+
+    /***
+     * Returns current Line of the vehicle
+     *
+     * @return line of the vehicle
+     */
+    public Line getLine() {
+        return this.onLine;
+    }
+
+    /***
+     * Returns street on which is vehicle at the time
+     *
+     * @return current street of the vehicle
+     */
+    public Street getCurrentStreet() {
+        return this.currentStreet;
+    }
+
+    /***
+     * Returns vehicle's passed distance
+     *
+     * @return passed distance
+     */
+    public double getPassedDistance() {
+        return this.distance;
+    }
+
+    /***
+     *  Returns GUI
+     *
+     * @return GUI
+     */
+    @Override
+    public List<Shape> getGUI() {
+        return GUI;
+    }
+
+    /***
+     * Moves car by modifying GUI
+     *
+     * @param coordinate according which translation will be calculated
+     */
     private void modifyGUI(Coordinate coordinate) {
-
-
         try{
             for(Shape shape : GUI) {
                 shape.setTranslateX(coordinate.getX() - position.getX() + shape.getTranslateX());
@@ -90,12 +150,15 @@ public class Vehicle implements Drawable, UpdateState {
         }
     }
 
-    @Override
-    public List<Shape> getGUI() {
-        return GUI;
-    }
 
 
+    /***
+     * Calculates new coordinate of the the vehicle
+     *
+     * @param distance passed distance of the car
+     * @param path vehicle moves according path
+     * @return new coordinate
+     */
     public Coordinate getNewCoord(double distance, List<Coordinate> path) {
         double length = 0;
         double currentLength = 0;
@@ -119,6 +182,11 @@ public class Vehicle implements Drawable, UpdateState {
         return new Coordinate(a.getX() + (b.getX() - a.getX()) * driven, a.getY() + (b.getY() - a.getY()) * driven);
     }
 
+    /***
+     * Calculates length of total path of the vehicle
+     *
+     * @return Total path length
+     */
     public double totalPathLength() {
         double total = 0;
         for(int i = 0; i < this.path.size()-1; i++) {
@@ -127,6 +195,12 @@ public class Vehicle implements Drawable, UpdateState {
         return total;
     }
 
+    /***
+     * Updates vehicle's position over the time
+     * @param time current time in the application
+     * @param speedMultiplier how much fast vehicle goes
+     * @param trafficCoefficient level of the traffic jam
+     */
     @Override
     public void update(LocalTime time, double speedMultiplier, int trafficCoefficient) {
         if(trafficCoefficient != 1)
