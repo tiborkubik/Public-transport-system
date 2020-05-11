@@ -10,6 +10,7 @@ public class Timetable {
     private View view;
     private Controller controller;
     private int id = 41999;
+
     public Timetable(List<Drawable> allElemets, List<Line> lines, View view, Controller controller) {
         this.allElemets = allElemets;
         this.lines = lines;

@@ -43,6 +43,10 @@ public class Vehicle implements Drawable, UpdateState {
         this.controller = controller;
     }
 
+    public List<Coordinate> getPath() {
+        return path;
+    }
+
     public void setInitialStop() {
         this.nextStop = this.onLine.getStopList().get(0);
     }

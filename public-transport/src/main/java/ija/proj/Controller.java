@@ -22,8 +22,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Controller {
     @FXML
@@ -107,6 +106,10 @@ public class Controller {
     private List<Street> streetsToAddToLine = new ArrayList<>();
 
     private List<Drawable> allStreets;
+
+    private List<String> focusedLineStopsNames = new ArrayList<>();
+    private List<Coordinate> focusedLineStops = new ArrayList<>();
+
     public List<Vehicle> getAllVehicles() {
         return allVehicles;
     }
@@ -453,20 +456,13 @@ public class Controller {
                 if(sg.getId().contains(s.getName())) {
                     if(this.streetsToAddToLine.size() == 0) {
                         if(s.follows(this.beingDetoured)) {
-                            System.out.println(s.getName() + " Can be used for detour");
                             this.streetsToAddToLine.add(s);
                             ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
-                        } else {
-                            System.out.println(s.getName() + " Cannot be used for detour");
                         }
                     } else {
                         if(s.follows(this.streetsToAddToLine.get(this.streetsToAddToLine.size()-1))) {
-                            System.out.println(s.getName() + " Can be used for detour");
-
                             ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
                             this.streetsToAddToLine.add(s);
-                        } else {
-                            System.out.println(s.getName() + " Cannot be used for detour");
                         }
                     }
                 }
@@ -634,7 +630,7 @@ public class Controller {
                             view.changeFinalStopText(finalStopText, line);
 
                             for(Line otherLine : lines) {
-                                if (otherLine.getName() != line.getName()) {
+                                if (!otherLine.getName().equals(line.getName())) {
                                     view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
                                 } else {
                                     view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
@@ -650,20 +646,28 @@ public class Controller {
     }
 
     public void generateStopsOnPath(Line line) {
+        focusedLineStopsNames.clear();
+        focusedLineStops.clear();
+
+        LinkedHashMap<String, Coordinate> path = line.getPath();
+
+        path.forEach((k,v)-> {
+            focusedLineStops.add(v);
+            focusedLineStopsNames.add(k);
+        });
+
         List<Stop> allStops = line.getStopList();
 
         double realToImPath = line.totalPathLength()/850;
+        double distFromStart = 0;
+        int j = 0;
 
-        double distFromStart = allStops.get(0).getCoordinate().coordsDistance(line.getStreetList().get(0).begin());
-
-        for(int i = 1; i < allStops.size(); i++) {
-            if(i == 1) {
-                view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i-1, allStops, bottomWindow);
+        for(int i = 1; i < focusedLineStops.size(); i++) {
+            distFromStart += focusedLineStops.get(i).coordsDistance(focusedLineStops.get(i-1));
+            if(focusedLineStopsNames.get(i).contains("stop")) {
+                view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, j, allStops, bottomWindow);
+                j++;
             }
-
-            distFromStart += allStops.get(i-1).getCoordinate().coordsDistance(allStops.get(i).getCoordinate());
-
-            view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, allStops, bottomWindow);
         }
     }
 
@@ -679,7 +683,7 @@ public class Controller {
                     view.changeFinalStopText(finalStopText, line);
 
                     for(Line otherLine : lines) {
-                        if (otherLine.getName() != line.getName()) {
+                        if (!otherLine.getName().equals(line.getName())) {
                             view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
                         } else {
                             view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
