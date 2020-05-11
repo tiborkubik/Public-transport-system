@@ -624,6 +624,29 @@ public class Controller {
                             vehicleOnRoute.setVisible(true);
                         }
                     }
+                    /////////priprava na delay
+                    if (focusedVehicle != null){
+                        int delay =0;
+                        int speed;
+                        String type = focusedVehicle.getLine().getType();
+
+                        if (type.equals("Bus"))
+                            speed = 1;
+                        else if (type.equals("Tram"))
+                            speed = 2;
+                        else
+                            speed = 3;
+
+                        for (Street s : focusedVehicle.getLine().getStreetList()){
+                            if(s.getTrafficDensity() != 1){
+                                //meskanie += (dlzka ulice / pixely za sekundu)*spomalenie*2 - (dlzka ulice / pixely za sekundu)
+                                //(dlzka ulice / pixely za sekundu) odcitavame preto lebo pri spomaleni urovne 2 prechod bude trvat 4 nasobnu dobu a teda 1 nasobok odcitame lebo tolko by to trvalo normalne
+                                delay += (s.begin().coordsDistance(s.end())/5.31340759143) * s.getTrafficDensity()*2 - (s.begin().coordsDistance(s.end())/5.31340759143);
+                            }
+                        }
+                        System.out.println("delay:" + delay);
+                    }
+                    /////////potialto je to rpiprava na delay
 
                     for(Line line : lines) {
                         if(sg.getId().contains(line.getName())) {
