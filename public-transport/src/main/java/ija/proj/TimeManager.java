@@ -37,7 +37,7 @@ public class TimeManager {
     public TimeManager(View view, Controller controller) {
         this.view = view;
         this.controller = controller;
-        int hours = LocalTime.now().getHour() - 2;
+        int hours = LocalTime.now().getHour() - 1;
         int min = LocalTime.now().getMinute();
         int sec = LocalTime.now().getSecond();
         this.currentTime = LocalTime.parse(formatTime(hours,min,sec));
@@ -141,7 +141,10 @@ public class TimeManager {
         this.timeToJump = LocalTime.parse(newTime);
         this.begin = currentTime;
         this.elapse_time = 1;
-        if (flag == 1){
+        if (flag == 0){
+            startTimer(updates, timeGUI, timeTable, mapContent, 12000.0, speedChange);
+        }
+        else if (flag == 1){
             if (timeToJump.getHour() < currentTime.getHour())
                 elapse_time = 2;
             startTimer(updates, timeGUI, timeTable, mapContent, 12000.0, speedChange);

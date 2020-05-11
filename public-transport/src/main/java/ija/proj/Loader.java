@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Loader {
-    private static String resources= "src/main/resources/";
-//    private static String resources= "public-transport/src/main/resources/";
+    //private static String resources= "src/main/resources/";
+    private static String resources= "public-transport/src/main/resources/";
     /** Method loads all streets from input XML file. Streets are parsed from XML and added into a list of Drawable objects, which is then returned
      *
      * @param allElements List of objects that will be put in canvas
