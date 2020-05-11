@@ -6,6 +6,7 @@ import java.time.LocalTime;
  * Interface UpdateState specifies all elements which are going to be updated
  */
 public interface UpdateState {
+
     /***
      * Updates Javafx elements which has type UpdateState
      *

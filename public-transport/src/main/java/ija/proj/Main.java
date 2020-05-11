@@ -129,7 +129,7 @@ public class Main extends Application {
 
         TimeManager timeManager = new TimeManager(this.view, this.controller);
         timeManager.setLines(lines);
-        this.timeTable = new Timetable(allElements, lines, view, controller);
+        this.timeTable = new Timetable(allElements, lines, controller);
 
         setController();
     }

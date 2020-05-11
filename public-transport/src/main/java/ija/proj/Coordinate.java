@@ -53,7 +53,7 @@ public class Coordinate {
         this.y = inputY;
     }
 
-    /***
+    /**
      * Distance between 2 coordinates
      *
      * @param a First coordinate
@@ -76,7 +76,7 @@ public class Coordinate {
         return Math.sqrt(Math.pow(this.getX() - b.getX(), 2) + Math.pow(this.getY() - b.getY(), 2));
     }
 
-    /***
+    /**
      * Method checks whether coordinate lies on street passed as parameter
      *
      * @param s Street on which the point should lie
@@ -94,7 +94,7 @@ public class Coordinate {
         return delta > Math.abs(distance - distanceWithStop) / Math.max(Math.abs(distance), Math.abs(distanceWithStop));
     }
 
-    /***
+    /**
      * Tries to change x and y attributes of the coordinate
      *
      * @param inputX Value to which the X attribute will be changed

@@ -14,22 +14,32 @@ import java.util.List;
  * Class TimeManager controls time of  the application and ensures time jumps, and flow of the time of application
  */
 public class TimeManager {
-    View view;              /**< Instance of the class view */
-    Controller controller;  /**< Instance of the class controller */
-    Timeline timer;         /**< Instance of the class Timeline which keep the time running */
-    LocalTime timeToJump;   /**< Time would like to jump to  */
-    LocalTime begin;        /**< Used for storing current time while time jumping  */
-    LocalTime currentTime = LocalTime.now().minusHours(1); /**< Time of the application (at the start 1hour earlier to ensure that lines will be spawned) */
+    private View view;              /**< Instance of the class view */
+    private Controller controller;  /**< Instance of the class controller */
+    private Timeline timer;         /**< Instance of the class Timeline which keep the time running */
+    private LocalTime timeToJump;   /**< Time would like to jump to  */
+    private LocalTime begin;        /**< Used for storing current time while time jumping  */
+    private LocalTime currentTime = LocalTime.now().minusHours(1); /**< Time of the application (at the start 1hour earlier to ensure that lines will be spawned) */
 
-    List<Drawable> vehiclesToAdd = new ArrayList<>();      /**< Vehicles added to be shown, according timetable */
-    List<Line> lines = new ArrayList<>();                  /**< List of lines */
+    private List<Drawable> vehiclesToAdd = new ArrayList<>();      /**< Vehicles added to be shown, according timetable */
+    private List<Line> lines = new ArrayList<>();                  /**< List of lines */
 
-    double scaleForSpeed = 1.0; /**< speed of time */
-    double timeMultiplier = 15; /**< timer is called "timeMultiplier" times per second */
-    long elapse_time = 0;       /**< time of elapse */
+    private double scaleForSpeed = 1.0; /**< speed of time */
+    private double timeMultiplier = 15; /**< timer is called "timeMultiplier" times per second */
+    private long elapse_time = 0;       /**< time of elapse */
 
 
-    /***
+    /**
+     * Time managr constructor specifying view and controller of program
+     * @param view Main view of program
+     * @param controller Main program controller
+     */
+    public TimeManager(View view, Controller controller) {
+        this.view = view;
+        this.controller = controller;
+    }
+
+    /**
      * Sets scale for speed
      *
      * @param scale scale for time
@@ -38,45 +48,57 @@ public class TimeManager {
         this.scaleForSpeed = scale;
     }
 
-    /***
-     * 
+    /**
+     * Method sets lines attribute
      *
-     * @param lines
+     * @param lines new list of lines
      */
     public void setLines(List<Line> lines) {
         this.lines = lines;
     }
 
-    /***
+    /**
      * Sets default time for the application "23:59:59"
      *
-     * @param timeGUI
+     * @param timeGUI Text element of GUI
      */
     public void setDefaultTime(Text timeGUI) {
         timeGUI.setText("23:59:59");
     }
 
-    public TimeManager(View view, Controller controller) {
-        this.view = view;
-        this.controller = controller;
-    }
-
+    /**
+     * @return Current program time
+     */
     public LocalTime getCurrentTime() {
         return this.currentTime;
     }
 
+    /**
+     * @return List of vehicles that will be added in next time update
+     */
     public List<Drawable> getVehicleToAdd() {
-        return  this.vehiclesToAdd;
+        return this.vehiclesToAdd;
     }
 
     /***
-     * Starts timer
+     * Changes system speed with proper scale
      */
     public void changeSpeed() {
         timer.setRate(scaleForSpeed);
     }
 
 
+    /**
+     * Method starts timer and contains Timeline updating the GUI
+     * Method checks timeline every minute and if needed adds them on canvas
+     *
+     * @param updates List of elements that are moving throughout time
+     * @param timeGUI Text GUI element - program clock
+     * @param timeTable Timetable containing times of all vehicles starts
+     * @param mapContent Pane where all vehicles, lines, stops, streets.. are located - map parent node
+     * @param coefficient Speed coefficient needed when moving in time
+     * @param speedChange Slider GUI element - we take value of this slider to speed up transport
+     */
     public void startTimer(List<UpdateState> updates, Text timeGUI, Timetable timeTable, Pane mapContent, double coefficient, Slider speedChange) {
             TimeManager thisTM = this;
             List<Drawable> vehiclesToAddT = this.vehiclesToAdd;
@@ -146,7 +168,19 @@ public class TimeManager {
     }
 
 
-    public void moveInTime(String newTime,List <UpdateState> updates, Text timeGUI,Timetable timeTable, Pane mapContent,int flag, Slider speedChange) {
+    /**
+     * Method is used to change the time value. It is called when user wants to move in time.
+     * Method starts new timer with new time and the time between is speed up by certain coefficient according to flag
+     *
+     * @param newTime String value of new time towards which current time will be speed up
+     * @param updates List of elements that will update its position when time moved
+     * @param timeGUI Text GUI element representing clock
+     * @param timeTable Contains all departures of all lines - we need to departure during speedtime
+     * @param mapContent Pane representing map
+     * @param flag Flag describing whether we move to the past or future and if by hour or minute - coefficient of speed is dependant on it
+     * @param speedChange Slider GUI element
+     */
+    public void moveInTime(String newTime, List <UpdateState> updates, Text timeGUI, Timetable timeTable, Pane mapContent, int flag, Slider speedChange) {
 
         this.timeToJump = LocalTime.parse(newTime);
         this.begin = currentTime;
@@ -175,6 +209,15 @@ public class TimeManager {
 
     }
 
+    /**
+     * Method formats input values of hours, minutes and seconds into valid string format, so that it can be parsed into LocalTime variable
+     *
+     * @param hour Hour of parsed time
+     * @param minute Minute value of parsed time
+     * @param second Second value of parsed time
+     *
+     * @return String ready to be parsed into a LocalTime variable
+     */
     public String formatTime(int hour, int minute, int second) {
         String hours = String.valueOf(hour);
         String minutes = String.valueOf(minute);
