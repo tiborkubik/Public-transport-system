@@ -1,7 +1,6 @@
 package ija.proj;
 
 import org.w3c.dom.*;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
@@ -9,9 +8,15 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Class Loader loads all information about city, its maps, stops and lines together with timetables of starts.
+ * Class uses XML parser as all information are in form of XML files.
+ */
 public class Loader {
     private static String resources= "src/main/resources/";
 //    private static String resources= "public-transport/src/main/resources/";
+
     /** Method loads all streets from input XML file. Streets are parsed from XML and added into a list of Drawable objects, which is then returned
      *
      * @param allElements List of objects that will be put in canvas
@@ -54,12 +59,20 @@ public class Loader {
         return allElements;
     }
 
+    /**
+     * Method adds stop found in XML file into proper street, which was as its parent node
+     *
+     * @param eElement Element of XML file representing stop
+     * @param sStreet Street that was parsed from parent node, stop lies on this street
+     *
+     * @return representation of given stop in Stop class type
+     */
     private Stop stopToStreet(Element eElement, Street sStreet){
-       // Element eElement = (Element) singleStop;
         String stopName = eElement.getAttribute("id");
 
         String temp_start_x = eElement.getElementsByTagName("x").item(0).getTextContent();
         int start_x = Integer.parseInt(temp_start_x);
+
         String temp_start_y = eElement.getElementsByTagName("y").item(0).getTextContent();
         int start_y = Integer.parseInt(temp_start_y);
 
@@ -80,11 +93,18 @@ public class Loader {
             System.out.println("Stop " + newStop.getName() + " lies outside of street " + sStreet.getName());
             System.exit(-1);
         }
-
-        // adding stop into list of stops of given instance
         return newStop;
     }
 
+    /**
+     * Method adds street into a line defined in parent node
+     *
+     * @param singleStreet Node containing street information
+     * @param streets List of all streets that were so far parsed
+     * @param streetsOnLine List of all streets on line, where street lies
+     *
+     * @return Street representation in form of Street class instance
+     */
     private Street streetToLine(Node singleStreet, List<Drawable> streets, List<Street> streetsOnLine){
         NamedNodeMap streetAttribute = singleStreet.getAttributes();
         String streetName = streetAttribute.item(0).getNodeValue();
@@ -110,9 +130,11 @@ public class Loader {
 
     /**
      * Method loads all data about lines and stops and adds them to elements for drawing
+     *
      * @param allElements List of drawable elements into which new found stops will be appended
      * @param streets List of streets that are already defined
-     * @return List of parsed lines, containg all information about streets and stops, too
+     *
+     * @return List of parsed line, containing all information about streets and stops, too
      */
     public List<Line> loadLinesData(List<Drawable> allElements, List<Drawable> streets) {
         List<Line> allLines = new ArrayList<>();
@@ -201,6 +223,7 @@ public class Loader {
 
     /**
      * Method loads timetables for all lines
+     *
      * @param lines list of lines
      */
     public void loadTimetableData(List<Line> lines) {

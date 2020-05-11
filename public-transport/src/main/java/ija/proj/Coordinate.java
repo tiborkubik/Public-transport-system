@@ -2,6 +2,7 @@ package ija.proj;
 
 import java.util.Objects;
 
+
 /**
  * Class Coordinate defines one point in the map of the town, it is defined in 2D space, therefore it is defined by two attributes
  * which are x and y
@@ -14,89 +15,6 @@ public class Coordinate {
     public Coordinate(double inputX, double inputY) {
         x = inputX;
         y = inputY;
-    }
-
-    /**
-     * Method sets X value of a coordinate
-     *
-     * @param inputX This value will be set as X value of given coordinate
-     */
-    public void setX(double inputX) {
-        this.x = inputX;
-    }
-
-
-    /**
-     * Method sets Y value of a coordinate
-     *
-     * @param inputY This value will be set as Y value of given coordinate
-     */
-    public void setY(double inputY) {
-        this.y = inputY;
-    }
-
-
-    /***
-     * Distance between 2 coordinates
-     *
-     * @param a First coordinate
-     * @param b Second coordinate
-     *
-     * @return Distance between coordinate a and coordinate b
-     */
-    private double distance(Coordinate a, Coordinate b){
-        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
-    }
-
-
-    /**
-     * Distance between coordinate on which method is called and coordinate as parameter
-     *
-     * @param b One of ends between which distance is calculated
-     *
-     * @return Distance between coordinate b and coordinate on which method is called
-     */
-    public double coordsDistance(Coordinate b) {
-        return Math.sqrt(Math.pow(this.getX() - b.getX(), 2) + Math.pow(this.getY() - b.getY(), 2));
-    }
-
-
-    /***
-     * Method checks whether coordinate lies on street passed as parameter
-     *
-     * @param s Street on which the point should lie
-     *
-     * @return True if the point lies on the line, otherwise false
-     */
-    public boolean liesOn(Street s){
-        Coordinate stop_to_add = this;
-
-        double distance = distance(s.begin(), s.end());     // original distance of the street
-        double distance_with_stop = distance(s.begin(), stop_to_add) + distance(stop_to_add, s.end()); //distance of the street trought the new stop
-        double delta = 0.00001;     // allowed distance from the line (proportional to street length)
-        //check if the distances and approximately the same
-        if (delta> Math.abs(distance- distance_with_stop) / Math.max(Math.abs(distance), Math.abs(distance_with_stop))){
-            return true;
-        }
-        return false;
-    }
-
-    /***
-     * Tries to change x and y attributes of the coordinate
-     *
-     * @param inputX Value to which the X attribute will be changed
-     * @param inputY Value of new Y
-     *
-     * @return True if coordinates were swapped, otherwise false
-     */
-    public boolean change(double inputX, double inputY){
-        if(inputX >= 0 && inputY >= 0) {
-            this.x = inputX;
-            this.y = inputY;
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**
@@ -117,6 +35,82 @@ public class Coordinate {
         return this.y;
     }
 
+    /**
+     * Method sets X value of a coordinate
+     *
+     * @param inputX This value will be set as X value of given coordinate
+     */
+    public void setX(double inputX) {
+        this.x = inputX;
+    }
+
+    /**
+     * Method sets Y value of a coordinate
+     *
+     * @param inputY This value will be set as Y value of given coordinate
+     */
+    public void setY(double inputY) {
+        this.y = inputY;
+    }
+
+    /***
+     * Distance between 2 coordinates
+     *
+     * @param a First coordinate
+     * @param b Second coordinate
+     *
+     * @return Distance between coordinate a and coordinate b
+     */
+    private double distance(Coordinate a, Coordinate b){
+        return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
+    }
+
+    /**
+     * Distance between coordinate on which method is called and coordinate as parameter
+     *
+     * @param b One of ends between which distance is calculated
+     *
+     * @return Distance between coordinate b and coordinate on which method is called
+     */
+    public double coordsDistance(Coordinate b) {
+        return Math.sqrt(Math.pow(this.getX() - b.getX(), 2) + Math.pow(this.getY() - b.getY(), 2));
+    }
+
+    /***
+     * Method checks whether coordinate lies on street passed as parameter
+     *
+     * @param s Street on which the point should lie
+     *
+     * @return True if the point lies on the line, otherwise false
+     */
+    public boolean liesOn(Street s){
+        Coordinate stopToAdd = this;
+
+        double distance = distance(s.begin(), s.end());                                             // original distance of the street
+        double distanceWithStop = distance(s.begin(), stopToAdd) + distance(stopToAdd, s.end());    //distance of the street trought the new stop
+        double delta = 0.00001;                                                                     // allowed distance from the line (proportional to street length)
+
+        //check if the distances and approximately the same
+        return delta > Math.abs(distance - distanceWithStop) / Math.max(Math.abs(distance), Math.abs(distanceWithStop));
+    }
+
+    /***
+     * Tries to change x and y attributes of the coordinate
+     *
+     * @param inputX Value to which the X attribute will be changed
+     * @param inputY Value of new Y
+     *
+     * @return True if coordinates were swapped, otherwise false
+     */
+    public boolean change(double inputX, double inputY){
+        if(inputX >= 0 && inputY >= 0) {
+            this.x = inputX;
+            this.y = inputY;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Method calculates the difference of X values of coordinates
@@ -150,11 +144,11 @@ public class Coordinate {
      * @param c Coordinate with with the attributes will be swapped
      */
     public void swapCoordinates(Coordinate c) {
-        Coordinate temp_c = new Coordinate(this.x,this.y);
+        Coordinate tempC = new Coordinate(this.x,this.y);
         this.x = c.getX();
         this.y = c.getY();
-        c.x = temp_c.getX();
-        c.y = temp_c.getY();
+        c.x = tempC.getX();
+        c.y = tempC.getY();
     }
 
     /***

@@ -29,6 +29,11 @@ public class Main extends Application {
     private List<Line> lines = new ArrayList<>();           /**< List of Public transport lines */
     private Timetable timeTable;                            /**< departures of specific lines */
 
+    /**
+     * Method initialises all important information for GUI setup
+     *
+     * @param primaryStage Stage of application
+     */
     private void loadMapLayout(Stage primaryStage) {
         try {
             this.rootElement = layoutLoader.load();
@@ -43,6 +48,9 @@ public class Main extends Application {
     }
 
 
+    /**
+     * Method initialises main controller, loader and some additional information for controller
+     */
     private void initControllers() {
         this.controller = layoutLoader.getController();
         this.loader = new Loader();
@@ -53,50 +61,64 @@ public class Main extends Application {
 
     }
 
+    /**
+     * Method initialises application's view
+     */
     private void initView() {
         this.view = new View(this.controller);
     }
 
+    /**
+     * Method calls method from Loader which loads all information about city streets
+     */
     private void loadMapData() {
         // Loading all streets from XML input into Drawable objects + adding them to all drawable elements
         this.streets = loader.loadMapData(allElements);
         controller.setAllStreets(allElements);
     }
 
+    /**
+     * Method calls method from Loader which loads all information about lines of public transport of given city
+     */
     private void loadLinesData() {
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
         this.lines = loader.loadLinesData(allElements, streets);
         loader.loadTimetableData(lines);
     }
 
+    /**
+     * Method calls controller methods which set all important information
+     */
     private void setController(){
-        controller.setTimeTable(timeTable);
+        controller.setTimeTable(timeTable);     // Setting controller's timeTable attribute
 
-        controller.setLines(lines);
+        controller.setLines(lines);             // Setting pared city lines into controller
 
-        view.setDefaultLineColors(lines);
+        view.setDefaultLineColors(lines);       // setting default colors for lines
 
-        // Setting list into gui
-        controller.setGUIelements(allElements);
+        controller.setGUIelements(allElements); // Setting list of drawables into gui
 
-        controller.setCurrentTime();
+        controller.setCurrentTime();            // Setting current time when application is started
 
-        controller.setLinesInfo(lines);
+        controller.setLinesInfo(lines);         // Setting lines information that are set into the bottom part of app
 
-        controller.setCursor(lines);
+        controller.setCursor(lines);            // Setting controller method that defines behaviour after clicking on streets
 
-        controller.highlightRouteFromList(lines);
+        controller.highlightRouteFromList(lines);// Setting method that highlights line route when necessary
 
-        controller.setBasicSettings(lines);
+        controller.setBasicSettings(lines);      // Setting app properties when default app settings
 
-        controller.showVehicleRoute();
+        controller.showVehicleRoute();           // Setting event method when route of vehicle should be shown
 
-        controller.setVehicleInfo();
+        controller.setVehicleInfo();            // Setting event method when vehicle information should be displayed in app
     }
 
+    /**
+     * Main start method
+     * @param primaryStage GUI app stage
+     */
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        // Loading resource for map layout
+    public void start(Stage primaryStage) {
         loadMapLayout(primaryStage);
 
         initControllers();
@@ -106,11 +128,9 @@ public class Main extends Application {
         loadLinesData();
 
         TimeManager timeManager = new TimeManager(this.view, this.controller);
-
         timeManager.setLines(lines);
         this.timeTable = new Timetable(allElements, lines, view, controller);
+
         setController();
-
-
     }
 }
