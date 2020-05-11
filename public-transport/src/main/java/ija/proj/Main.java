@@ -6,51 +6,70 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main class servers for Initialisation of the application and creating
+ * controller object as well as object view which run the application
+ */
 public class Main extends Application {
+    private FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml")); /**< Loads layout of the application */
+    private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+    private Loader loader;                                  /**< Loads data about map, lines, stops */
+    private View view;                                      /**< Object used for manipulation with UI */
+    private Controller controller;                          /**< Object resposible for workflow of the application */
+    private BorderPane rootElement;                         /**< UI element */
+    private Scene mainScene;                                /**<  UI element*/
 
-        // Loading resource for map layout
-        FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml"));
-        String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
+    private List<Drawable> allElements = new ArrayList<>(); /**< All elements to display  */
+    private List<Drawable> streets = new ArrayList<>();     /**< List of street on the map */
+    private List<Line> lines = new ArrayList<>();           /**< List of Public transport lines */
+    private Timetable timeTable;                            /**< departures of specific lines */
 
-        BorderPane rootElement = layoutLoader.load();
-        Scene mainScene = new Scene(rootElement);       // loads root element from GUI
-        mainScene.getStylesheets().add(normalLine);
+    private void loadMapLayout(Stage primaryStage) {
+        try {
+            this.rootElement = layoutLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.mainScene = new Scene(rootElement);       // loads root element from GUI
+        this.mainScene.getStylesheets().add(normalLine);
 
         primaryStage.setScene(mainScene);               // setting scene into stage
         primaryStage.show();
+    }
 
-        Controller controller = layoutLoader.getController();
 
-        controller.setBackground();
-        controller.setScene(mainScene);
+    private void initControllers() {
+        this.controller = layoutLoader.getController();
+        this.loader = new Loader();
 
-        View view = new View(controller);
 
-        // allElements containg all Drawable elements such as streets, stops, etc
-        List<Drawable> allElements = new ArrayList<>();
+        this.controller.setBackground();
+        this.controller.setScene(mainScene);
 
-        Loader loader = new Loader();
+    }
 
+    private void initView() {
+        this.view = new View(this.controller);
+    }
+
+    private void loadMapData() {
         // Loading all streets from XML input into Drawable objects + adding them to all drawable elements
-        List<Drawable> streets = loader.loadMapData(allElements);
-
+        this.streets = loader.loadMapData(allElements);
         controller.setAllStreets(allElements);
+    }
 
+    private void loadLinesData() {
         // Loading all stops, lines, etc from XML input into Drawable objects + adding them to all drawable elements
-        List<Line> lines = loader.loadLinesData(allElements, streets);
+        this.lines = loader.loadLinesData(allElements, streets);
         loader.loadTimetableData(lines);
+    }
 
-        TimeManager timeManager = new TimeManager(view, controller);
-
-        timeManager.setLines(lines);
-
-        Timetable timeTable = new Timetable(allElements, lines, view, controller);
+    private void setController(){
         controller.setTimeTable(timeTable);
 
         controller.setLines(lines);
@@ -73,7 +92,25 @@ public class Main extends Application {
         controller.showVehicleRoute();
 
         controller.setVehicleInfo();
+    }
 
-        controller.setCurrentTime();
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        // Loading resource for map layout
+        loadMapLayout(primaryStage);
+
+        initControllers();
+        initView();
+
+        loadMapData();
+        loadLinesData();
+
+        TimeManager timeManager = new TimeManager(this.view, this.controller);
+
+        timeManager.setLines(lines);
+        this.timeTable = new Timetable(allElements, lines, view, controller);
+        setController();
+
+
     }
 }

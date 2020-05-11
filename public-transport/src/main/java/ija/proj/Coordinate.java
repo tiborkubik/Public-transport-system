@@ -2,11 +2,14 @@ package ija.proj;
 
 import java.util.Objects;
 
-
+/**
+ * Class Coordinate defines one point in the map of the town, it is defined in 2D space, therefore it is defined by two attributes
+ * which are x and y
+ * Poit with coordinates [0,0] lies in the upper left corner of the map
+ */
 public class Coordinate {
-    private double x;
-    private double y;
-
+    private double x; /**< X attribute of the coordinate */
+    private double y; /**< Y attribute of the coordinate */
 
     public Coordinate(double inputX, double inputY) {
         x = inputX;
@@ -16,25 +19,31 @@ public class Coordinate {
     public void setX(double inputX) {
         this.x = inputX;
     }
-
     public void setY(double inputY) {
         this.y = inputY;
     }
 
-    public double coordsDistance(Coordinate b) {
-        return Math.sqrt(Math.pow(this.getX() - b.getX(), 2) + Math.pow(this.getY() - b.getY(), 2));
-    }
+
 
     /***
      * distance between 2 coordinates
      * @param a first coordinate
-     * @param b second coordinate
      * @return distance
      */
     private double distance(Coordinate a, Coordinate b){
         return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
     }
 
+    public double coordsDistance(Coordinate b) {
+        return Math.sqrt(Math.pow(this.getX() - b.getX(), 2) + Math.pow(this.getY() - b.getY(), 2));
+    }
+
+
+    /***
+     * Returns true of the Coordinate lies on the street
+     * @param s street on which the point should lie
+     * @return true if the point lies on the line
+     */
     public boolean liesOn(Street s){
         Coordinate stop_to_add = this;
 
@@ -48,6 +57,12 @@ public class Coordinate {
         return false;
     }
 
+    /***
+     * Tries to change x and y atributes of the coordinate
+     * @param inputX value to which the X attribute will be changed
+     * @param inputY
+     * @return
+     */
     public boolean change(double inputX, double inputY){
         if(inputX >= 0 && inputY >= 0) {
             this.x = inputX;
@@ -82,13 +97,16 @@ public class Coordinate {
         return x1 - x2;
     }
 
-
     public double diffY(Coordinate c) {
         double y1 = this.y;
         double y2 = c.getY();
         return y1 - y2;
     }
 
+    /***
+     * swap x and y attributes of the coordinates
+     * @param c Coordinate with witch the attributes will be swapped
+     */
     public void swapCoordinates(Coordinate c) {
         Coordinate temp_c = new Coordinate(this.x,this.y);
         this.x = c.getX();
@@ -110,8 +128,6 @@ public class Coordinate {
         return x == that.x &&
                 y == that.y;
     }
-
-
 
     @Override
     public int hashCode() {

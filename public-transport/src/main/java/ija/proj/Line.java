@@ -35,16 +35,10 @@ public class Line implements Drawable  {
         setPath();
 
     }
-    //Just for detours
+
     public void setStreets(List<Street> newStreets, List<Street> toAdd, Street detoured){
         this.streetList = newStreets;
-       // this.path.clear();
         this.setPathDetour(toAdd, detoured);
-//        System.out.println(this.getName() + " " );
-//        for(Street s: streetList){
-//            System.out.println(s.getName());
-//        }
-
     }
 
     public String getType() {
@@ -72,33 +66,24 @@ public class Line implements Drawable  {
 
         path.forEach((k,v)-> {
             if(v.equals(detoured.begin())) {
-//                System.out.println("---------------skaokaosvksaovkoavkoakvoa " + k);
                 newPath.put(k, v);
-               for(Street s : toAdd) {
+                for(Street s : toAdd)
                    newPath.put("Street " + s.getName(), s.end());
-               }
-
             }
             else if(v.liesOn(detoured)){
             }
-            else{
+            else
                 newPath.put(k, v);
-            }
         });
-
-//        newPath.forEach((k, v)->System.out.println(k));
-//        this.path.clear();
         this.path = newPath;
-
     }
 
     private void setPath(){
-
         int n_places = stopList.size()+streetList.size();
-        System.out.println(this.getName() + " --- " + n_places);
         int street_id =0;
         int stop_id =0;
         this.path.put("street " + streetList.get(0).getName(),streetList.get(0).begin());
+
         for (int i = 0; i < n_places; i++) {
 
             Street act_street = new Street();
@@ -107,36 +92,23 @@ public class Line implements Drawable  {
             try {
                 act_street = streetList.get(street_id);
                 act_stop = stopList.get(stop_id);
-//                System.out.println(act_street.getName() + " number of stops: " + act_street.getNStops());
             } catch (Exception e) {
                 act_stop.setStreet(streetList.get(0));
             }
 
             if (act_street.getNStops() == 0) {
-//                System.out.println("---- " + act_street.getName());
                 this.path.put("street: " + streetList.get(street_id).getName(), streetList.get(street_id).end());
-//                System.out.println("street: " + streetList.get(street_id).getName() + " "+ streetList.get(street_id).end());
                 street_id++;
-            }
-            else{
-
+            } else {
                 if(act_stop.getStreet().getName().equals(act_street.getName())){
-    //                System.out.println("stop: " + stopList.get(stop_id).getName());
                     this.path.put("stop: " + stopList.get(stop_id).getName(),stopList.get(stop_id).getCoordinate());
-//                    System.out.println("stop: " + stopList.get(stop_id).getName()+ " " +stopList.get(stop_id).getCoordinate());
                     stop_id++;
-                }
-                else {
-    //                System.out.println("street: " + streetList.get(street_id).getName());
+                } else {
                     this.path.put("street: " + streetList.get(street_id).getName(),streetList.get(street_id).end());
-//                    System.out.println("street: " + streetList.get(street_id).getName() + " " +streetList.get(street_id).end());
                     street_id++;
+                }
             }
-            }
-
-         //   System.out.println(this.getName() + " " + this.path.get(i).toString());
         }
-
     }
 
     public LinkedHashMap<String, Coordinate> getPath() {
@@ -159,26 +131,6 @@ public class Line implements Drawable  {
         return this.streetList;
     }
 
-    /***
-     * Adds street to the line
-     * @param street street to be added
-     * @return if it was successful then returns true, else false
-     */
-    public boolean addStreet(Street street) {
-        if(streetList.size() == 0) {
-            return false;
-        }
-
-        Street lastInserted = streetList.get(streetList.size()-1);      // last inserted street
-
-        if(street.follows(lastInserted)) {
-            streetList.add(street);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 
     public void addToTimetable(LocalTime l){
         timetable.add(l);
@@ -199,29 +151,6 @@ public class Line implements Drawable  {
 
     public Color getColor() {
         return this.col;
-    }
-
-    /***
-     * If successful then stop is added to stopList and it's street to streetList
-     * @param stop stop to add
-     * @return true if adding stop was successful, false if it wasn't
-     */
-    public boolean addStop(Stop stop) {
-        if(stop.getStreet() == null) {
-            return false;
-        }
-        if(stopList.size() == 0) {
-            stopList.add(stop);
-            streetList.add(stop.getStreet());
-            return true;
-        }
-
-        if(!stop.getStreet().follows(streetList.get(streetList.size() - 1))) {
-            return false;
-        }
-        stopList.add(stop);
-        streetList.add(stop.getStreet());
-        return true;
     }
 
     @Override
@@ -279,30 +208,6 @@ public class Line implements Drawable  {
                 if (!s || !e) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
-
-//                List<String> pathStops = new ArrayList<>();
-//                List<Coordinate> pathVals = new ArrayList<>();
-//
-//                this.path.forEach((k,v)->{
-//                    pathStops.add(k);
-//                    pathVals.add(v);
-//                });
-//
-//                for(int j = 0; j < pathStops.size()-1; j++) {
-//                    if(pathStops.get(j).contains(street.getName())) {
-//                        int k = j-1;
-//                        if (k==-1)
-//                            continue;
-//
-//                        while(!pathStops.get(k).contains("Street:") && k > 0) {
-//                            this.path.put(pathStops.get(k), new Coordinate(pathVals.get(k).getX(), pathVals.get(k)getY()-(6*n_lines)));
-//                            --k;
-//                            System.out.println("Toto posun");
-//                        }
-//                    }
-//                }
-
-
             }
 
             javafx.scene.shape.Line singleStreet = new javafx.scene.shape.Line(start.getX(), start.getY(), end.getX(), end.getY());

@@ -54,6 +54,59 @@ public class Loader {
         return allElements;
     }
 
+    private Stop stopToStreet(Element eElement, Street sStreet){
+       // Element eElement = (Element) singleStop;
+        String stopName = eElement.getAttribute("id");
+
+        String temp_start_x = eElement.getElementsByTagName("x").item(0).getTextContent();
+        int start_x = Integer.parseInt(temp_start_x);
+        String temp_start_y = eElement.getElementsByTagName("y").item(0).getTextContent();
+        int start_y = Integer.parseInt(temp_start_y);
+
+        int time_to_stay;
+
+        try{
+            String temp_time_to_stay =  eElement.getElementsByTagName("time").item(0).getTextContent();
+            time_to_stay =Integer.parseInt(temp_time_to_stay );
+        }
+        catch(NullPointerException e){
+            time_to_stay = 500;
+        }
+        Stop newStop = new Stop(stopName, new Coordinate(start_x, start_y), sStreet, time_to_stay);
+
+        // Checking whether stop is on a street
+        boolean stopToStreet = sStreet.addStop(newStop);
+        if(!stopToStreet) {
+            System.out.println("Stop " + newStop.getName() + " lies outside of street " + sStreet.getName());
+            System.exit(-1);
+        }
+
+        // adding stop into list of stops of given instance
+        return newStop;
+    }
+
+    private Street streetToLine(Node singleStreet, List<Drawable> streets, List<Street> streetsOnLine){
+        NamedNodeMap streetAttribute = singleStreet.getAttributes();
+        String streetName = streetAttribute.item(0).getNodeValue();
+
+        // Getting given street from streetList, which is already on canvas
+        Street sStreet = new Street();
+        sStreet.findStreetByName(streets, streetName);
+
+        // Street must be defined on map, otherwise error
+        if(sStreet == null) {
+            System.out.println("Line is going through non-existing street.");
+            System.exit(-1);
+        }
+        if (streetsOnLine.size() != 0){
+            Coordinate lastEnd = streetsOnLine.get(streetsOnLine.size()-1).end();
+
+            if(!lastEnd.equals(sStreet.begin()))
+                sStreet.end().swapCoordinates(sStreet.begin());
+        }
+        return  sStreet;
+    }
+
 
     /**
      * Method loads all data about lines and stops and adds them to elements for drawing
@@ -97,62 +150,15 @@ public class Loader {
                         Node singleStreet = streetsList.item(i);
 
                         if(singleStreet.getNodeType() == Node.ELEMENT_NODE) {
-                            NamedNodeMap streetAttribute = singleStreet.getAttributes();
-                            String streetName = streetAttribute.item(0).getNodeValue();
-
-                            // Getting given street from streetList, which is already on canvas
-                            Street sStreet = new Street();
-
-                            sStreet.findStreetByName(streets, streetName);
-
-                            // Street must be defined on map, otherwise error
-                            if(sStreet == null) {
-                                System.out.println("Line is going through non-existing street.");
-                                System.exit(-1);
-                            }
-                            if (streetsOnLine.size() != 0){
-                                Coordinate lastEnd = streetsOnLine.get(streetsOnLine.size()-1).end();
-
-                                if(!lastEnd.equals(sStreet.begin()))
-                                    sStreet.end().swapCoordinates(sStreet.begin());
-                            }
-
+                            Street sStreet = streetToLine(singleStreet,streets, streetsOnLine);
                             streetsOnLine.add(sStreet); // street is in Line list
 
                             // getting List of Stops of given Street
                             NodeList stopList = singleStreet.getChildNodes();
                             for(int j = 0; j < stopList.getLength(); j++) {
                                 Node singleStop = stopList.item(j);
-
                                 if(singleStop.getNodeType() == Node.ELEMENT_NODE) {
-                                    Element eElement = (Element) singleStop;
-                                    String stopName = eElement.getAttribute("id");
-
-                                    String temp_start_x = eElement.getElementsByTagName("x").item(0).getTextContent();
-                                    int start_x = Integer.parseInt(temp_start_x);
-                                    String temp_start_y = eElement.getElementsByTagName("y").item(0).getTextContent();
-                                    int start_y = Integer.parseInt(temp_start_y);
-
-                                    int time_to_stay;
-
-                                    try{
-                                        String temp_time_to_stay =  eElement.getElementsByTagName("time").item(0).getTextContent();
-                                        time_to_stay =Integer.parseInt(temp_time_to_stay );
-                                    }
-                                    catch(NullPointerException e){
-                                        time_to_stay = 500;
-                                    }
-                                    Stop newStop = new Stop(stopName, new Coordinate(start_x, start_y), sStreet, time_to_stay);
-
-                                    // Checking whether stop is on a street
-                                    boolean stopToStreet = sStreet.addStop(newStop);
-                                    if(!stopToStreet) {
-                                        System.out.println("Stop " + newStop.getName() + " lies outside of street " + sStreet.getName());
-                                        System.exit(-1);
-                                    }
-
-                                    // adding stop into list of stops of given instance
-                                    stopsOnLine.add(newStop);
+                                    stopsOnLine.add(stopToStreet((Element) singleStop, sStreet));
                                 }
                             }
                         }
@@ -161,18 +167,14 @@ public class Loader {
                     newLine.setType(lineType);
 
                     for(Street street : streetsOnLine) {
-
                         for(Drawable mapStreet : streets) {
                             Street mapS = (Street)mapStreet;
                             if(street.getName() == mapS.getName()) {
-
                                 ((Street) mapStreet).add_line();
-
                             }
                         }
                         newLine.addCoordinates(street.begin(),street.end());
                     }
-
                     allLines.add(newLine);
                 }
             }
@@ -192,9 +194,7 @@ public class Loader {
                 Drawable drStop = stop;
                 allElements.add(drStop);
             }
-
         }
-
         return allLines;
     }
 

@@ -171,6 +171,7 @@ public class View {
 
         double distFromStart = singleV.getLine().getStopList().get(0).getCoordinate().coordsDistance(singleV.getLine().getStreetList().get(0).begin());
 
+
         for(int i = 1; i < singleV.getLine().getStopList().size()-1; i++) {
             if(i == 1) {
                 addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, singleV, bottomWindow);

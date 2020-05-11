@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TimeManager {
-    LocalTime currentTime ;
+    LocalTime currentTime = LocalTime.now().minusHours(1);
     double scaleForSpeed = 1.0;
     List<Drawable> vehiclesToAdd = new ArrayList<>();
     List<Drawable> routeVehicleToAdd = new ArrayList<>();
@@ -37,10 +37,6 @@ public class TimeManager {
     public TimeManager(View view, Controller controller) {
         this.view = view;
         this.controller = controller;
-        int hours = LocalTime.now().getHour() - 1;
-        int min = LocalTime.now().getMinute();
-        int sec = LocalTime.now().getSecond();
-        this.currentTime = LocalTime.parse(formatTime(hours,min,sec));
     }
 
 
@@ -141,24 +137,19 @@ public class TimeManager {
         this.timeToJump = LocalTime.parse(newTime);
         this.begin = currentTime;
         this.elapse_time = 1;
-        if (flag == 0){
-            startTimer(updates, timeGUI, timeTable, mapContent, 12000.0, speedChange);
-        }
-        else if (flag == 1){
+
+        if (flag == 1){
             if (timeToJump.getHour() < currentTime.getHour())
                 elapse_time = 2;
             startTimer(updates, timeGUI, timeTable, mapContent, 12000.0, speedChange);
 
         }
-
-        else if (flag == 2){
-            if (timeToJump.getMinute() < currentTime.getMinute()){
+        else if (flag == 2) {
+            if (timeToJump.getMinute() < currentTime.getMinute()) {
                 elapse_time = 2;
                 startTimer(updates, timeGUI, timeTable, mapContent, 12000.0, speedChange);
-            }
-            else startTimer(updates, timeGUI, timeTable, mapContent, 1000.0, speedChange);
+            } else startTimer(updates, timeGUI, timeTable, mapContent, 1000.0, speedChange);
         }
-
         else if (flag == 3){
             if (timeToJump.getSecond() < currentTime.getSecond()){
                 elapse_time = 2;

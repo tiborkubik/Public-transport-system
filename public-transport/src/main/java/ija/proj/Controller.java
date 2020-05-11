@@ -445,6 +445,63 @@ public class Controller {
         view.viewLinesInfo(lines, linesInfo);
     }
 
+    private void buildingDetour(Node sg){
+        for(Drawable fromAll : this.allStreets) {
+            if(fromAll instanceof Street) {
+                Street s = (Street) fromAll;
+
+                if(sg.getId().contains(s.getName())) {
+                    if(this.streetsToAddToLine.size() == 0) {
+                        if(s.follows(this.beingDetoured)) {
+                            System.out.println(s.getName() + " Can be used for detour");
+                            this.streetsToAddToLine.add(s);
+                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
+                        } else {
+                            System.out.println(s.getName() + " Cannot be used for detour");
+                        }
+                    } else {
+                        if(s.follows(this.streetsToAddToLine.get(this.streetsToAddToLine.size()-1))) {
+                            System.out.println(s.getName() + " Can be used for detour");
+
+                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
+                            this.streetsToAddToLine.add(s);
+                        } else {
+                            System.out.println(s.getName() + " Cannot be used for detour");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void setTraficJam(Node sg, Street st){
+        if(sg.getId().contains(st.getName())) {
+            try {
+                mainScene.getStylesheets().remove(normalLine);
+            } catch (Exception ignored){
+            }
+            mainScene.getStylesheets().add(dashedLine);
+            sg.getStyleClass().add("dashedLine");
+            trafficSpinner.setVisible(true);
+            setIntensity.setVisible(true);
+            spinnerVal.setValue(st.getTrafficDensity());
+
+            setIntensity.setOnMouseClicked(event2 -> {
+                st.setTrafficDensity(trafficSpinner.getValue());
+
+                if(st.getTrafficDensity() == 1) {
+                    mainScene.getStylesheets().add(normalLine);
+                    sg.getStyleClass().add("normalLine");
+                    try {
+                        mainScene.getStylesheets().remove(dashedLine);
+                    } catch (Exception ignored){
+                    }
+                }
+                trafficSpinner.setVisible(false);
+                setIntensity.setVisible(false);
+            });
+        }
+    }
 
     /***
      * changes cursor according it's position + expanding of line information after clicking
@@ -480,32 +537,7 @@ public class Controller {
                     boolean onLine = false;
 
                     if(this.beingDetoured != null) {
-                        for(Drawable fromAll : this.allStreets) {
-                            if(fromAll instanceof Street) {
-                                Street s = (Street) fromAll;
-
-                                if(sg.getId().contains(s.getName())) {
-                                    if(this.streetsToAddToLine.size() == 0) {
-                                        if(s.follows(this.beingDetoured)) {
-                                            System.out.println(s.getName() + " Can be used for detour");
-                                            this.streetsToAddToLine.add(s);
-                                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
-                                        } else {
-                                            System.out.println(s.getName() + " Cannot be used for detour");
-                                        }
-                                    } else {
-                                        if(s.follows(this.streetsToAddToLine.get(this.streetsToAddToLine.size()-1))) {
-                                            System.out.println(s.getName() + " Can be used for detour");
-
-                                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
-                                            this.streetsToAddToLine.add(s);
-                                        } else {
-                                            System.out.println(s.getName() + " Cannot be used for detour");
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        buildingDetour(sg);
                     }
 
                     for(Line line : lines) {
@@ -517,33 +549,7 @@ public class Controller {
                                 view.clickedOnLine(finalStopInfo, finalStopText);
                                 onLine = true;
                             } else if(inEditTrafficMode && !inEditDetours) {
-                                if(sg.getId().contains(st.getName())) {
-                                    try {
-                                        mainScene.getStylesheets().remove(normalLine);
-                                    } catch (Exception ignored){
-                                    }
-                                    mainScene.getStylesheets().add(dashedLine);
-                                    sg.getStyleClass().add("dashedLine");
-                                    trafficSpinner.setVisible(true);
-                                    setIntensity.setVisible(true);
-                                    spinnerVal.setValue(st.getTrafficDensity());
-
-                                    setIntensity.setOnMouseClicked(event2 -> {
-                                        st.setTrafficDensity(trafficSpinner.getValue());
-
-                                        if(st.getTrafficDensity() == 1) {
-                                            mainScene.getStylesheets().add(normalLine);
-                                            sg.getStyleClass().add("normalLine");
-                                            try {
-                                                mainScene.getStylesheets().remove(dashedLine);
-                                            } catch (Exception ignored){
-                                            }
-                                        }
-
-                                        trafficSpinner.setVisible(false);
-                                        setIntensity.setVisible(false);
-                                    });
-                                }
+                                setTraficJam(sg, st);
                             } else {
                                 if(sg.getId().contains(st.getName())) {
                                     if(this.beingDetoured == null) {
@@ -560,7 +566,6 @@ public class Controller {
                             }
                         }
                     }
-
                     if(!onLine) {
                         view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
                     }
@@ -571,9 +576,7 @@ public class Controller {
 
                    for(Line line : lines) {
                      if(sg.getId().contains(line.getName())) {
-
                          generateStopsOnPath(line);
-
                          view.colorRoute(vehicleRoute, line.getColor().saturate().saturate());
                          view.changeFinalStopText(finalStopText, line);
 
@@ -662,10 +665,6 @@ public class Controller {
 
             view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, i, allStops, bottomWindow);
         }
-
-//        distFromStart += allStops.get(allStops.size()-2).getCoordinate().coordDistance(allStops.get(allStops.size()-1).getCoordinate());
-//
-//        view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, allStops.size()-1, allStops, bottomWindow);
     }
 
     public void highlightRouteFromList(List<Line> lines) {
@@ -707,11 +706,10 @@ public class Controller {
 
     public void setCurrentTime() {
         timeManager.timer.stop();
-        timeManager.moveInTime( timeManager.formatTime(LocalTime.now().getHour(),LocalTime.now().getMinute(),LocalTime.now().getSecond()), updates, timeGUI,timeTable, mapContent,0, speedChange);
+        timeManager.moveInTime( timeManager.formatTime(LocalTime.now().getHour(),LocalTime.now().getMinute(),LocalTime.now().getSecond()), updates, timeGUI,timeTable, mapContent,1, speedChange);
         timeManager.setScale(1);
         timeManager.changeSpeed();
     }
-
     public Pane getMapContent() {
         return this.mapContent;
     }
