@@ -673,18 +673,38 @@ public class Controller {
             distFromStart += focusedLineStops.get(i).coordsDistance(focusedLineStops.get(i-1));
 
             if(focusedLineStopsNames.get(i).contains("stop")) {
+                LocalTime stopTime = null;
+                
                 if(focusedVehicle != null) {
+                    double secondsOfPassed;
 
-                    double secondsOfPassed = distFromStart/5.365;
+                    if(focusedVehicle instanceof Bus) {
+                        secondsOfPassed = distFromStart/4.64;
+                    } else if(focusedVehicle instanceof Tram) {
+                        secondsOfPassed = distFromStart/(4.64*2);
+                    } else {
+                        secondsOfPassed = distFromStart/(4.64*3);
+                    }
 
-                    System.out.println((long)secondsOfPassed);
+                    System.out.println(secondsOfPassed);
+                    int wholeSecs = (int) secondsOfPassed;
+                    double decSecs = secondsOfPassed - wholeSecs;
+                    long nanos = (long) (decSecs * 1000000000);
 
-                    LocalTime stopTime = focusedVehicle.getTimeofDeparture().plusSeconds((long)secondsOfPassed);
-                    stopTime = stopTime.plusNanos(34465*1000000);
-                    System.out.println("At " + focusedLineStopsNames.get(i) + ": " + stopTime);
+                    stopTime = focusedVehicle.getTimeofDeparture().plusSeconds(wholeSecs);
+                    stopTime = stopTime.plusNanos(nanos);
+                    int stopsToCount = j;
+                    while(stopsToCount > 0) {
+                        stopTime = stopTime.plusSeconds(34);
+                        stopTime = stopTime.plusNanos(449667100);
+                        stopsToCount--;
+                    }
+
+                    stopTime = stopTime.plusSeconds(34);
+                    stopTime = stopTime.plusNanos(449667100);
                 }
 
-                view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, j, allStops, bottomWindow);
+                view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, j, allStops, bottomWindow, stopTime);
                 j++;
             }
         }

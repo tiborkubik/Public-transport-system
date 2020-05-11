@@ -2,7 +2,10 @@ package ija.proj;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -10,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,19 +152,25 @@ public class View {
         bottomWindow.getChildren().add(stopName);
     }
 
-    public void  addStopToRoute(javafx.scene.shape.Line vehicleRoute, double distFromStart, double realToImPath, int i, List<Stop> allStops, Pane bottomWindow) {
+    public void  addStopToRoute(javafx.scene.shape.Line vehicleRoute, double distFromStart, double realToImPath, int i, List<Stop> allStops, Pane bottomWindow, LocalTime printTime) {
         javafx.scene.shape.Line stopLine = new javafx.scene.shape.Line(vehicleRoute.getStartX()+distFromStart/realToImPath, vehicleRoute.getStartY() , vehicleRoute.getStartX()+distFromStart/realToImPath + 10, vehicleRoute.getStartY() - 10);
         stopLine.setStroke(Color.rgb(50,50,50));
         stopLine.setStrokeLineCap(StrokeLineCap.ROUND);
         stopLine.setStrokeLineJoin(StrokeLineJoin.ROUND);
         stopLine.setStrokeWidth(4);
         stopLine.setId("RouteStop");
+
+        String hours = String.valueOf(printTime.getHour());
+        String minutes = String.valueOf(printTime.getMinute());
+        if(printTime.getHour() < 10) hours = "0" + hours;
+        if(printTime.getMinute() < 10) minutes = "0" + minutes;
         try {
-            Text stopName = new Text(stopLine.getEndX() + 10, stopLine.getEndY() - 5, allStops.get(i).getName());
+            Text stopName = new Text(stopLine.getEndX() + 10, stopLine.getEndY() - 5, allStops.get(i).getName() + " - " + hours + ":" + minutes);
             stopName.setFont(Font.font ("Impact", 14));
             stopName.getTransforms().add(new Rotate(-45, stopLine.getEndX() + 10, stopLine.getEndY() - 5));
             stopName.setFill(Color.rgb(50, 50, 50));
             stopName.setId("RouteStopName");
+
             bottomWindow.getChildren().add(stopLine);
             bottomWindow.getChildren().add(stopName);
         }catch (Exception e){

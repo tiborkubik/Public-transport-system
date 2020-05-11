@@ -232,13 +232,14 @@ public class Vehicle implements Drawable, UpdateState {
         double total = totalPathLength();
 
         if(distance > total) {
-            System.out.println(time);
+//            System.out.println(time);
             for(Shape x : GUI) {
                 Pane mapContent = controller.getMapContent();
 
                 ObservableList<Node> mapNodes = mapContent.getChildren();
                 for(Node singleNode : mapNodes) {
                     if(x.getId().equals(singleNode.getId())){
+//                        System.out.println("time: " + time + " ," + this.getName());
                         GUI.remove(x);
                         mapContent.getChildren().remove(singleNode);
                         controller.getUpdates().remove(this);
@@ -254,6 +255,10 @@ public class Vehicle implements Drawable, UpdateState {
         for(int i = 0; i < this.onLine.getStopList().size(); i++) {
             if(Math.abs(this.onLine.getStopList().get(i).getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(this.onLine.getStopList().get(i).getCoordinate().diffY(newC)) < this.speed/2) {
                 cnt_time = this.onLine.getStopList().get(i).getTime();
+
+                if(this.onLine.getName().contains("Bus Line 40"))
+                    System.out.println(time + " " + distance);
+
                 if(i < this.onLine.getStopList().size())
                     this.nextStop = this.onLine.getStopList().get(i+1);
             }
