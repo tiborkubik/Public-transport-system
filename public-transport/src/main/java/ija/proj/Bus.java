@@ -3,6 +3,8 @@ package ija.proj;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.time.LocalTime;
+
 
 /**
  * Class bus extends vehicle so it is a special type of vehicle. This kind of vehicle can maintain on Bus Lines only
@@ -21,8 +23,8 @@ public class Bus extends Vehicle {
      * @param firstStop First stop on which bus stops
      * @param controller Main controller
      */
-    public Bus(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
-        super(position, speed, onLine, identifier, street, firstStop, controller);
+    public Bus(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller, LocalTime time) {
+        super(position, speed, onLine, identifier, street, firstStop, controller, time);
         super.setInitialStop();
         super.setStops();
 

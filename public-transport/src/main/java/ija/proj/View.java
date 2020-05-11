@@ -155,15 +155,17 @@ public class View {
         stopLine.setStrokeLineJoin(StrokeLineJoin.ROUND);
         stopLine.setStrokeWidth(4);
         stopLine.setId("RouteStop");
+        try {
+            Text stopName = new Text(stopLine.getEndX() + 10, stopLine.getEndY() - 5, allStops.get(i).getName());
+            stopName.setFont(Font.font ("Impact", 14));
+            stopName.getTransforms().add(new Rotate(-45, stopLine.getEndX() + 10, stopLine.getEndY() - 5));
+            stopName.setFill(Color.rgb(50, 50, 50));
+            stopName.setId("RouteStopName");
+            bottomWindow.getChildren().add(stopLine);
+            bottomWindow.getChildren().add(stopName);
+        }catch (Exception e){
 
-        Text stopName = new Text(stopLine.getEndX() + 10, stopLine.getEndY() - 5, allStops.get(i).getName());
-        stopName.setFont(Font.font ("Impact", 14));
-        stopName.getTransforms().add(new Rotate(-45, stopLine.getEndX() + 10, stopLine.getEndY() - 5));
-
-        stopName.setFill(Color.rgb(50, 50, 50));
-        stopName.setId("RouteStopName");
-        bottomWindow.getChildren().add(stopLine);
-        bottomWindow.getChildren().add(stopName);
+        }
     }
 
     public void generateStopsOnPath(Vehicle singleV, javafx.scene.shape.Line vehicleRoute, Pane bottomWindow) {

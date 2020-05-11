@@ -3,6 +3,8 @@ package ija.proj;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
+import java.time.LocalTime;
+
 /**
  * Class tram extends vehicle so it is a special type of vehicle. This kind of vehicle can maintain on Tram Lines only
  * and has special representation on map - a square.
@@ -20,8 +22,8 @@ public class Tram extends Vehicle {
      * @param firstStop First stop on which Tram stops
      * @param controller Main controller
      */
-    public Tram(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
-        super(position, speed, onLine, identifier, street, firstStop, controller);
+    public Tram(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller, LocalTime time) {
+        super(position, speed, onLine, identifier, street, firstStop, controller, time);
 
         super.setInitialStop();
         super.setStops();

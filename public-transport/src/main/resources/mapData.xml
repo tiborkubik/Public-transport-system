@@ -102,9 +102,9 @@
 
   <street id="Card Ave B">
     <start_x>1200</start_x>
-    <start_y>400</start_y>
+    <start_y>500</start_y>
     <end_x>1200</end_x>
-    <end_y>500</end_y>
+    <end_y>400</end_y>
   </street>
 
   <street id="Card Ave C">
@@ -122,10 +122,10 @@
   </street>
 
   <street id="Jobs Ave B">
-    <start_x>1600</start_x>
-    <start_y>150</start_y>
-    <end_x>1700</end_x>
-    <end_y>300</end_y>
+    <start_x>1700</start_x>
+    <start_y>300</start_y>
+    <end_x>1600</end_x>
+    <end_y>150</end_y>
   </street>
 
   <street id="Jobs Ave C">
@@ -144,9 +144,9 @@
 
   <street id="Jobs Ave E">
     <start_x>1700</start_x>
-    <start_y>500</start_y>
+    <start_y>600</start_y>
     <end_x>1700</end_x>
-    <end_y>600</end_y>
+    <end_y>500</end_y>
   </street>
 
 
@@ -158,9 +158,9 @@
   </street>
 
   <street id="East 5th St">
-    <start_x>1200</start_x>
+    <start_x>1700</start_x>
     <start_y>500</start_y>
-    <end_x>1700</end_x>
+    <end_x>1200</end_x>
     <end_y>500</end_y>
   </street>
 

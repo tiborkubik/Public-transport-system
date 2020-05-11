@@ -16,7 +16,7 @@ import java.util.List;
 public class TimeManager {
     private View view;              /**< Instance of the class view */
     private Controller controller;  /**< Instance of the class controller */
-    private Timeline timer;         /**< Instance of the class Timeline which keep the time running */
+    public Timeline timer;         /**< Instance of the class Timeline which keep the time running */
     private LocalTime timeToJump;   /**< Time would like to jump to  */
     private LocalTime begin;        /**< Used for storing current time while time jumping  */
     private LocalTime currentTime = LocalTime.now().minusHours(1); /**< Time of the application (at the start 1hour earlier to ensure that lines will be spawned) */

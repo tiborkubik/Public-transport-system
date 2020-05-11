@@ -457,11 +457,18 @@ public class Controller {
                     if(this.streetsToAddToLine.size() == 0) {
                         if(s.follows(this.beingDetoured)) {
                             this.streetsToAddToLine.add(s);
-                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
+//                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
+                            javafx.scene.shape.Line singleStreet = new javafx.scene.shape.Line(s.begin().getX(), s.begin().getY(), s.end().getX(), s.end().getY());
+                            singleStreet.setStroke(this.lineDetoured.getColor());
+                            singleStreet.setStrokeWidth(2);
+                            mapContent.getChildren().add(singleStreet);
                         }
                     } else {
                         if(s.follows(this.streetsToAddToLine.get(this.streetsToAddToLine.size()-1))) {
-                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
+                            javafx.scene.shape.Line singleStreet = new javafx.scene.shape.Line(s.begin().getX(), s.begin().getY(), s.end().getX(), s.end().getY());
+                            singleStreet.setStroke(this.lineDetoured.getColor());
+                            singleStreet.setStrokeWidth(2);
+                            mapContent.getChildren().add(singleStreet);
                             this.streetsToAddToLine.add(s);
                         }
                     }
@@ -664,7 +671,19 @@ public class Controller {
 
         for(int i = 1; i < focusedLineStops.size(); i++) {
             distFromStart += focusedLineStops.get(i).coordsDistance(focusedLineStops.get(i-1));
+
             if(focusedLineStopsNames.get(i).contains("stop")) {
+                if(focusedVehicle != null) {
+
+                    double secondsOfPassed = distFromStart/5.365;
+
+                    System.out.println((long)secondsOfPassed);
+
+                    LocalTime stopTime = focusedVehicle.getTimeofDeparture().plusSeconds((long)secondsOfPassed);
+                    stopTime = stopTime.plusNanos(34465*1000000);
+                    System.out.println("At " + focusedLineStopsNames.get(i) + ": " + stopTime);
+                }
+
                 view.addStopToRoute(vehicleRoute, distFromStart, realToImPath, j, allStops, bottomWindow);
                 j++;
             }

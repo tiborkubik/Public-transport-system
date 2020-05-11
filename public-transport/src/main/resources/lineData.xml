@@ -59,7 +59,7 @@
   <line id="Metro Line A" type="sub">
     <street id="Bercley St A">
       <stop id="Bc W1">
-        <time>50</time>
+<!--        <time>50</time>-->
         <x>50</x>
         <y>50</y>
       </stop>
@@ -71,7 +71,7 @@
 
     <street id="Bercley St B">
       <stop id="Bc W3">
-        <time>50</time>
+<!--        <time>50</time>-->
         <x>50</x>
         <y>230</y>
       </stop>
@@ -265,18 +265,18 @@
 
   <line id="Bus Line 41" type="bus">
     <street id="Jobs Ave E">
-      <stop id="6th+Jobs">
-        <x>1700</x>
-        <y>600</y>
-      </stop>
+<!--      <stop id="6th+Jobs">-->
+<!--        <x>1700</x>-->
+<!--        <y>600</y>-->
+<!--      </stop>-->
 
     </street>
 
     <street id="Jobs Ave D">
-      <stop id="5th+Jobs">
-        <x>1700</x>
-        <y>500</y>
-      </stop>
+<!--      <stop id="5th+Jobs">-->
+<!--        <x>1700</x>-->
+<!--        <y>500</y>-->
+<!--      </stop>-->
     </street>
     <street id="Jobs Ave C">
     </street>

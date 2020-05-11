@@ -29,6 +29,7 @@ public class Vehicle implements Drawable, UpdateState {
     protected List<Shape> GUI = new ArrayList<>();          /**< List of GUI elements to be drawn on canvas */
     private List<Coordinate> path = new ArrayList<>();      /**< List of all stops and ends of lines */
 
+    private LocalTime timeofDeparture;
     private int cnt_time = 0;                               /**< Counter that ensures that vehicles stop on stops */
 
 
@@ -43,7 +44,7 @@ public class Vehicle implements Drawable, UpdateState {
      * @param firstStop first stop of the car
      * @param controller instance of controller
      */
-    public Vehicle(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller) {
+    public Vehicle(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller, LocalTime timeOfDeparture) {
         this.position = position;
         this.speed = speed;
         this.onLine = onLine;
@@ -52,6 +53,7 @@ public class Vehicle implements Drawable, UpdateState {
         this.currentStreet = street;
         this.nextStop = firstStop;
         this.controller = controller;
+        this.timeofDeparture = timeOfDeparture;
     }
 
     /***
@@ -77,6 +79,13 @@ public class Vehicle implements Drawable, UpdateState {
         LinkedHashMap<String, Coordinate> tempPath = this.onLine.getPath();
 
         tempPath.forEach((k,v)-> this.path.add(v));
+    }
+
+    /**
+     * @return Time of vehicle departure
+     */
+    public LocalTime getTimeofDeparture() {
+        return this.timeofDeparture;
     }
 
     /***
@@ -223,7 +232,7 @@ public class Vehicle implements Drawable, UpdateState {
         double total = totalPathLength();
 
         if(distance > total) {
-
+            System.out.println(time);
             for(Shape x : GUI) {
                 Pane mapContent = controller.getMapContent();
 
