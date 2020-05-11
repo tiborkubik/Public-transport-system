@@ -198,6 +198,9 @@ public class Controller {
             lineDetoured.deleteStops(beingDetoured);
             lineDetoured.setStreets(newStreets, streetsToAddToLine, beingDetoured);
 
+            beingDetoured = null;
+            lineDetoured = null;
+            streetsToAddToLine.clear();
         }
 
         view.exitGUIAdmin(

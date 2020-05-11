@@ -473,9 +473,9 @@
   </street>
 
   <street id="Colwyn St">
-    <start_x>800</start_x>
+    <start_x>1900</start_x>
     <start_y>1950</start_y>
-    <end_x>1900</end_x>
+    <end_x>800</end_x>
     <end_y>1950</end_y>
   </street>
 
