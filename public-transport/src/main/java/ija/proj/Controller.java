@@ -24,106 +24,124 @@ import javafx.util.Duration;
 import java.time.LocalTime;
 import java.util.*;
 
+/***
+ * Class controller serves for controlling the application by invoking object according
+ * changes made by user to view or timeline
+ */
 public class Controller {
     @FXML
-    private Pane mapContent;
+    private Pane mapContent;        /**< main visual component which contains streets,lines,stops,vehicles and background */
     @FXML
-    private Text nextStopInfo;
+    private Text nextStopInfo;      /**< Information about the following stop */
     @FXML
-    private ScrollPane scrollP;
+    private ScrollPane scrollP;     /**< Wrapper element for map */
     @FXML
-    private Text nextStopText;
+    private Text nextStopText;      /**< Unique line identifier */
     @FXML
-    private Text finalStopInfo;
+    private Text finalStopInfo;     /**< Name of the next stop */
     @FXML
-    private Text finalStopText;
+    private Text finalStopText;     /**< Name of the Last stop */
     @FXML
-    private Text delayText;
+    private Text delayText;         /**< Displays delay */
     @FXML
-    private Text timeGUI;
+    private Text timeGUI;           /**< Shows time in GUI */
     @FXML
-    private Pane bottomWindow;
+    private Pane bottomWindow;      /**< Bottom pane element of the GUI */
     @FXML
-    private Rectangle background;
+    private Rectangle background;   /**< Background of the city map */
     @FXML
-    private Slider speedChange;
+    private Slider speedChange;     /**< Defines pace of the time */
     @FXML
-    private ListView<Object> linesInfo;
+    private ListView<Object> linesInfo;             /**< Information about lines */
     @FXML
-    private javafx.scene.shape.Line vehicleRoute;
+    private javafx.scene.shape.Line vehicleRoute;   /**< Bottom line which represents selected line */
     @FXML
-    private Rectangle rightBlur1;
+    private Rectangle rightBlur1;   /**< Blur effect */
     @FXML
-    private Rectangle rightBlur111;
+    private Rectangle rightBlur111; /**< Blur effect */
     @FXML
-    private Text linesSign;
+    private Text linesSign;         /**< Sign of the line */
     @FXML
-    private Button saveExitEditing;
+    private Button saveExitEditing; /**< Button to save changes made by admin */
     @FXML
-    private  Rectangle saveBackground;
+    private  Rectangle saveBackground;  /**< saves background image */
     @FXML
-    private Button plusH;
+    private Button plusH;           /**< Move one hour forward */
     @FXML
-    private Button plusM;
+    private Button plusM;           /**< Move one minute forward */
     @FXML
-    private Button plusS;
+    private Button plusS;           /**< Move one second forward */
     @FXML
-    private Button minusH;
+    private Button minusH;          /**< Move one hour backward */
     @FXML
-    private Button minusM;
+    private Button minusM;          /**< Move one minute backward */
     @FXML
-    private Button minusS;
+    private Button minusS;          /**< Move one second backward */
     @FXML
-    private TextArea editJamsInfo;
+    private TextArea editJamsInfo;  /**< to edit jam degree of the street */
     @FXML
-    private TextArea editDetoursInfo;
+    private TextArea editDetoursInfo;       /**< to edit detours of the line */
     @FXML
-    private Spinner<Integer> trafficSpinner;
+    private Spinner<Integer> trafficSpinner;/**< degree of the jam */
     @FXML
-    private Button setIntensity;
+    private Button setIntensity;            /**< button to save jam degree*/
     @FXML
-    private Circle vehicleOnRoute;
+    private Circle vehicleOnRoute;          /**< representation of vehicle on the bottom route */
 
-    private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
-    private Scene mainScene;
-    private Image bg = new Image("mapa1.jpg");
-    private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
-    private List<Line> lines = new ArrayList<>();
-    private List<UpdateState> updates = new ArrayList<>();
-    private List<Vehicle> allVehicles = new ArrayList<>();
-    private boolean inEditTrafficMode = false;
-    private boolean inEditDetours = false;
-    private Timetable timeTable;
-    private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
-    private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm();
-    private View view = new View(this);
-    private Tooltip densityInfo = new Tooltip();
-    private TimeManager timeManager = new TimeManager(view, this);
-    private Vehicle focusedVehicle = null;
+    private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1); /**< Stores degree of the traffic jam */
+    private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true); /**< Defines size of the background picture */
+    private String normalLine = getClass().getResource("/normalLine.css").toExternalForm(); /**< Path to style normalize file */
+    private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm(); /**< Path to styles of dashed lines */
+    private Image bg = new Image("mapa1.jpg"); /**< Path to background image */
+    private Scene mainScene;    /**< Main scene */
+    private List<Line> lines = new ArrayList<>();   /**< Stores all line */
+    private List<UpdateState> updates = new ArrayList<>(); /**< Stores all objects needed to be updated */
+    private List<Vehicle> allVehicles = new ArrayList<>(); /**< Stores all vehicles */
+    private List<String> focusedLineStopsNames = new ArrayList<>(); /**< Stop names of selected line */
+    private List<Coordinate> focusedLineStops = new ArrayList<>(); /**< Stop coordinates of selected line */
+    private boolean inEditTrafficMode = false;      /**< Flag, true if editing traffic */
+    private boolean inEditDetours = false;          /**< Flag, true if editing detours */
+    private Timetable timeTable;                    /**< Timetable of the lines */
+    private View view = new View(this);    /**< View object defines what to display */
+    private Tooltip densityInfo = new Tooltip();    /**< Density */
+    private Vehicle focusedVehicle = null;          /**< stores focused vehicle, if null then no vehicle is selected */
+    private List<Drawable> allStreets;              /**< stores all streets typed Drawable */
 
-    private Street beingDetoured = null;
-    private Line lineDetoured = null;
-    private List<Street> streetsToAddToLine = new ArrayList<>();
+    private Street beingDetoured = null;            /**< tells us which street is being detoured, if null then none */
+    private Line lineDetoured = null;               /**< tells us which line is being detoured, if null then none */
+    private List<Street> streetsToAddToLine = new ArrayList<>(); /**< while building detour stores all streets added to the line */
 
-    private List<Drawable> allStreets;
+    private TimeManager timeManager = new TimeManager(view, this); /**< Controls time related calculations */
 
-    private List<String> focusedLineStopsNames = new ArrayList<>();
-    private List<Coordinate> focusedLineStops = new ArrayList<>();
-
+    /***
+     * Returns all vehicles on the map
+     * @return all vehicles on the map
+     */
     public List<Vehicle> getAllVehicles() {
         return allVehicles;
     }
 
+    /***
+     * exits program
+     */
     @FXML
     private void exitProgram() {
         Platform.exit();
         System.exit(0);
     }
 
+    /***
+     * return all elements of the type UpdateState
+     *
+     * @return returns all updates
+     */
     public List<UpdateState> getUpdates() {
         return updates;
     }
 
+    /***
+     * Changes gui when editing mode for jams entered
+     */
     @FXML
     private void startEditingTraffic() {
         timeManager.setScale(1);
@@ -153,6 +171,9 @@ public class Controller {
                                 editDetoursInfo);
     }
 
+    /***
+     * Changes gui when editing mode for detours entered
+     */
     @FXML
     private void startEditingDetours() {
         timeManager.setScale(1);
@@ -182,6 +203,9 @@ public class Controller {
         inEditTrafficMode = false;
     }
 
+    /***
+     * Exits editing mode
+     */
     @FXML
     private void exitEditing() {
         timeManager.setScale((float)speedChange.getValue());
@@ -233,7 +257,7 @@ public class Controller {
         inEditDetours = false;
     }
     /***
-     * changes speed
+     * Changes speed
      */
     @FXML
     private void speedChanged() {
@@ -242,6 +266,9 @@ public class Controller {
         timeManager.changeSpeed();
     }
 
+    /***
+     * Adding one hour to the time of the app
+     */
     @FXML
     private void plusHour() {
         LocalTime time = timeManager.getCurrentTime();
@@ -257,6 +284,9 @@ public class Controller {
         }
     }
 
+    /***
+     * Subtracting one hour to the time of the app
+     */
     @FXML
     private void minusHour() {
         LocalTime time = timeManager.getCurrentTime();
@@ -272,6 +302,9 @@ public class Controller {
         }
     }
 
+    /***
+     * Adding one minute to the time of the app
+     */
     @FXML
     private void plusMinute() {
         LocalTime time = timeManager.getCurrentTime();
@@ -287,7 +320,9 @@ public class Controller {
             }
         }
     }
-
+    /***
+     * Subtracting one minute to the time of the app
+     */
     @FXML
     private void minusMinute() {
         LocalTime time = timeManager.getCurrentTime();
@@ -296,6 +331,10 @@ public class Controller {
         normalizeAfterTimeShift();
     }
 
+
+    /***
+     * Adding one second to the time of the app
+     */
     @FXML
     private void plusSecond() {
         LocalTime time = timeManager.getCurrentTime();
@@ -303,11 +342,29 @@ public class Controller {
         timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()+1),updates, timeGUI, timeTable, mapContent,3, speedChange);
         normalizeAfterTimeShift();
     }
+    /***
+     * Subtracting one second to the time of the app
+     */
+    @FXML
+    private void minusSecond() {
+        LocalTime time = timeManager.getCurrentTime();
+        timeManager.timer.stop();
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2),updates, timeGUI, timeTable, mapContent,3, speedChange);
+        normalizeAfterTimeShift();
+    }
 
+    /***
+     * Sets all streets
+     *
+     * @param streets streets to add
+     */
     public void setAllStreets(List<Drawable> streets) {
         this.allStreets = streets;
     }
 
+    /***
+     * reverting changes made because of time shift
+     */
     private void normalizeAfterTimeShift() {
         float scaleForSpeed = (float) speedChange.getValue();
         timeManager.setScale(scaleForSpeed);
@@ -323,14 +380,9 @@ public class Controller {
         }
     }
 
-    @FXML
-    private void minusSecond() {
-        LocalTime time = timeManager.getCurrentTime();
-        timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2),updates, timeGUI, timeTable, mapContent,3, speedChange);
-        normalizeAfterTimeShift();
-    }
-
+    /***
+     * Set time to it's default which is "23:59:59" for us
+     */
     @FXML
     private void setTimeDefault() {
         timeManager.setDefaultTime(timeGUI);
@@ -340,6 +392,10 @@ public class Controller {
         timeManager.setScale(scaleForSpeed);
     }
 
+    /***
+     * Controlls zooming according user input ScrollEvent
+     * @param event event of zooming
+     */
     @FXML
     private void zooming(ScrollEvent event) {
         event.consume();
@@ -375,6 +431,10 @@ public class Controller {
         timeline.play();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean inEditTrafficMode() {
         return this.inEditTrafficMode;
     }
@@ -604,18 +664,36 @@ public class Controller {
         }
     }
 
+    /**
+     * Returns vehicle on Route (Bottom line)
+     *
+     * @return vehicle on route
+     */
     public Circle getVehicleOnRoute() {
         return vehicleOnRoute;
     }
 
+    /**
+     * Returns Name of following stop
+     *
+     * @return name of the following stop
+     */
     public Text getNextStopText() {
         return this.nextStopText;
     }
 
+    /**
+     * Returns focused vehicle
+     *
+     * @return focused vehicle
+     */
     public Vehicle getFocusedVehicle() {
         return focusedVehicle;
     }
 
+    /**
+     * Sets info to object vehicle
+     */
     public void setVehicleInfo() {
         ObservableList<Node> x = mapContent.getChildren();
 
@@ -631,7 +709,6 @@ public class Controller {
                             vehicleOnRoute.setVisible(true);
                         }
                     }
-                    /////////priprava na delay
                     if (focusedVehicle != null) {
                         int delay =0;
                         int speed;
@@ -648,7 +725,7 @@ public class Controller {
                             if(s.getTrafficDensity() != 1){
                                 //meskanie += (dlzka ulice / pixely za sekundu)*spomalenie*2 - (dlzka ulice / pixely za sekundu)
                                 //(dlzka ulice / pixely za sekundu) odcitavame preto lebo pri spomaleni urovne 2 prechod bude trvat 4 nasobnu dobu a teda 1 nasobok odcitame lebo tolko by to trvalo normalne
-                                delay += (s.begin().coordsDistance(s.end())/(5.31340759143*speed)) * s.getTrafficDensity()*2 - (s.begin().coordsDistance(s.end())/5.31340759143);
+                                delay += (s.begin().coordsDistance(s.end())/(5.31340759143*speed)) * s.getTrafficDensity()*2 - (s.begin().coordsDistance(s.end())/(5.31340759143*speed));
                             }
                         }
                         System.out.println("delay:" + delay);
@@ -662,7 +739,6 @@ public class Controller {
                         focusedVehicle.setDelay(fullMins);
                         delayText.setText("Delay: " + fullMins + " min");
                     }
-                    /////////potialto je to rpiprava na delay
 
                     for(Line line : lines) {
                         if(sg.getId().contains(line.getName())) {
@@ -691,6 +767,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Generaating stops on the path
+     *
+     * @param line public transport line
+     */
     public void generateStopsOnPath(Line line) {
         focusedLineStopsNames.clear();
         focusedLineStops.clear();
@@ -725,7 +806,6 @@ public class Controller {
                         secondsOfPassed = distFromStart/(4.64*3);
                     }
 
-//                    System.out.println(secondsOfPassed);
                     int wholeSecs = (int) secondsOfPassed;
                     double decSecs = secondsOfPassed - wholeSecs;
                     long nanos = (long) (decSecs * 1000000000);
@@ -749,6 +829,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Highlights route from the list and fades others
+     *
+     * @param lines list of all lines
+     */
     public void highlightRouteFromList(List<Line> lines) {
         linesInfo.setOnMouseClicked(event ->{
             view.cleanRouteFromStops(bottomWindow);
@@ -772,6 +857,9 @@ public class Controller {
         });
     }
 
+    /**
+     * showing route of selected vehicle
+     */
     public void showVehicleRoute() {
         view.showVehicleRoute(mapContent,
                                 background,
@@ -786,12 +874,21 @@ public class Controller {
                                 lines);
     }
 
+    /**
+     * Sets current time to the application
+     */
     public void setCurrentTime() {
         timeManager.timer.stop();
         timeManager.moveInTime( timeManager.formatTime(LocalTime.now().getHour(),LocalTime.now().getMinute(),LocalTime.now().getSecond()), updates, timeGUI,timeTable, mapContent,1, speedChange);
         timeManager.setScale(1);
         timeManager.changeSpeed();
     }
+
+    /**
+     * Returns mapContent
+     *
+     * @return mapContent
+     */
     public Pane getMapContent() {
         return this.mapContent;
     }

@@ -21,7 +21,10 @@ public class Line implements Drawable  {
 
     private List<Street> streetList;                                            /**< List of all streets that define given line */
     private List<Stop> stopList;                                                /**< List of all stops that define given line */
-    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();     /**< Path of a line - stops + end of lines */
+
+    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();     /**< Path of a line = stops + end of lines */
+    private LinkedHashMap<String, Coordinate> defaultPath = new LinkedHashMap<>();     /**< Path of a line = stops + end of lines before admin's change/s */
+
     private List<Coordinate> streetsBegins = new ArrayList<>();                 /**< List of all stats of lines */
     private List<Coordinate> streetsEnds = new ArrayList<>();                   /**< List of all ends of lines */
 
@@ -40,6 +43,7 @@ public class Line implements Drawable  {
         this.streetList = streetList;
         this.stopList = stopList;
         setPath();
+        this.defaultPath = this.path;
     }
 
     /**
@@ -96,6 +100,7 @@ public class Line implements Drawable  {
                 }
             }
         }
+
     }
 
     /**

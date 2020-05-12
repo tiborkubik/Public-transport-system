@@ -225,8 +225,6 @@ public class Vehicle implements Drawable, UpdateState {
         else
             this.speed = this.constantSpeed * speedMultiplier;
 
-
-
         if (cnt_time >= 0){
             cnt_time--;
             if(cnt_time == 0){
@@ -240,14 +238,12 @@ public class Vehicle implements Drawable, UpdateState {
         double total = totalPathLength();
 
         if(distance > total) {
-//            System.out.println(time);
             for(Shape x : GUI) {
                 Pane mapContent = controller.getMapContent();
 
                 ObservableList<Node> mapNodes = mapContent.getChildren();
                 for(Node singleNode : mapNodes) {
                     if(x.getId().equals(singleNode.getId())){
-//                        System.out.println("time: " + time + " ," + this.getName());
                         GUI.remove(x);
                         mapContent.getChildren().remove(singleNode);
                         controller.getUpdates().remove(this);
