@@ -38,7 +38,7 @@
                         </Group>
                     </content>
                 </ScrollPane>
-                <Pane fx:id="sideWindow" layoutX="1246.0" prefHeight="178.0" prefWidth="356.0">
+                <Pane fx:id="sideWindow" layoutX="1246.0" prefHeight="680.0" prefWidth="356.0">
                     <children>
                         <Rectangle fx:id="rightBlur1" arcHeight="50.0" arcWidth="50.0" fill="#fffffff2" height="277.0" layoutX="33.0" layoutY="-101.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="300.0">
                             <effect>
@@ -115,50 +115,50 @@
                                 <ColorAdjust contrast="0.05" />
                             </effect>
                         </Slider>
-                    </children>
-                </Pane>
-                <Pane fx:id="bottomWindow" layoutY="800.0" prefHeight="225.0" prefWidth="1609.0">
-                    <children>
-                        <Rectangle fx:id="rightBlur111" arcHeight="50.0" arcWidth="50.0" fill="#fffffff2" height="80.0" layoutX="1347.0" layoutY="34.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="156.0">
+                        <Rectangle fx:id="rightBlur111" arcHeight="50.0" arcWidth="50.0" fill="#fffffff2" height="66.0" layoutX="109.0" layoutY="420.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="156.0">
                             <effect>
                                 <BoxBlur iterations="3" width="0.0" />
                             </effect>
                         </Rectangle>
-                        <Rectangle fx:id="bottomBlur" arcHeight="50.0" arcWidth="50.0" fill="#fffffff3" height="221.0" layoutX="28.0" layoutY="14.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1229.0">
+                        <ListView fx:id="linesInfo" layoutX="37.0" layoutY="453.0" prefHeight="135.0" prefWidth="300.0" />
+                        <Text fx:id="linesSign" fill="#323232" layoutX="150.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines">
+                            <font>
+                                <Font name="SansSerif Regular" size="31.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
+                <Pane fx:id="bottomWindow" layoutY="800.0" prefHeight="225.0" prefWidth="1609.0">
+                    <children>
+                        <Rectangle fx:id="bottomBlur" arcHeight="50.0" arcWidth="50.0" fill="#fffffff3" height="221.0" layoutX="28.0" layoutY="14.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1553.0">
                             <effect>
                                 <BoxBlur iterations="3" width="0.0" />
                             </effect>
                         </Rectangle>
                         <Line fx:id="vehicleRoute" endX="900.0" endY="180.0" opacity="0.5" startX="50.0" startY="180.0" stroke="#323232" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeMiterLimit="5.0" strokeWidth="6.0" />
-                        <Text fx:id="nextStopInfo" fill="#323232" layoutX="946.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Next station:" wrappingWidth="176.13671875">
+                        <Text fx:id="nextStopInfo" fill="#323232" layoutX="1231.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Next station:" wrappingWidth="176.13671875">
                             <font>
                                 <Font name="SansSerif Regular" size="18.0" />
                             </font>
                         </Text>
-                        <Text fx:id="finalStopInfo" fill="#323232" layoutX="946.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Final station:" wrappingWidth="234.13671875">
+                        <Text fx:id="finalStopInfo" fill="#323232" layoutX="1231.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Final station:" wrappingWidth="234.13671875">
                             <font>
                                 <Font name="SansSerif Regular" size="18.0" />
                             </font>
                         </Text>
-                        <Text fx:id="delayText" fill="#323232" layoutX="946.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delay: 0 min" wrappingWidth="234.13671875">
+                        <Text fx:id="delayText" fill="#323232" layoutX="1231.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delay: 0 min" wrappingWidth="234.13671875">
                             <font>
                                 <Font name="SansSerif Regular" size="18.0" />
                             </font>
                         </Text>
-                        <Text fx:id="nextStopText" layoutX="1063.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="183.13671875">
+                        <Text fx:id="nextStopText" layoutX="1348.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="227.13671875">
                             <font>
                                 <Font name="Impact" size="24.0" />
                             </font>
                         </Text>
-                        <Text fx:id="finalStopText" layoutX="1062.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="169.13671875">
+                        <Text fx:id="finalStopText" layoutX="1348.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="227.13671875">
                             <font>
                                 <Font name="Impact" size="24.0" />
-                            </font>
-                        </Text>
-                        <ListView fx:id="linesInfo" layoutX="1280.0" layoutY="67.0" prefHeight="135.0" prefWidth="300.0" />
-                        <Text fx:id="linesSign" fill="#323232" layoutX="1388.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines">
-                            <font>
-                                <Font name="SansSerif Regular" size="31.0" />
                             </font>
                         </Text>
                   <Circle fx:id="vehicleOnRoute" centerX="50.0" centerY="180.0" fill="#323232" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" />

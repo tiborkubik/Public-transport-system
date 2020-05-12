@@ -709,7 +709,7 @@ public class Controller {
                         secondsOfPassed = distFromStart/(4.64*3);
                     }
 
-                    System.out.println(secondsOfPassed);
+//                    System.out.println(secondsOfPassed);
                     int wholeSecs = (int) secondsOfPassed;
                     double decSecs = secondsOfPassed - wholeSecs;
                     long nanos = (long) (decSecs * 1000000000);

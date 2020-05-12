@@ -160,12 +160,20 @@ public class View {
         stopLine.setStrokeWidth(4);
         stopLine.setId("RouteStop");
 
-        String hours = String.valueOf(printTime.getHour());
-        String minutes = String.valueOf(printTime.getMinute());
-        if(printTime.getHour() < 10) hours = "0" + hours;
-        if(printTime.getMinute() < 10) minutes = "0" + minutes;
         try {
-            Text stopName = new Text(stopLine.getEndX() + 10, stopLine.getEndY() - 5, allStops.get(i).getName() + " - " + hours + ":" + minutes);
+            Text stopName;
+
+            if(printTime != null) {
+                String hours = String.valueOf(printTime.getHour());
+                String minutes = String.valueOf(printTime.getMinute());
+                if(printTime.getHour() < 10) hours = "0" + hours;
+                if(printTime.getMinute() < 10) minutes = "0" + minutes;
+
+                stopName = new Text(stopLine.getEndX() + 10, stopLine.getEndY() - 5, allStops.get(i).getName() + " - " + hours + ":" + minutes);
+            } else {
+                stopName = new Text(stopLine.getEndX() + 10, stopLine.getEndY() - 5, allStops.get(i).getName());
+            }
+
             stopName.setFont(Font.font ("Impact", 14));
             stopName.getTransforms().add(new Rotate(-45, stopLine.getEndX() + 10, stopLine.getEndY() - 5));
             stopName.setFill(Color.rgb(50, 50, 50));
@@ -173,7 +181,7 @@ public class View {
 
             bottomWindow.getChildren().add(stopLine);
             bottomWindow.getChildren().add(stopName);
-        }catch (Exception e){
+        }catch (Exception ignored) {
 
         }
     }

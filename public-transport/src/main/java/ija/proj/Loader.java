@@ -14,8 +14,8 @@ import java.util.List;
  * Class uses XML parser as all information are in form of XML files.
  */
 public class Loader {
-    //private static String resources= "src/main/resources/";
-    private static String resources= "public-transport/src/main/resources/";
+    private static String resources= "src/main/resources/";
+//    private static String resources= "public-transport/src/main/resources/";
 
     /** Method loads all streets from input XML file. Streets are parsed from XML and added into a list of Drawable objects, which is then returned
      *
