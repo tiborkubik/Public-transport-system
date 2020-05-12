@@ -31,7 +31,7 @@ public class Vehicle implements Drawable, UpdateState {
 
     private LocalTime timeofDeparture;
     private int cnt_time = 0;                               /**< Counter that ensures that vehicles stop on stops */
-
+    private int delay = 0;                                  /**< Delay of a vehicle when a traffic jam is set or a detour */
 
     /***
      * Method creates a new car of public transport in the given city
@@ -70,6 +70,14 @@ public class Vehicle implements Drawable, UpdateState {
      */
     public void setInitialStop() {
         this.nextStop = this.onLine.getStopList().get(0);
+    }
+
+
+    /**
+     * @param delay Value in minutes of delay of vehicle on given line
+     */
+    public void setDelay(int delay) {
+        this.delay = delay;
     }
 
     /***

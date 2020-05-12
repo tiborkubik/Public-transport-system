@@ -35,6 +35,7 @@ public class Main extends Application {
      * @param primaryStage Stage of application
      */
     private void loadMapLayout(Stage primaryStage) {
+        primaryStage.setTitle("Public transport system");
         try {
             this.rootElement = layoutLoader.load();
         } catch (IOException e) {
@@ -75,6 +76,7 @@ public class Main extends Application {
         // Loading all streets from XML input into Drawable objects + adding them to all drawable elements
         this.streets = loader.loadMapData(allElements);
         controller.setAllStreets(allElements);
+
     }
 
     /**

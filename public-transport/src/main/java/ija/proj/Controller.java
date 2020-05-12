@@ -189,17 +189,22 @@ public class Controller {
 
         if(inEditDetours) {
             List<Street> newStreets = new ArrayList<>();
-            for (Street s : lineDetoured.getStreetList()){
-                if (s.getName().equals(beingDetoured.getName())){
-                    for (Street n : streetsToAddToLine)
-                        newStreets.add(n);
+            try {
+                for (Street s : lineDetoured.getStreetList()){
+                    if (s.getName().equals(beingDetoured.getName())){
+                        newStreets.addAll(streetsToAddToLine);
+                    }
+                    else {
+                        newStreets.add(s);
+                    }
                 }
-                else {
-                    newStreets.add(s);
-                }
+
+                lineDetoured.deleteStops(beingDetoured);
+                lineDetoured.setStreets(newStreets, streetsToAddToLine, beingDetoured);
+
+            } catch (Exception ignore) {
             }
-            lineDetoured.deleteStops(beingDetoured);
-            lineDetoured.setStreets(newStreets, streetsToAddToLine, beingDetoured);
+
 
             beingDetoured = null;
             lineDetoured = null;
@@ -358,13 +363,14 @@ public class Controller {
 
         scrollP.setFitToHeight(true);
         scrollP.setFitToWidth(true);
+
         // timeline that scales and moves the node
         timeline.getKeyFrames().clear();
         timeline.getKeyFrames().addAll(
-                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.translateXProperty(), mapContent.getTranslateX() - f * dx)),
-                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.translateYProperty(), mapContent.getTranslateY() - f * dy)),
                 new KeyFrame(Duration.millis(200), new KeyValue(mapContent.scaleXProperty(), scale)),
-                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.scaleYProperty(), scale))
+                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.scaleYProperty(), scale)),
+                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.translateXProperty(), mapContent.getTranslateX() - f * dx)),
+                new KeyFrame(Duration.millis(200), new KeyValue(mapContent.translateYProperty(), mapContent.getTranslateY() - f * dy))
         );
         timeline.play();
     }
@@ -431,6 +437,7 @@ public class Controller {
             vehicleOnRoute.setCenterX(50);
             view.cleanRouteFromStops(bottomWindow);
             view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
+            delayText.setText("Delay: 0 min");
             focusedVehicle = null;
             vehicleOnRoute.setVisible(false);
         });
@@ -536,7 +543,7 @@ public class Controller {
                     focusedVehicle = null;
                     vehicleOnRoute.setVisible(false);
                     vehicleOnRoute.setCenterX(50);
-
+                    delayText.setText("Delay: 0 min");
                     boolean onLine = false;
 
                     if(this.beingDetoured != null) {
@@ -625,7 +632,7 @@ public class Controller {
                         }
                     }
                     /////////priprava na delay
-                    if (focusedVehicle != null){
+                    if (focusedVehicle != null) {
                         int delay =0;
                         int speed;
                         String type = focusedVehicle.getLine().getType();
@@ -645,6 +652,15 @@ public class Controller {
                             }
                         }
                         System.out.println("delay:" + delay);
+                        double delayInMins = delay/60.0;
+                        int fullMins = (int)delayInMins;
+
+                        if((delayInMins - fullMins) > 0.5)
+                            ++fullMins;
+
+                        System.out.println(delayInMins + " " + fullMins);
+                        focusedVehicle.setDelay(fullMins);
+                        delayText.setText("Delay: " + fullMins + " min");
                     }
                     /////////potialto je to rpiprava na delay
 
