@@ -1,10 +1,19 @@
-package ija.proj;
+package timeActions;
+
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import main.Controller;
+import vehicles.Drawable;
+import main.View;
+import mapData.Line;
+import vehicles.Bus;
+import vehicles.Subway;
+import vehicles.Tram;
+import vehicles.Vehicle;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

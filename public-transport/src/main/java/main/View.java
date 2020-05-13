@@ -1,4 +1,4 @@
-package ija.proj;
+package main;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -13,6 +13,10 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import mapData.Stop;
+import mapData.Street;
+import vehicles.Drawable;
+import vehicles.Vehicle;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -56,7 +60,7 @@ public class View {
      *
      * @param lines List of all active lines
      */
-    public void setDefaultLineColors(List<Line> lines) {
+    public void setDefaultLineColors(List<mapData.Line> lines) {
         for (int i = 0; i < lines.size(); i++) {
             lines.get(i).setColor(colorsForLines.get(i));
         }
@@ -139,7 +143,7 @@ public class View {
      * @param line line to which it changes color
      * @param color to which color we are changing the line
      */
-    public void changeLineColor(Pane mapContent, Line line, Color color) {
+    public void changeLineColor(Pane mapContent, mapData.Line line, Color color) {
         ObservableList<Node> x = mapContent.getChildren();
         for (Node sg : x) {
             Shape sp = (Shape) sg;
@@ -179,8 +183,8 @@ public class View {
      * @param lines List of all lines
      * @param linesInfo GUI listView element where all lines will be in a list
      */
-    public void viewLinesInfo(List<Line> lines, ListView<Object> linesInfo) {
-        for (Line line : lines) {
+    public void viewLinesInfo(List<mapData.Line> lines, ListView<Object> linesInfo) {
+        for (mapData.Line line : lines) {
             linesInfo.getItems().add(line.getName());
         }
 
@@ -232,7 +236,7 @@ public class View {
      * @param text Text GUI element
      * @param line Line of stop
      */
-    public void changeFinalStopText(Text text, Line line) {
+    public void changeFinalStopText(Text text, mapData.Line line) {
         text.setText(line.getStopList().get(line.getStopList().size() - 1).getName());
     }
 
@@ -451,7 +455,7 @@ public class View {
                                  Text delayText,
                                  List<Vehicle> allVehicles,
                                  javafx.scene.shape.Line vehicleRoute,
-                                 List<Line> lines) {
+                                 List<mapData.Line> lines) {
 
         ObservableList<Node> x = mapContent.getChildren();
         for (Node sg : x) {
@@ -470,7 +474,7 @@ public class View {
 
                             colorRoute(vehicleRoute, singleV.getLine().getColor().saturate().saturate());
 
-                            for (Line otherLine : lines) {
+                            for (mapData.Line otherLine : lines) {
                                 if (otherLine.getName() != singleV.getLine().getName()) {
                                     changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
                                 } else {

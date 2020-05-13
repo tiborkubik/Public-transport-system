@@ -1,4 +1,12 @@
-package ija.proj;
+package timeActions;
+
+import main.Controller;
+import vehicles.Drawable;
+import mapData.Coordinate;
+import mapData.Line;
+import vehicles.Bus;
+import vehicles.Subway;
+import vehicles.Tram;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

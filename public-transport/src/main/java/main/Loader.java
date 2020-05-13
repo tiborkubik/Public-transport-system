@@ -1,6 +1,11 @@
-package ija.proj;
+package main;
 
+import mapData.Coordinate;
+import mapData.Line;
+import mapData.Stop;
+import mapData.Street;
 import org.w3c.dom.*;
+import vehicles.Drawable;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

@@ -1,10 +1,14 @@
-package ija.proj;
+package main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import mapData.Line;
+import timeActions.TimeManager;
+import timeActions.Timetable;
+import vehicles.Drawable;
 
 import java.io.IOException;
 import java.util.ArrayList;

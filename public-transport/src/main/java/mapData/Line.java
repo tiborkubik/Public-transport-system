@@ -1,5 +1,6 @@
-package ija.proj;
+package mapData;
 
+import vehicles.Drawable;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;

@@ -1,7 +1,12 @@
-package ija.proj;
+package vehicles;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import main.Controller;
+import mapData.Coordinate;
+import mapData.Line;
+import mapData.Stop;
+import mapData.Street;
 
 import java.time.LocalTime;
 
