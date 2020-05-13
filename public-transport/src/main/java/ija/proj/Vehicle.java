@@ -6,7 +6,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 
 /**
@@ -14,23 +16,59 @@ import java.util.*;
  * Contains all important information, which define the movement and dynamics of program
  */
 public class Vehicle implements Drawable, UpdateState {
-    private String identifier;                              /**< Unique identifier of vehicle */
-    private Coordinate position;                            /**< Position of vehicle on map */
-    private Street currentStreet;                           /**< Street on which a vehicle currently occurs */
-    private Line onLine;                                    /**< Line on which the vehicle transports passengers */
-    private Stop nextStop;                                  /**< Next stop where vehicle stops */
+    /**
+     * < Distance in pixels from the start of vehicle's route
+     */
 
-    private Controller controller;                          /**< Main controller */
+    protected List<Shape> GUI = new ArrayList<>();
+    private String identifier;
+    /**
+     * < Unique identifier of vehicle
+     */
+    private Coordinate position;
+    /**
+     * < Position of vehicle on map
+     */
+    private Street currentStreet;
+    /**
+     * < Street on which a vehicle currently occurs
+     */
+    private Line onLine;
+    /**
+     * < Line on which the vehicle transports passengers
+     */
+    private Stop nextStop;
+    /**
+     * < Next stop where vehicle stops
+     */
 
-    private double speed;                                   /**< Speed of movement of vehicle */
-    private double constantSpeed;                           /**< Value of speed not effected by speedUp, etc */
-    private double distance = 0;                            /**< Distance in pixels from the start of vehicle's route */
+    private Controller controller;
+    /**
+     * < Main controller
+     */
 
-    protected List<Shape> GUI = new ArrayList<>();          /**< List of GUI elements to be drawn on canvas */
-    private List<Coordinate> path = new ArrayList<>();      /**< List of all stops and ends of lines */
+    private double speed;
+    /**
+     * < Speed of movement of vehicle
+     */
+    private double constantSpeed;
+    /**
+     * < Value of speed not effected by speedUp, etc
+     */
+    private double distance = 0;
+    /**
+     * < List of GUI elements to be drawn on canvas
+     */
+    private List<Coordinate> path = new ArrayList<>();
+    /**
+     * < List of all stops and ends of lines
+     */
 
     private LocalTime timeofDeparture;
-    private int cnt_time = 0;                               /**< Counter that ensures that vehicles stop on stops */
+    private int cnt_time = 0;
+    /**
+     * < Counter that ensures that vehicles stop on stops
+     */
     private int delay = 0;                                  /**< Delay of a vehicle when a traffic jam is set or a detour */
 
     /***
@@ -86,7 +124,7 @@ public class Vehicle implements Drawable, UpdateState {
     protected void setStops() {
         LinkedHashMap<String, Coordinate> tempPath = this.onLine.getPath();
 
-        tempPath.forEach((k,v)-> this.path.add(v));
+        tempPath.forEach((k, v) -> this.path.add(v));
     }
 
     /**
@@ -157,8 +195,8 @@ public class Vehicle implements Drawable, UpdateState {
      * @param coordinate according which translation will be calculated
      */
     private void modifyGUI(Coordinate coordinate) {
-        try{
-            for(Shape shape : GUI) {
+        try {
+            for (Shape shape : GUI) {
                 shape.setTranslateX(coordinate.getX() - position.getX() + shape.getTranslateX());
                 shape.setTranslateY(coordinate.getY() - position.getY() + shape.getTranslateY());
             }
@@ -166,7 +204,6 @@ public class Vehicle implements Drawable, UpdateState {
             System.out.println("Accessing non-existing element");
         }
     }
-
 
 
     /***
@@ -182,16 +219,16 @@ public class Vehicle implements Drawable, UpdateState {
         Coordinate a = null;
         Coordinate b = null;
 
-        for(int i = 0; i < path.size() - 1; i++) {
+        for (int i = 0; i < path.size() - 1; i++) {
             a = path.get(i);
             b = path.get(i + 1);
             currentLength = a.coordsDistance(b);
-            if(length + currentLength >= distance) {
+            if (length + currentLength >= distance) {
                 break;
             }
             length += currentLength;
         }
-        if(a == null || b == null) {
+        if (a == null || b == null) {
             return null;
         }
 
@@ -206,8 +243,8 @@ public class Vehicle implements Drawable, UpdateState {
      */
     public double totalPathLength() {
         double total = 0;
-        for(int i = 0; i < this.path.size()-1; i++) {
-            total += this.path.get(i).coordsDistance(this.path.get(i+1));
+        for (int i = 0; i < this.path.size() - 1; i++) {
+            total += this.path.get(i).coordsDistance(this.path.get(i + 1));
         }
         return total;
     }
@@ -220,16 +257,16 @@ public class Vehicle implements Drawable, UpdateState {
      */
     @Override
     public void update(LocalTime time, double speedMultiplier, int trafficCoefficient) {
-        if(trafficCoefficient != 1)
-            this.speed = this.constantSpeed * speedMultiplier * ((double)1/(trafficCoefficient*2));
+        if (trafficCoefficient != 1)
+            this.speed = this.constantSpeed * speedMultiplier * ((double) 1 / (trafficCoefficient * 2));
         else
             this.speed = this.constantSpeed * speedMultiplier;
 
-        if (cnt_time >= 0){
+        if (cnt_time >= 0) {
             cnt_time--;
-            if(cnt_time == 0){
+            if (cnt_time == 0) {
                 this.speed = this.constantSpeed;
-            }else
+            } else
                 return;
 
         }
@@ -237,13 +274,13 @@ public class Vehicle implements Drawable, UpdateState {
         distance += speed;
         double total = totalPathLength();
 
-        if(distance > total) {
-            for(Shape x : GUI) {
+        if (distance > total) {
+            for (Shape x : GUI) {
                 Pane mapContent = controller.getMapContent();
 
                 ObservableList<Node> mapNodes = mapContent.getChildren();
-                for(Node singleNode : mapNodes) {
-                    if(x.getId().equals(singleNode.getId())){
+                for (Node singleNode : mapNodes) {
+                    if (x.getId().equals(singleNode.getId())) {
                         GUI.remove(x);
                         mapContent.getChildren().remove(singleNode);
                         controller.getUpdates().remove(this);
@@ -256,60 +293,53 @@ public class Vehicle implements Drawable, UpdateState {
 
         Coordinate newC = getNewCoord(distance, path);
 
-        for(int i = 0; i < this.onLine.getStopList().size(); i++) {
-            if(Math.abs(this.onLine.getStopList().get(i).getCoordinate().diffX(newC)) < this.speed/2 && Math.abs(this.onLine.getStopList().get(i).getCoordinate().diffY(newC)) < this.speed/2) {
+        for (int i = 0; i < this.onLine.getStopList().size(); i++) {
+            if (Math.abs(this.onLine.getStopList().get(i).getCoordinate().diffX(newC)) < this.speed / 2 && Math.abs(this.onLine.getStopList().get(i).getCoordinate().diffY(newC)) < this.speed / 2) {
                 cnt_time = this.onLine.getStopList().get(i).getTime();
 
-                if(this.onLine.getName().contains("Bus Line 40"))
+                if (this.onLine.getName().contains("Bus Line 40"))
                     System.out.println(time + " " + distance);
 
-                if(i < this.onLine.getStopList().size())
-                    this.nextStop = this.onLine.getStopList().get(i+1);
+                if (i < this.onLine.getStopList().size())
+                    this.nextStop = this.onLine.getStopList().get(i + 1);
             }
         }
 
-        for(Street s : this.onLine.getStreetList()) {
-            if(Math.abs(s.begin().diffX(newC)) < this.speed/2 && Math.abs(s.begin().diffY(newC)) < this.speed/2) {
+        for (Street s : this.onLine.getStreetList()) {
+            if (Math.abs(s.begin().diffX(newC)) < this.speed / 2 && Math.abs(s.begin().diffY(newC)) < this.speed / 2) {
                 double slope = s.getSlope();
                 double rotation = GUI.get(0).getRotate();
                 GUI.get(0).setRotate(-rotation);
 
-                if(slope == 2.0){
+                if (slope == 2.0) {
                     GUI.get(0).setRotate(0);
-                }
-                else if(slope == 1.0) {
+                } else if (slope == 1.0) {
                     GUI.get(0).setRotate(-45);
-                }
-                else if(slope == 0.0) {
+                } else if (slope == 0.0) {
                     GUI.get(0).setRotate(90);
                 } else {
-                    if(this instanceof Subway) {
+                    if (this instanceof Subway) {
                         if (s.begin().getX() < s.end().getX()) {
-                            GUI.get(0).setRotate(90-90*slope);
-                        }
-                        else{
-                            if (s.begin().getY() < s.end().getY()){
-                                GUI.get(0).setRotate(150+90*slope);
-                            }
-                            else{
-                                GUI.get(0).setRotate(60-90*slope);
+                            GUI.get(0).setRotate(90 - 90 * slope);
+                        } else {
+                            if (s.begin().getY() < s.end().getY()) {
+                                GUI.get(0).setRotate(150 + 90 * slope);
+                            } else {
+                                GUI.get(0).setRotate(60 - 90 * slope);
                             }
                         }
                     } else {
                         if (s.begin().getX() < s.end().getX()) {
-                            if (s.begin().getY() < s.end().getY()){
-                                GUI.get(0).setRotate(180-90*slope);
+                            if (s.begin().getY() < s.end().getY()) {
+                                GUI.get(0).setRotate(180 - 90 * slope);
+                            } else {
+                                GUI.get(0).setRotate(90 + 90 * slope);
                             }
-                            else{
-                                GUI.get(0).setRotate(90+90*slope);
-                            }
-                        }
-                        else{
-                            if (s.begin().getY() < s.end().getY()){
-                                GUI.get(0).setRotate(180+90*slope);
-                            }
-                            else{
-                                GUI.get(0).setRotate(90-90*slope);
+                        } else {
+                            if (s.begin().getY() < s.end().getY()) {
+                                GUI.get(0).setRotate(180 + 90 * slope);
+                            } else {
+                                GUI.get(0).setRotate(90 - 90 * slope);
                             }
                         }
                     }

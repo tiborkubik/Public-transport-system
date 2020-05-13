@@ -1,6 +1,7 @@
 package ija.proj;
 
 import org.w3c.dom.*;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
@@ -14,16 +15,17 @@ import java.util.List;
  * Class uses XML parser as all information are in form of XML files.
  */
 public class Loader {
-    private static String resources= "src/main/resources/";
+    private static String resources = "src/main/resources/";
 //    private static String resources= "public-transport/src/main/resources/";
 
-    /** Method loads all streets from input XML file. Streets are parsed from XML and added into a list of Drawable objects, which is then returned
+    /**
+     * Method loads all streets from input XML file. Streets are parsed from XML and added into a list of Drawable objects, which is then returned
      *
      * @param allElements List of objects that will be put in canvas
      */
     public List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
-            File fXmlFile = new File(resources+"mapData.xml");
+            File fXmlFile = new File(resources + "mapData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -63,11 +65,10 @@ public class Loader {
      * Method adds stop found in XML file into proper street, which was as its parent node
      *
      * @param eElement Element of XML file representing stop
-     * @param sStreet Street that was parsed from parent node, stop lies on this street
-     *
+     * @param sStreet  Street that was parsed from parent node, stop lies on this street
      * @return representation of given stop in Stop class type
      */
-    private Stop stopToStreet(Element eElement, Street sStreet){
+    private Stop stopToStreet(Element eElement, Street sStreet) {
         String stopName = eElement.getAttribute("id");
 
         String temp_start_x = eElement.getElementsByTagName("x").item(0).getTextContent();
@@ -78,18 +79,17 @@ public class Loader {
 
         int time_to_stay;
 
-        try{
-            String temp_time_to_stay =  eElement.getElementsByTagName("time").item(0).getTextContent();
-            time_to_stay =Integer.parseInt(temp_time_to_stay );
-        }
-        catch(NullPointerException e){
+        try {
+            String temp_time_to_stay = eElement.getElementsByTagName("time").item(0).getTextContent();
+            time_to_stay = Integer.parseInt(temp_time_to_stay);
+        } catch (NullPointerException e) {
             time_to_stay = 500;
         }
         Stop newStop = new Stop(stopName, new Coordinate(start_x, start_y), sStreet, time_to_stay);
 
         // Checking whether stop is on a street
         boolean stopToStreet = sStreet.addStop(newStop);
-        if(!stopToStreet) {
+        if (!stopToStreet) {
             System.out.println("Stop " + newStop.getName() + " lies outside of street " + sStreet.getName());
             System.exit(-1);
         }
@@ -99,13 +99,12 @@ public class Loader {
     /**
      * Method adds street into a line defined in parent node
      *
-     * @param singleStreet Node containing street information
-     * @param streets List of all streets that were so far parsed
+     * @param singleStreet  Node containing street information
+     * @param streets       List of all streets that were so far parsed
      * @param streetsOnLine List of all streets on line, where street lies
-     *
      * @return Street representation in form of Street class instance
      */
-    private Street streetToLine(Node singleStreet, List<Drawable> streets, List<Street> streetsOnLine){
+    private Street streetToLine(Node singleStreet, List<Drawable> streets, List<Street> streetsOnLine) {
         NamedNodeMap streetAttribute = singleStreet.getAttributes();
         String streetName = streetAttribute.item(0).getNodeValue();
 
@@ -114,17 +113,17 @@ public class Loader {
         sStreet.findStreetByName(streets, streetName);
 
         // Street must be defined on map, otherwise error
-        if(sStreet == null) {
+        if (sStreet == null) {
             System.out.println("Line is going through non-existing street.");
             System.exit(-1);
         }
-        if (streetsOnLine.size() != 0){
-            Coordinate lastEnd = streetsOnLine.get(streetsOnLine.size()-1).end();
+        if (streetsOnLine.size() != 0) {
+            Coordinate lastEnd = streetsOnLine.get(streetsOnLine.size() - 1).end();
 
-            if(!lastEnd.equals(sStreet.begin()))
+            if (!lastEnd.equals(sStreet.begin()))
                 sStreet.end().swapCoordinates(sStreet.begin());
         }
-        return  sStreet;
+        return sStreet;
     }
 
 
@@ -132,15 +131,14 @@ public class Loader {
      * Method loads all data about lines and stops and adds them to elements for drawing
      *
      * @param allElements List of drawable elements into which new found stops will be appended
-     * @param streets List of streets that are already defined
-     *
+     * @param streets     List of streets that are already defined
      * @return List of parsed line, containing all information about streets and stops, too
      */
     public List<Line> loadLinesData(List<Drawable> allElements, List<Drawable> streets) {
         List<Line> allLines = new ArrayList<>();
 
         try {
-            File fXmlFile = new File(resources+"lineData.xml");
+            File fXmlFile = new File(resources + "lineData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -171,15 +169,15 @@ public class Loader {
                     for (int i = 0; i < streetsList.getLength(); i++) {
                         Node singleStreet = streetsList.item(i);
 
-                        if(singleStreet.getNodeType() == Node.ELEMENT_NODE) {
-                            Street sStreet = streetToLine(singleStreet,streets, streetsOnLine);
+                        if (singleStreet.getNodeType() == Node.ELEMENT_NODE) {
+                            Street sStreet = streetToLine(singleStreet, streets, streetsOnLine);
                             streetsOnLine.add(sStreet); // street is in Line list
 
                             // getting List of Stops of given Street
                             NodeList stopList = singleStreet.getChildNodes();
-                            for(int j = 0; j < stopList.getLength(); j++) {
+                            for (int j = 0; j < stopList.getLength(); j++) {
                                 Node singleStop = stopList.item(j);
-                                if(singleStop.getNodeType() == Node.ELEMENT_NODE) {
+                                if (singleStop.getNodeType() == Node.ELEMENT_NODE) {
                                     stopsOnLine.add(stopToStreet((Element) singleStop, sStreet));
                                 }
                             }
@@ -188,14 +186,14 @@ public class Loader {
                     Line newLine = new Line(lineName, lineType, streetsOnLine, stopsOnLine);
                     newLine.setType(lineType);
 
-                    for(Street street : streetsOnLine) {
-                        for(Drawable mapStreet : streets) {
-                            Street mapS = (Street)mapStreet;
-                            if(street.getName() == mapS.getName()) {
+                    for (Street street : streetsOnLine) {
+                        for (Drawable mapStreet : streets) {
+                            Street mapS = (Street) mapStreet;
+                            if (street.getName() == mapS.getName()) {
                                 ((Street) mapStreet).add_line();
                             }
                         }
-                        newLine.addCoordinates(street.begin(),street.end());
+                        newLine.addCoordinates(street.begin(), street.end());
                     }
                     allLines.add(newLine);
                 }
@@ -205,14 +203,14 @@ public class Loader {
         }
 
         // Extracting stops only, typing into Drawable objects and adding on cavas
-        for(Line line : allLines) {
+        for (Line line : allLines) {
             Drawable drLine = line;
             allElements.add(drLine);
         }
 
-        for(Line line : allLines) {
+        for (Line line : allLines) {
             List<Stop> stopsInLine = line.getStopList();
-            for(Stop stop : stopsInLine) {
+            for (Stop stop : stopsInLine) {
                 Drawable drStop = stop;
                 allElements.add(drStop);
             }
@@ -228,7 +226,7 @@ public class Loader {
      */
     public void loadTimetableData(List<Line> lines) {
         try {
-            File fXmlFile = new File(resources+"timetable.xml");
+            File fXmlFile = new File(resources + "timetable.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -249,7 +247,7 @@ public class Loader {
                     NodeList times = singleLine.getChildNodes();
 
                     for (Line l : lines) {
-                        if(l.getName().equals(lineId)) {
+                        if (l.getName().equals(lineId)) {
                             line = l;
                         }
                     }
@@ -258,7 +256,7 @@ public class Loader {
                     for (int i = 0; i < times.getLength(); i++) {
                         Node singleTime = times.item(i);
 
-                        if(singleTime.getNodeType() == Node.ELEMENT_NODE) {
+                        if (singleTime.getNodeType() == Node.ELEMENT_NODE) {
                             String temp_start_x = singleTime.getTextContent();
                             LocalTime dateTime = LocalTime.parse(temp_start_x);
 

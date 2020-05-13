@@ -7,9 +7,8 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import java.util.ArrayList;
-import java.lang.Math;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,8 +19,8 @@ public class Street implements Drawable {
     private String identifier;
     private Coordinate start;
     private Coordinate end;
-    private List<Stop> stopList= new ArrayList<>();
-    private List<Coordinate> coordinatesList= new ArrayList<>();
+    private List<Stop> stopList = new ArrayList<>();
+    private List<Coordinate> coordinatesList = new ArrayList<>();
     private int n_lines = 0;
     private int trafficDensity = 1;
 
@@ -39,7 +38,7 @@ public class Street implements Drawable {
 
     }
 
-    public int getNStops(){
+    public int getNStops() {
         return this.stopList.size();
     }
 
@@ -51,11 +50,11 @@ public class Street implements Drawable {
         this.trafficDensity = trafficDensity;
     }
 
-    public int getN_lines(){
+    public int getN_lines() {
         return this.n_lines;
     }
 
-    public void  add_line(){
+    public void add_line() {
         this.n_lines++;
     }
 
@@ -66,9 +65,9 @@ public class Street implements Drawable {
      * @return found street, if not found null
      */
     public void findStreetByName(List<Drawable> listStreet, String identifier) {
-        for(Drawable street : listStreet) {
+        for (Drawable street : listStreet) {
             Street typedStreet = (Street) street;
-            if(typedStreet.getName().equals(identifier)) {
+            if (typedStreet.getName().equals(identifier)) {
                 this.identifier = typedStreet.getName();
                 this.start = typedStreet.begin();
                 this.end = typedStreet.end();
@@ -79,7 +78,6 @@ public class Street implements Drawable {
             }
         }
     }
-
 
 
     public Coordinate begin() {
@@ -103,20 +101,16 @@ public class Street implements Drawable {
         Coordinate givenStart = s.begin();
         Coordinate givenEnd = s.end();
 
-        if(start.diffX(givenStart) == 0 && start.diffY(givenStart) == 0) {
+        if (start.diffX(givenStart) == 0 && start.diffY(givenStart) == 0) {
             return true;
         }
-        if(start.diffX(givenEnd) == 0 && start.diffY(givenEnd) == 0) {
+        if (start.diffX(givenEnd) == 0 && start.diffY(givenEnd) == 0) {
             return true;
         }
-        if(end.diffX(givenStart) == 0 && end.diffY(givenStart) == 0) {
+        if (end.diffX(givenStart) == 0 && end.diffY(givenStart) == 0) {
             return true;
         }
-        if(end.diffX(givenEnd) == 0 && end.diffY(givenEnd) == 0) {
-            return true;
-        }
-
-        return false;
+        return end.diffX(givenEnd) == 0 && end.diffY(givenEnd) == 0;
     }
 
     /***
@@ -132,7 +126,7 @@ public class Street implements Drawable {
         double distance_with_stop = distance(start, stop_to_add) + distance(stop_to_add, end); //distance of the street trought the new stop
         double delta = 0.00001;     // allowed distance from the line (proportional to street length)
         //check if the distances and approximately the same
-        if (delta> Math.abs(distance- distance_with_stop) / Math.max(Math.abs(distance), Math.abs(distance_with_stop))){
+        if (delta > Math.abs(distance - distance_with_stop) / Math.max(Math.abs(distance), Math.abs(distance_with_stop))) {
             stopList.add(stop);
             stop.setStreet(this);
             return true;
@@ -146,13 +140,13 @@ public class Street implements Drawable {
      * @param b second coordinate
      * @return distance
      */
-    private double distance(Coordinate a, Coordinate b){
+    private double distance(Coordinate a, Coordinate b) {
         return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
     }
 
     public double getSlope() {
         // vertical line has special value
-        if((this.end.getX() - this.start.getX()) == 0.0) {
+        if ((this.end.getX() - this.start.getX()) == 0.0) {
             return 2.0;
         }
         return (this.end.getY() - this.start.getY()) / (this.end.getX() - this.start.getX());
@@ -163,26 +157,21 @@ public class Street implements Drawable {
         Line singleStreet = new Line(start.getX(), start.getY(), end.getX(), end.getY());
 
         Text streetName;
-        if(start.getY() == end.getY()) {
-            streetName = new Text( (start.getX()+end.getX())/2 - 20, (start.getY()+end.getY())/2 - 10, identifier);
-        }
-        else if(start.getX() == end.getX()) {
-            streetName = new Text( (start.getX()+end.getX())/2 + 20, (start.getY()+end.getY())/2 - 10, identifier);
-        }
-        else if(start.getX() > end.getX() && start.getY() > end.getY()) {
-            streetName = new Text( (start.getX()+end.getX())/2 + 20, (start.getY()+end.getY())/2 - 10, identifier);
-        }
-        else if(start.getX() > end.getX() && start.getY() < end.getY()) {
-            streetName = new Text( (start.getX()+end.getX())/2 + 30, (start.getY()+end.getY())/2 - 10, identifier);
-        }
-        else if(start.getX() < end.getX() && start.getY() > end.getY()) {
-            streetName = new Text( (start.getX()+end.getX())/2 + 40, (start.getY()+end.getY())/2 - 10, identifier);
-        }
-        else {
-            streetName = new Text( (start.getX()+end.getX())/2 + 10, (start.getY()+end.getY())/2 - 10, identifier);
+        if (start.getY() == end.getY()) {
+            streetName = new Text((start.getX() + end.getX()) / 2 - 20, (start.getY() + end.getY()) / 2 - 10, identifier);
+        } else if (start.getX() == end.getX()) {
+            streetName = new Text((start.getX() + end.getX()) / 2 + 20, (start.getY() + end.getY()) / 2 - 10, identifier);
+        } else if (start.getX() > end.getX() && start.getY() > end.getY()) {
+            streetName = new Text((start.getX() + end.getX()) / 2 + 20, (start.getY() + end.getY()) / 2 - 10, identifier);
+        } else if (start.getX() > end.getX() && start.getY() < end.getY()) {
+            streetName = new Text((start.getX() + end.getX()) / 2 + 30, (start.getY() + end.getY()) / 2 - 10, identifier);
+        } else if (start.getX() < end.getX() && start.getY() > end.getY()) {
+            streetName = new Text((start.getX() + end.getX()) / 2 + 40, (start.getY() + end.getY()) / 2 - 10, identifier);
+        } else {
+            streetName = new Text((start.getX() + end.getX()) / 2 + 10, (start.getY() + end.getY()) / 2 - 10, identifier);
         }
 
-        streetName.setFont(Font.font ("SimSun", 12));
+        streetName.setFont(Font.font("SimSun", 12));
         streetName.setFill(Color.GRAY);
         singleStreet.setStroke(Color.rgb(150, 150, 150));
         singleStreet.setStrokeWidth(6);

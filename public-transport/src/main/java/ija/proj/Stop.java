@@ -7,6 +7,7 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,17 +17,26 @@ import java.util.List;
  * given street. Stops are always connected to specific street and cannot be on their own.
  */
 public class Stop implements Drawable {
-    private String identifier;                 /**< Unique identifier of a stop within given map */
-    private Coordinate location = null;        /**< Location of stop within canvas */
-    private Street onStreet = null;            /**< Definition of street on which a stop lies */
+    private String identifier;
+    /**
+     * < Unique identifier of a stop within given map
+     */
+    private Coordinate location = null;
+    /**
+     * < Location of stop within canvas
+     */
+    private Street onStreet = null;
+    /**
+     * < Definition of street on which a stop lies
+     */
     private int time_to_stay;                  /**< Time which vehicles spend on given stop */
 
     /**
      * Stop constructor. All its attributes must be set
      *
-     * @param identifier Unique stop name
-     * @param location  Location of stop within city map
-     * @param onStreet  Street on which stop lies
+     * @param identifier   Unique stop name
+     * @param location     Location of stop within city map
+     * @param onStreet     Street on which stop lies
      * @param time_to_stay Duration, which vehicles spend on given stop
      */
     public Stop(String identifier, Coordinate location, Street onStreet, int time_to_stay) {
@@ -40,13 +50,6 @@ public class Stop implements Drawable {
      * Overloading of constructor when no attributes must be specified
      */
     public Stop() {
-    }
-
-    /**
-     * @param s Street of the stop
-     */
-    public void setStreet(Street s) {
-        onStreet = s;
     }
 
     /**
@@ -67,7 +70,7 @@ public class Stop implements Drawable {
      * @return Street on which stop lies
      */
     public Street getStreet() {
-        if(onStreet == null) {
+        if (onStreet == null) {
             return null;
         } else {
             return onStreet;
@@ -75,10 +78,17 @@ public class Stop implements Drawable {
     }
 
     /**
+     * @param s Street of the stop
+     */
+    public void setStreet(Street s) {
+        onStreet = s;
+    }
+
+    /**
      * @return Location of stop in a form of Coordinate
      */
     public Coordinate getCoordinate() {
-        if(location == null) {
+        if (location == null) {
             return null;
         } else {
             return location;
@@ -90,11 +100,11 @@ public class Stop implements Drawable {
         Line stopLine = new Line(location.getX(), location.getY(), location.getX() + 14, location.getY() - 14);
         Text stopName = new Text(location.getX() + 18, location.getY() - 18, identifier);
 
-        stopName.setFont(Font.font ("Impact", 12));
+        stopName.setFont(Font.font("Impact", 12));
         stopName.setFill(Color.rgb(50, 50, 50));
 
-        stopLine.setId(this.onStreet.getName()+"Stop");
-        stopName.setId(identifier+"Stop");
+        stopLine.setId(this.onStreet.getName() + "Stop");
+        stopName.setId(identifier + "Stop");
         stopLine.setSmooth(true);
         stopLine.setStroke(Color.rgb(50, 50, 50));
         stopLine.setStrokeWidth(6);

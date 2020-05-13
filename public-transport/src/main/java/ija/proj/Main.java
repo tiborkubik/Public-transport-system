@@ -15,18 +15,45 @@ import java.util.List;
  * controller object as well as object view which run the application
  */
 public class Main extends Application {
-    private FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml")); /**< Loads layout of the application */
+    private FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml"));
+    /**
+     * < Loads layout of the application
+     */
     private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
 
-    private Loader loader;                                  /**< Loads data about map, lines, stops */
-    private View view;                                      /**< Object used for manipulation with UI */
-    private Controller controller;                          /**< Object resposible for workflow of the application */
-    private BorderPane rootElement;                         /**< UI element */
-    private Scene mainScene;                                /**<  UI element*/
+    private Loader loader;
+    /**
+     * < Loads data about map, lines, stops
+     */
+    private View view;
+    /**
+     * < Object used for manipulation with UI
+     */
+    private Controller controller;
+    /**
+     * < Object resposible for workflow of the application
+     */
+    private BorderPane rootElement;
+    /**
+     * < UI element
+     */
+    private Scene mainScene;
+    /**
+     * <  UI element
+     */
 
-    private List<Drawable> allElements = new ArrayList<>(); /**< All elements to display  */
-    private List<Drawable> streets = new ArrayList<>();     /**< List of street on the map */
-    private List<Line> lines = new ArrayList<>();           /**< List of Public transport lines */
+    private List<Drawable> allElements = new ArrayList<>();
+    /**
+     * < All elements to display
+     */
+    private List<Drawable> streets = new ArrayList<>();
+    /**
+     * < List of street on the map
+     */
+    private List<Line> lines = new ArrayList<>();
+    /**
+     * < List of Public transport lines
+     */
     private Timetable timeTable;                            /**< departures of specific lines */
 
     /**
@@ -91,7 +118,7 @@ public class Main extends Application {
     /**
      * Method calls controller methods which set all important information
      */
-    private void setController(){
+    private void setController() {
         controller.setTimeTable(timeTable);     // Setting controller's timeTable attribute
 
         controller.setLines(lines);             // Setting pared city lines into controller
@@ -104,7 +131,7 @@ public class Main extends Application {
 
         controller.setLinesInfo(lines);         // Setting lines information that are set into the bottom part of app
 
-        controller.setCursor(lines);            // Setting controller method that defines behaviour after clicking on streets
+        controller.actionsAfterClickedOnLine(lines);            // Setting controller method that defines behaviour after clicking on streets
 
         controller.highlightRouteFromList(lines);// Setting method that highlights line route when necessary
 
@@ -117,6 +144,7 @@ public class Main extends Application {
 
     /**
      * Main start method
+     *
      * @param primaryStage GUI app stage
      */
     @Override

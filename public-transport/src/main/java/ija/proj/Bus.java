@@ -15,12 +15,13 @@ public class Bus extends Vehicle {
     /**
      * Bus constructor
      * Method creates new instance of Bus and creates a GUI object on canvas.
-     * @param position Coordinate of bus within map
-     * @param speed Movement speed of given bus
-     * @param onLine Line on which bus transports people
+     *
+     * @param position   Coordinate of bus within map
+     * @param speed      Movement speed of given bus
+     * @param onLine     Line on which bus transports people
      * @param identifier Unique bus name
-     * @param street Dynamically changing street, on which bus currently locates
-     * @param firstStop First stop on which bus stops
+     * @param street     Dynamically changing street, on which bus currently locates
+     * @param firstStop  First stop on which bus stops
      * @param controller Main controller
      */
     public Bus(Coordinate position, double speed, Line onLine, String identifier, Street street, Stop firstStop, Controller controller, LocalTime time) {

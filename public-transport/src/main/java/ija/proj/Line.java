@@ -4,8 +4,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
+
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 
 /**
@@ -13,19 +17,46 @@ import java.util.*;
  * Line is defined by streets and stops together with a timetable of departures.
  * Each line within one map has special color. Type of line defines what kind of vehicles are used - trams, subways, buses..
  */
-public class Line implements Drawable  {
-    private String identifier;                                                  /**< Unique line identifier */
-    private String type;                                                        /**< Type of line - Bus/Tram/Subway */
-    private javafx.scene.paint.Color col;                                       /**< Unique color of given line */
-    private List<LocalTime> timetable = new ArrayList<>();                      /**< Timetable of scheduled departures */
+public class Line implements Drawable {
+    private String identifier;
+    /**
+     * < Unique line identifier
+     */
+    private String type;
+    /**
+     * < Type of line - Bus/Tram/Subway
+     */
+    private javafx.scene.paint.Color col;
+    /**
+     * < Unique color of given line
+     */
+    private List<LocalTime> timetable = new ArrayList<>();
+    /**
+     * < Timetable of scheduled departures
+     */
 
-    private List<Street> streetList;                                            /**< List of all streets that define given line */
-    private List<Stop> stopList;                                                /**< List of all stops that define given line */
+    private List<Street> streetList;
+    /**
+     * < List of all streets that define given line
+     */
+    private List<Stop> stopList;
+    /**
+     * < List of all stops that define given line
+     */
 
-    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();     /**< Path of a line = stops + end of lines */
-    private LinkedHashMap<String, Coordinate> defaultPath = new LinkedHashMap<>();     /**< Path of a line = stops + end of lines before admin's change/s */
+    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();
+    /**
+     * < Path of a line = stops + end of lines
+     */
+    private LinkedHashMap<String, Coordinate> defaultPath = new LinkedHashMap<>();
+    /**
+     * < Path of a line = stops + end of lines before admin's change/s
+     */
 
-    private List<Coordinate> streetsBegins = new ArrayList<>();                 /**< List of all stats of lines */
+    private List<Coordinate> streetsBegins = new ArrayList<>();
+    /**
+     * < List of all stats of lines
+     */
     private List<Coordinate> streetsEnds = new ArrayList<>();                   /**< List of all ends of lines */
 
 
@@ -33,9 +64,9 @@ public class Line implements Drawable  {
      * Method creates a new line of public transport system in given city
      *
      * @param identifier Unique name of line
-     * @param type Specifies what kind of vehicles are transporting people, e.g Bus, Tram etc
+     * @param type       Specifies what kind of vehicles are transporting people, e.g Bus, Tram etc
      * @param streetList List of streets that define given line - through these streets line passes
-     * @param stopList List of stops on which vehicles of this line stop
+     * @param stopList   List of stops on which vehicles of this line stop
      */
     public Line(String identifier, String type, List<Street> streetList, List<Stop> stopList) {
         this.identifier = identifier;
@@ -50,21 +81,12 @@ public class Line implements Drawable  {
      * Method sets new streets that define given line when a detour is specified
      *
      * @param newStreets List of streets that are used as a detour streets
-     * @param toAdd List of old streets together with inserted new streets
-     * @param detoured A street that is being detoured
+     * @param toAdd      List of old streets together with inserted new streets
+     * @param detoured   A street that is being detoured
      */
-    public void setStreets(List<Street> newStreets, List<Street> toAdd, Street detoured){
+    public void setStreets(List<Street> newStreets, List<Street> toAdd, Street detoured) {
         this.streetList = newStreets;
         this.setPathDetour(toAdd, detoured);
-    }
-
-    /**
-     * Method sets color of line
-     *
-     * @param c New color of line
-     */
-    public void setColor(Color c) {
-        this.col = c;
     }
 
     /**
@@ -91,7 +113,7 @@ public class Line implements Drawable  {
                 this.path.put("street: " + streetList.get(streetId).getName(), streetList.get(streetId).end());
                 streetId++;
             } else {
-                if(actStop.getStreet().getName().equals(actStreet.getName())){
+                if (actStop.getStreet().getName().equals(actStreet.getName())) {
                     this.path.put("stop: " + stopList.get(stopId).getName(), stopList.get(stopId).getCoordinate());
                     stopId++;
                 } else {
@@ -101,15 +123,6 @@ public class Line implements Drawable  {
             }
         }
 
-    }
-
-    /**
-     * Method sets type into a line
-     *
-     * @param type Type of line, e.g sub, tram, bus
-     */
-    public void setType(String type) {
-        this.type = type;
     }
 
     /**
@@ -148,12 +161,30 @@ public class Line implements Drawable  {
     }
 
     /**
+     * Method sets color of line
+     *
+     * @param c New color of line
+     */
+    public void setColor(Color c) {
+        this.col = c;
+    }
+
+    /**
      * Method returns type of vehicles that transport people on given line
      *
      * @return Type of line, e.g Tram, Subway..
      */
     public String getType() {
         return type;
+    }
+
+    /**
+     * Method sets type into a line
+     *
+     * @param type Type of line, e.g sub, tram, bus
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
@@ -169,7 +200,7 @@ public class Line implements Drawable  {
      *
      * @param s Street, where stops which are going to be deleted are located
      */
-    public void deleteStops(Street s){
+    public void deleteStops(Street s) {
         stopList.removeIf(stp -> stp.getStreet().getName().equals(s.getName()));
     }
 
@@ -184,8 +215,8 @@ public class Line implements Drawable  {
         Collection<Coordinate> c = path.values();
         ArrayList<Coordinate> coords = new ArrayList<>(c);
 
-        for(int i = 0; i < coords.size()-1; i++) {
-            total += coords.get(i).coordsDistance(coords.get(i+1));
+        for (int i = 0; i < coords.size() - 1; i++) {
+            total += coords.get(i).coordsDistance(coords.get(i + 1));
         }
         return total;
     }
@@ -193,19 +224,18 @@ public class Line implements Drawable  {
     /**
      * Method defines new path of line when admin creates a detour
      *
-     * @param toAdd List of streets that are going to define line after detour
+     * @param toAdd    List of streets that are going to define line after detour
      * @param detoured Detoured street
      */
-    private void setPathDetour(List<Street> toAdd, Street detoured){
+    private void setPathDetour(List<Street> toAdd, Street detoured) {
         LinkedHashMap<String, Coordinate> newPath = new LinkedHashMap<>();
 
-        path.forEach((k, v)-> {
-            if(v.equals(detoured.begin())) {
+        path.forEach((k, v) -> {
+            if (v.equals(detoured.begin())) {
                 newPath.put(k, v);
-                for(Street s : toAdd)
-                   newPath.put("Street " + s.getName(), s.end());
-            }
-            else {
+                for (Street s : toAdd)
+                    newPath.put("Street " + s.getName(), s.end());
+            } else {
                 if (!v.liesOn(detoured)) {
                     newPath.put(k, v);
                 }
@@ -228,7 +258,7 @@ public class Line implements Drawable  {
      * Method adds start and end of a line into auxiliary lists
      *
      * @param start Start coordinate of a street
-     * @param end End coordinate of a street
+     * @param end   End coordinate of a street
      */
     public void addCoordinates(Coordinate start, Coordinate end) {
         this.streetsBegins.add(start);
@@ -237,7 +267,7 @@ public class Line implements Drawable  {
 
     @Override
     public List<Shape> getGUI() {
-        List<Shape> line  = new ArrayList<>();
+        List<Shape> line = new ArrayList<>();
         int i = 0;
         for (Street street : streetList) {
 
@@ -246,35 +276,35 @@ public class Line implements Drawable  {
             int n_lines = street.getN_lines();
 
             //fix endings when last street was shifted by n*6
-            if(i > 0 && streetList.get(i-1).getN_lines() != 0 && streetList.get(i-1).getSlope() != street.getSlope()) {
-                if(streetList.get(i-1).getSlope() == 2.0) {
-                    start.setX(start.getX() + 6 *( streetList.get(i-1).getN_lines()));
+            if (i > 0 && streetList.get(i - 1).getN_lines() != 0 && streetList.get(i - 1).getSlope() != street.getSlope()) {
+                if (streetList.get(i - 1).getSlope() == 2.0) {
+                    start.setX(start.getX() + 6 * (streetList.get(i - 1).getN_lines()));
                 }
-                if(streetList.get(i-1).getSlope() == 0.0) {
-                    start.setY(start.getY() - 6 * (streetList.get(i-1).getN_lines()));
+                if (streetList.get(i - 1).getSlope() == 0.0) {
+                    start.setY(start.getY() - 6 * (streetList.get(i - 1).getN_lines()));
                 }
             }
-            if(i > 0 && streetList.get(i-1).getN_lines() == 0 && streetList.get(i-1).getSlope() != street.getSlope()) {
-                if(streetList.get(i-1).getSlope() == 0.0) {
+            if (i > 0 && streetList.get(i - 1).getN_lines() == 0 && streetList.get(i - 1).getSlope() != street.getSlope()) {
+                if (streetList.get(i - 1).getSlope() == 0.0) {
 
-                    start.setX(start.getX() + 6 * streetList.get(i-1).getN_lines());
+                    start.setX(start.getX() + 6 * streetList.get(i - 1).getN_lines());
                 }
             }
-            if(i < streetList.size() - 1 && streetList.get(i+1).getN_lines() == 1) {
-                if(streetList.get(i+1).getSlope() != 2.0) {
-                    end.setX(end.getX() + 6 * streetList.get(i+1).getN_lines());
+            if (i < streetList.size() - 1 && streetList.get(i + 1).getN_lines() == 1) {
+                if (streetList.get(i + 1).getSlope() != 2.0) {
+                    end.setX(end.getX() + 6 * streetList.get(i + 1).getN_lines());
                 }
-                if(streetList.get(i+1).getSlope() == 2.0 && streetList.get(i).getSlope() == 0.0) {
-                    end.setX(end.getX() + 6 * streetList.get(i+1).getN_lines());
+                if (streetList.get(i + 1).getSlope() == 2.0 && streetList.get(i).getSlope() == 0.0) {
+                    end.setX(end.getX() + 6 * streetList.get(i + 1).getN_lines());
                 }
             }
-            if(i < streetList.size() - 1 && streetList.get(i+1).getN_lines() != 1) {
+            if (i < streetList.size() - 1 && streetList.get(i + 1).getN_lines() != 1) {
                 if (streetList.get(i + 1).getSlope() == 2.0 && streetList.get(i).getSlope() == 0.0) {
                     end.setX(end.getX() + 6 * streetList.get(i + 1).getN_lines());
                 }
             }
 
-            if(street.getSlope() != 0.0 && street.getN_lines() != 0) {
+            if (street.getSlope() != 0.0 && street.getN_lines() != 0) {
                 boolean s = start.change(start.getX() + (6), start.getY());
                 boolean e = end.change(end.getX() + (6), end.getY());
 
@@ -282,8 +312,8 @@ public class Line implements Drawable  {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
             } else {
-                boolean s = start.change(start.getX(), start.getY()-(6*n_lines));
-                boolean e = end.change(end.getX(), end.getY()-(6*n_lines));
+                boolean s = start.change(start.getX(), start.getY() - (6 * n_lines));
+                boolean e = end.change(end.getX(), end.getY() - (6 * n_lines));
                 if (!s || !e) {
                     System.err.println("Error: failed to change coordinate. (Line.java)");
                 }
@@ -294,7 +324,7 @@ public class Line implements Drawable  {
             singleStreet.setStrokeWidth(6);
             singleStreet.setSmooth(true);
             singleStreet.toFront();
-            String id = street.getName()+this.identifier;
+            String id = street.getName() + this.identifier;
             singleStreet.setId(id);
             singleStreet.setStrokeLineCap(StrokeLineCap.ROUND);
             singleStreet.setStrokeLineJoin(StrokeLineJoin.ROUND);

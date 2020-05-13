@@ -11,9 +11,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -22,7 +21,9 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /***
  * Class controller serves for controlling the application by invoking object according
@@ -30,98 +31,256 @@ import java.util.*;
  */
 public class Controller {
     @FXML
-    private Pane mapContent;        /**< main visual component which contains streets,lines,stops,vehicles and background */
+    private Pane mapContent;
+    /**
+     * < main visual component which contains streets,lines,stops,vehicles and background
+     */
     @FXML
-    private Text nextStopInfo;      /**< Information about the following stop */
+    private Text nextStopInfo;
+    /**
+     * < Information about the following stop
+     */
     @FXML
-    private ScrollPane scrollP;     /**< Wrapper element for map */
+    private ScrollPane scrollP;
+    /**
+     * < Wrapper element for map
+     */
     @FXML
-    private Text nextStopText;      /**< Unique line identifier */
+    private Text nextStopText;
+    /**
+     * < Unique line identifier
+     */
     @FXML
-    private Text finalStopInfo;     /**< Name of the next stop */
+    private Text finalStopInfo;
+    /**
+     * < Name of the next stop
+     */
     @FXML
-    private Text finalStopText;     /**< Name of the Last stop */
+    private Text finalStopText;
+    /**
+     * < Name of the Last stop
+     */
     @FXML
-    private Text delayText;         /**< Displays delay */
+    private Text delayText;
+    /**
+     * < Displays delay
+     */
     @FXML
-    private Text timeGUI;           /**< Shows time in GUI */
+    private Text timeGUI;
+    /**
+     * < Shows time in GUI
+     */
     @FXML
-    private Pane bottomWindow;      /**< Bottom pane element of the GUI */
+    private Pane bottomWindow;
+    /**
+     * < Bottom pane element of the GUI
+     */
     @FXML
-    private Rectangle background;   /**< Background of the city map */
+    private Rectangle background;
+    /**
+     * < Background of the city map
+     */
     @FXML
-    private Slider speedChange;     /**< Defines pace of the time */
+    private Slider speedChange;
+    /**
+     * < Defines pace of the time
+     */
     @FXML
-    private ListView<Object> linesInfo;             /**< Information about lines */
+    private ListView<Object> linesInfo;
+    /**
+     * < Information about lines
+     */
     @FXML
-    private javafx.scene.shape.Line vehicleRoute;   /**< Bottom line which represents selected line */
+    private javafx.scene.shape.Line vehicleRoute;
+    /**
+     * < Bottom line which represents selected line
+     */
     @FXML
-    private Rectangle rightBlur1;   /**< Blur effect */
+    private Rectangle rightBlur1;
+    /**
+     * < Blur effect
+     */
     @FXML
-    private Rectangle rightBlur111; /**< Blur effect */
+    private Rectangle rightBlur111;
+    /**
+     * < Blur effect
+     */
     @FXML
-    private Text linesSign;         /**< Sign of the line */
+    private Text linesSign;
+    /**
+     * < Sign of the line
+     */
     @FXML
-    private Button saveExitEditing; /**< Button to save changes made by admin */
+    private Button saveExitEditing;
+    /**
+     * < Button to save changes made by admin
+     */
     @FXML
-    private  Rectangle saveBackground;  /**< saves background image */
+    private Rectangle saveBackground;
+    /**
+     * < saves background image
+     */
     @FXML
-    private Button plusH;           /**< Move one hour forward */
+    private Button plusH;
+    /**
+     * < Move one hour forward
+     */
     @FXML
-    private Button plusM;           /**< Move one minute forward */
+    private Button plusM;
+    /**
+     * < Move one minute forward
+     */
     @FXML
-    private Button plusS;           /**< Move one second forward */
+    private Button plusS;
+    /**
+     * < Move one second forward
+     */
     @FXML
-    private Button minusH;          /**< Move one hour backward */
+    private Button minusH;
+    /**
+     * < Move one hour backward
+     */
     @FXML
-    private Button minusM;          /**< Move one minute backward */
+    private Button minusM;
+    /**
+     * < Move one minute backward
+     */
     @FXML
-    private Button minusS;          /**< Move one second backward */
+    private Button minusS;
+    /**
+     * < Move one second backward
+     */
     @FXML
-    private TextArea editJamsInfo;  /**< to edit jam degree of the street */
+    private TextArea editJamsInfo;
+    /**
+     * < to edit jam degree of the street
+     */
     @FXML
-    private TextArea editDetoursInfo;       /**< to edit detours of the line */
+    private TextArea editDetoursInfo;
+    /**
+     * < to edit detours of the line
+     */
     @FXML
-    private Spinner<Integer> trafficSpinner;/**< degree of the jam */
+    private Spinner<Integer> trafficSpinner;
+    /**
+     * < degree of the jam
+     */
     @FXML
-    private Button setIntensity;            /**< button to save jam degree*/
+    private Button setIntensity;
+    /**
+     * < button to save jam degree
+     */
     @FXML
-    private Circle vehicleOnRouteBus;          /**< representation of vehicle on the bottom route */
+    private Circle vehicleOnRouteBus;
+    /**
+     * < representation of vehicle on the bottom route - Bus
+     */
     @FXML
     private Rectangle vehicleOnRouteSub;
+    /**
+     * < representation of vehicle on the bottom route - Subway
+     */
     @FXML
     private Rectangle vehicleOnRouteTram;
+    /**
+     * < representation of vehicle on the bottom route - Tram
+     */
     @FXML
     private Button playPauseButton;
+    /**
+     * < Button that pauses/resumes time when clicked
+     */
 
-    private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1); /**< Stores degree of the traffic jam */
-    private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true); /**< Defines size of the background picture */
-    private String normalLine = getClass().getResource("/normalLine.css").toExternalForm(); /**< Path to style normalize file */
-    private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm(); /**< Path to styles of dashed lines */
-    private Image bg = new Image("mapa1.jpg"); /**< Path to background image */
-    private Scene mainScene;    /**< Main scene */
-    private List<Line> lines = new ArrayList<>();   /**< Stores all line */
-    private List<UpdateState> updates = new ArrayList<>(); /**< Stores all objects needed to be updated */
-    private List<Vehicle> allVehicles = new ArrayList<>(); /**< Stores all vehicles */
-    private List<String> focusedLineStopsNames = new ArrayList<>(); /**< Stop names of selected line */
-    private List<Coordinate> focusedLineStops = new ArrayList<>(); /**< Stop coordinates of selected line */
-    private boolean inEditTrafficMode = false;      /**< Flag, true if editing traffic */
-    private boolean inEditDetours = false;          /**< Flag, true if editing detours */
-    private Timetable timeTable;                    /**< Timetable of the lines */
-    private View view = new View(this);    /**< View object defines what to display */
-    private Tooltip densityInfo = new Tooltip();    /**< Density */
-    private Vehicle focusedVehicle = null;          /**< stores focused vehicle, if null then no vehicle is selected */
-    private List<Drawable> allStreets;              /**< stores all streets typed Drawable */
+    private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
+    /**
+     * < Stores degree of the traffic jam
+     */
+    private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
+    /**
+     * < Path to style normalize file
+     */
+    private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm();
+    /**
+     * < Path to styles of dashed lines
+     */
+    private Scene mainScene;
+    /**
+     * < Main scene
+     */
+    private List<Line> lines = new ArrayList<>();
+    /**
+     * < Stores all line
+     */
+    private List<UpdateState> updates = new ArrayList<>();
+    /**
+     * < Stores all objects needed to be updated
+     */
+    private List<Vehicle> allVehicles = new ArrayList<>();
+    /**
+     * < Stores all vehicles
+     */
+    private List<String> focusedLineStopsNames = new ArrayList<>();
+    /**
+     * < Stop names of selected line
+     */
+    private List<Coordinate> focusedLineStops = new ArrayList<>();
+    /**
+     * < Stop coordinates of selected line
+     */
+    private boolean inEditTrafficMode = false;
+    /**
+     * < Flag, true if editing traffic
+     */
+    private boolean inEditDetours = false;
+    /**
+     * < Flag, true if editing detours
+     */
+    private Timetable timeTable;
+    /**
+     * < Timetable of the lines
+     */
+    private View view = new View(this);
+    /**
+     * < View object defines what to display
+     */
+    private Tooltip densityInfo = new Tooltip();
+    /**
+     * < Density
+     */
+    private Vehicle focusedVehicle = null;
+    /**
+     * < stores focused vehicle, if null then no vehicle is selected
+     */
+    private List<Drawable> allStreets;
+    /**
+     * < stores all streets typed Drawable
+     */
 
-    private Street beingDetoured = null;            /**< tells us which street is being detoured, if null then none */
-    private Line lineDetoured = null;               /**< tells us which line is being detoured, if null then none */
-    private List<Street> streetsToAddToLine = new ArrayList<>(); /**< while building detour stores all streets added to the line */
+    private Street beingDetoured = null;
+    /**
+     * < tells us which street is being detoured, if null then none
+     */
+    private Line lineDetoured = null;
+    /**
+     * < tells us which line is being detoured, if null then none
+     */
+    private List<Street> streetsToAddToLine = new ArrayList<>();
+    /**
+     * < while building detour stores all streets added to the line
+     */
 
-    private TimeManager timeManager = new TimeManager(view, this); /**< Controls time related calculations */
+    private TimeManager timeManager = new TimeManager(view, this);
+    /**
+     * < Controls time related calculations
+     */
     private boolean paused = false;
 
-    /***
+    /**
+     * < Boolean value which defines whether whole scene is paused or not
+     * <p>
+     * /***
      * Returns all vehicles on the map
+     *
      * @return all vehicles on the map
      */
     public List<Vehicle> getAllVehicles() {
@@ -146,11 +305,14 @@ public class Controller {
         return updates;
     }
 
+    /**
+     * When playPauseButton is pressed, this method checks whether app was paused or not and makes proper reaction - resumes or pauses
+     */
     @FXML
     private void playPausePressed() {
-        if(paused) {
+        if (paused) {
             LocalTime time = timeManager.getCurrentTime();
-            timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()),updates, timeGUI, timeTable, mapContent,2, speedChange);
+            timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()), updates, timeGUI, timeTable, mapContent, 2, speedChange);
             playPauseButton.setText("\u23F8");
             speedChange.setValue(1);
             timeManager.setScale(1);
@@ -181,22 +343,22 @@ public class Controller {
         trafficSpinner.setValueFactory(spinnerVal);
 
         view.prepareGUIforAdmin(
-                                rightBlur1,
-                                rightBlur111,
-                                linesInfo,
-                                linesSign,
-                                speedChange,
-                                bottomWindow,
-                                saveExitEditing,
-                                saveBackground,
-                                plusH,
-                                plusM,
-                                plusS,
-                                minusH,
-                                minusM,
-                                minusS,
-                                editJamsInfo,
-                                editDetoursInfo);
+                rightBlur1,
+                rightBlur111,
+                linesInfo,
+                linesSign,
+                speedChange,
+                bottomWindow,
+                saveExitEditing,
+                saveBackground,
+                plusH,
+                plusM,
+                plusS,
+                minusH,
+                minusM,
+                minusS,
+                editJamsInfo,
+                editDetoursInfo);
     }
 
     /***
@@ -236,17 +398,16 @@ public class Controller {
      */
     @FXML
     private void exitEditing() {
-        timeManager.setScale((float)speedChange.getValue());
+        timeManager.setScale((float) speedChange.getValue());
         timeManager.changeSpeed();
 
-        if(inEditDetours) {
+        if (inEditDetours) {
             List<Street> newStreets = new ArrayList<>();
             try {
-                for (Street s : lineDetoured.getStreetList()){
-                    if (s.getName().equals(beingDetoured.getName())){
+                for (Street s : lineDetoured.getStreetList()) {
+                    if (s.getName().equals(beingDetoured.getName())) {
                         newStreets.addAll(streetsToAddToLine);
-                    }
-                    else {
+                    } else {
                         newStreets.add(s);
                     }
                 }
@@ -284,6 +445,7 @@ public class Controller {
         inEditTrafficMode = false;
         inEditDetours = false;
     }
+
     /***
      * Changes speed
      */
@@ -301,11 +463,11 @@ public class Controller {
     private void plusHour() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour()+1, time.getMinute(), time.getSecond()-1),updates, timeGUI, timeTable, mapContent,1, speedChange);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour() + 1, time.getMinute(), time.getSecond() - 1), updates, timeGUI, timeTable, mapContent, 1, speedChange);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
-            for(Drawable veh : vehList) {
-                if (veh != null)  {
+            for (Drawable veh : vehList) {
+                if (veh != null) {
                     view.addElement(veh, mapContent);
                 }
             }
@@ -319,11 +481,11 @@ public class Controller {
     private void minusHour() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour()-1, time.getMinute(), time.getSecond()-1),updates, timeGUI, timeTable, mapContent,1, speedChange);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour() - 1, time.getMinute(), time.getSecond() - 1), updates, timeGUI, timeTable, mapContent, 1, speedChange);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
-            for(Drawable veh : vehList) {
-                if (veh != null)  {
+            for (Drawable veh : vehList) {
+                if (veh != null) {
                     view.addElement(veh, mapContent);
                 }
             }
@@ -337,17 +499,18 @@ public class Controller {
     private void plusMinute() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()+1, time.getSecond()),updates, timeGUI, timeTable, mapContent,2, speedChange);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute() + 1, time.getSecond()), updates, timeGUI, timeTable, mapContent, 2, speedChange);
         timeManager.changeSpeed();
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
-            for(Drawable veh : vehList) {
-                if (veh != null)  {
+            for (Drawable veh : vehList) {
+                if (veh != null) {
                     view.addElement(veh, mapContent);
                 }
             }
         }
     }
+
     /***
      * Subtracting one minute to the time of the app
      */
@@ -355,7 +518,7 @@ public class Controller {
     private void minusMinute() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute()-1, time.getSecond()),updates, timeGUI, timeTable, mapContent,2, speedChange);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute() - 1, time.getSecond()), updates, timeGUI, timeTable, mapContent, 2, speedChange);
         normalizeAfterTimeShift();
     }
 
@@ -367,9 +530,10 @@ public class Controller {
     private void plusSecond() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()+1),updates, timeGUI, timeTable, mapContent,3, speedChange);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond() + 1), updates, timeGUI, timeTable, mapContent, 3, speedChange);
         normalizeAfterTimeShift();
     }
+
     /***
      * Subtracting one second to the time of the app
      */
@@ -377,7 +541,7 @@ public class Controller {
     private void minusSecond() {
         LocalTime time = timeManager.getCurrentTime();
         timeManager.timer.stop();
-        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()-2),updates, timeGUI, timeTable, mapContent,3, speedChange);
+        timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond() - 2), updates, timeGUI, timeTable, mapContent, 3, speedChange);
         normalizeAfterTimeShift();
     }
 
@@ -400,8 +564,8 @@ public class Controller {
 
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
-            for(Drawable veh : vehList) {
-                if (veh != null)  {
+            for (Drawable veh : vehList) {
+                if (veh != null) {
                     view.addElement(veh, mapContent);
                 }
             }
@@ -415,7 +579,7 @@ public class Controller {
     private void setTimeDefault() {
         timeManager.setDefaultTime(timeGUI);
         timeManager.timer.stop();
-        timeManager.moveInTime("23:59:59",updates, timeGUI, timeTable, mapContent,1, speedChange);
+        timeManager.moveInTime("23:59:59", updates, timeGUI, timeTable, mapContent, 1, speedChange);
         float scaleForSpeed = (float) speedChange.getValue();
         timeManager.setScale(scaleForSpeed);
     }
@@ -460,27 +624,41 @@ public class Controller {
     }
 
     /**
-     *
-     * @return
+     * @return True if program is in Edit Traffic mode, otherwise false
      */
     public boolean inEditTrafficMode() {
         return this.inEditTrafficMode;
     }
 
-    public boolean isInEditDetours() { return  this.inEditDetours; }
+    /**
+     * @return True if program is in Edit Detour mode, otherwise false
+     */
+    public boolean isInEditDetours() {
+        return this.inEditDetours;
+    }
 
+
+    /**
+     * Method sets main scene of controller
+     *
+     * @param scene Scene of program
+     */
     public void setScene(Scene scene) {
         this.mainScene = scene;
     }
 
+    /**
+     * Method sets background on mapContent
+     */
     public void setBackground() {
-        mapContent.setBackground(new Background(new BackgroundImage(bg,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                bSize)));
+        view.setBackground(mapContent);
     }
 
+    /**
+     * Method sets timetable into controller
+     *
+     * @param timeTable Timetable of all departures
+     */
     public void setTimeTable(Timetable timeTable) {
         this.timeTable = timeTable;
     }
@@ -493,8 +671,8 @@ public class Controller {
         view.setLineInfoDefault(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText, vehicleRoute);
         view.showMapContent(GUIelements, mapContent);
 
-        for(Drawable obj : GUIelements) {
-            if(obj instanceof UpdateState) {
+        for (Drawable obj : GUIelements) {
+            if (obj instanceof UpdateState) {
                 updates.add((UpdateState) obj);
             }
         }
@@ -502,8 +680,8 @@ public class Controller {
         timeManager.startTimer(updates, timeGUI, timeTable, mapContent, 15, speedChange);
         List<Drawable> vehList = timeManager.getVehicleToAdd();
         if (vehList != null) {
-            for(Drawable veh : vehList) {
-                if (veh != null)  {
+            for (Drawable veh : vehList) {
+                if (veh != null) {
                     view.addElement(veh, mapContent);
                 }
             }
@@ -518,14 +696,24 @@ public class Controller {
         minusS.setText("\uD83E\uDC97");
     }
 
+    /**
+     * Method adds a vehicle into list of active vehicles of controller
+     *
+     * @param e Vehicle to add into list of all vehicles
+     */
     public void addVehicleToController(Vehicle e) {
         allVehicles.add(e);
     }
 
+    /**
+     * Method returns app into default state. No line will be highlighted, no vehicle information, etc..
+     *
+     * @param lines All lines on map
+     */
     public void setBasicSettings(List<Line> lines) {
         background.setOnMousePressed(event -> {
             view.setLineInfoDefault(nextStopInfo, nextStopText, finalStopInfo, finalStopText, delayText, vehicleRoute);
-            for(int i = 0; i < lines.size(); i++) {
+            for (int i = 0; i < lines.size(); i++) {
                 view.changeLineColor(mapContent, lines.get(i), view.colorsForLines.get(i));
             }
 
@@ -549,20 +737,26 @@ public class Controller {
 
     /***
      * Adds information about line to the navigation
-     * @param lines
+     * @param lines All active lines of app
      */
     public void setLinesInfo(List<Line> lines) {
         view.viewLinesInfo(lines, linesInfo);
     }
 
-    private void buildingDetour(Node sg){
-        for(Drawable fromAll : this.allStreets) {
-            if(fromAll instanceof Street) {
+
+    /**
+     * Starts building detour
+     *
+     * @param sg Node representing detoured street
+     */
+    private void buildingDetour(Node sg) {
+        for (Drawable fromAll : this.allStreets) {
+            if (fromAll instanceof Street) {
                 Street s = (Street) fromAll;
 
-                if(sg.getId().contains(s.getName())) {
-                    if(this.streetsToAddToLine.size() == 0) {
-                        if(s.follows(this.beingDetoured)) {
+                if (sg.getId().contains(s.getName())) {
+                    if (this.streetsToAddToLine.size() == 0) {
+                        if (s.follows(this.beingDetoured)) {
                             this.streetsToAddToLine.add(s);
 //                            ((javafx.scene.shape.Line) sg).setStroke(this.lineDetoured.getColor());
                             javafx.scene.shape.Line singleStreet = new javafx.scene.shape.Line(s.begin().getX(), s.begin().getY(), s.end().getX(), s.end().getY());
@@ -571,7 +765,7 @@ public class Controller {
                             mapContent.getChildren().add(singleStreet);
                         }
                     } else {
-                        if(s.follows(this.streetsToAddToLine.get(this.streetsToAddToLine.size()-1))) {
+                        if (s.follows(this.streetsToAddToLine.get(this.streetsToAddToLine.size() - 1))) {
                             javafx.scene.shape.Line singleStreet = new javafx.scene.shape.Line(s.begin().getX(), s.begin().getY(), s.end().getX(), s.end().getY());
                             singleStreet.setStroke(this.lineDetoured.getColor());
                             singleStreet.setStrokeWidth(2);
@@ -584,11 +778,17 @@ public class Controller {
         }
     }
 
-    private void setTraficJam(Node sg, Street st){
-        if(sg.getId().contains(st.getName())) {
+    /**
+     * Method slows down or speeds up traffic on selected street
+     *
+     * @param sg Node representation of edited street
+     * @param st Edited street
+     */
+    private void setTraficJam(Node sg, Street st) {
+        if (sg.getId().contains(st.getName())) {
             try {
                 mainScene.getStylesheets().remove(normalLine);
-            } catch (Exception ignored){
+            } catch (Exception ignored) {
             }
             mainScene.getStylesheets().add(dashedLine);
             sg.getStyleClass().add("dashedLine");
@@ -599,12 +799,12 @@ public class Controller {
             setIntensity.setOnMouseClicked(event2 -> {
                 st.setTrafficDensity(trafficSpinner.getValue());
 
-                if(st.getTrafficDensity() == 1) {
+                if (st.getTrafficDensity() == 1) {
                     mainScene.getStylesheets().add(normalLine);
                     sg.getStyleClass().add("normalLine");
                     try {
                         mainScene.getStylesheets().remove(dashedLine);
-                    } catch (Exception ignored){
+                    } catch (Exception ignored) {
                     }
                 }
                 trafficSpinner.setVisible(false);
@@ -613,25 +813,29 @@ public class Controller {
         }
     }
 
-    /***
-     * changes cursor according it's position + expanding of line information after clicking
-     */
-    public void setCursor(List<Line> lines) {
-        ObservableList<Node> x = mapContent.getChildren();
-        for(Node sg : x) {
 
-            if(sg != background)
+    /**
+     * This method performs multiple actions when clicked on a line.
+     * It checks whether user is in admin mode or not and certain actions are performed according to it.
+     *
+     * @param lines All active lines in given city
+     */
+    public void actionsAfterClickedOnLine(List<Line> lines) {
+        ObservableList<Node> x = mapContent.getChildren();
+        for (Node sg : x) {
+
+            if (sg != background)
                 sg.setCursor(Cursor.HAND);
 
-            if(sg instanceof javafx.scene.shape.Line) {
+            if (sg instanceof javafx.scene.shape.Line) {
 
                 // Traffic density on given street on hover
                 sg.setOnMouseEntered(event -> {
-                    for(Line line : lines) {
-                        for(Street st : line.getStreetList()) {
-                            if(sg.getId().contains(st.getName())) {
-                                densityInfo.setText("Traffic density on "+ line.getName() + " on " + st.getName() + ": " + st.getTrafficDensity());
-                                densityInfo.setFont(Font.font ("SansSerif", 14));
+                    for (Line line : lines) {
+                        for (Street st : line.getStreetList()) {
+                            if (sg.getId().contains(st.getName())) {
+                                densityInfo.setText("Traffic density on " + line.getName() + " on " + st.getName() + ": " + st.getTrafficDensity());
+                                densityInfo.setFont(Font.font("SansSerif", 14));
                                 Tooltip.install(sg, densityInfo);
                             }
                         }
@@ -651,26 +855,26 @@ public class Controller {
                     delayText.setText("Delay: 0 min");
                     boolean onLine = false;
 
-                    if(this.beingDetoured != null) {
+                    if (this.beingDetoured != null) {
                         buildingDetour(sg);
                     }
 
-                    for(Line line : lines) {
-                        for(Street st : line.getStreetList()) {
-                            if(!inEditTrafficMode && !inEditDetours){
-                                if(sg.getId().contains(st.getName())) {
+                    for (Line line : lines) {
+                        for (Street st : line.getStreetList()) {
+                            if (!inEditTrafficMode && !inEditDetours) {
+                                if (sg.getId().contains(st.getName())) {
                                     bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
                                 }
                                 view.clickedOnLine(finalStopInfo, finalStopText);
                                 onLine = true;
-                            } else if(inEditTrafficMode && !inEditDetours) {
+                            } else if (inEditTrafficMode && !inEditDetours) {
                                 setTraficJam(sg, st);
                             } else {
-                                if(sg.getId().contains(st.getName())) {
-                                    if(this.beingDetoured == null) {
+                                if (sg.getId().contains(st.getName())) {
+                                    if (this.beingDetoured == null) {
                                         try {
                                             mainScene.getStylesheets().remove(normalLine);
-                                        } catch (Exception ignored){
+                                        } catch (Exception ignored) {
                                         }
                                         mainScene.getStylesheets().add(dashedLine);
                                         sg.getStyleClass().add("dashedLine2");
@@ -681,7 +885,7 @@ public class Controller {
                             }
                         }
                     }
-                    if(!onLine) {
+                    if (!onLine) {
                         view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
                     }
 
@@ -689,21 +893,21 @@ public class Controller {
                     nextStopText.setOpacity(0.5);
                     delayText.setOpacity(0.5);
 
-                   for(Line line : lines) {
-                     if(sg.getId().contains(line.getName())) {
-                         generateStopsOnPath(line);
-                         view.colorRoute(vehicleRoute, line.getColor().saturate().saturate());
-                         view.changeFinalStopText(finalStopText, line);
+                    for (Line line : lines) {
+                        if (sg.getId().contains(line.getName())) {
+                            generateStopsOnPath(line);
+                            view.colorRoute(vehicleRoute, line.getColor().saturate().saturate());
+                            view.changeFinalStopText(finalStopText, line);
 
-                           for(Line otherLine : lines) {
-                               if (!otherLine.getName().equals(line.getName())) {
-                                   view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
-                               } else {
-                                   view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
-                               }
-                           }
-                       }
-                   }
+                            for (Line otherLine : lines) {
+                                if (!otherLine.getName().equals(line.getName())) {
+                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
+                                } else {
+                                    view.changeLineColor(mapContent, otherLine, otherLine.getColor().saturate().saturate());
+                                }
+                            }
+                        }
+                    }
                 });
             }
         }
@@ -756,25 +960,25 @@ public class Controller {
     public void setVehicleInfo() {
         ObservableList<Node> x = mapContent.getChildren();
 
-        for(Node sg : x) {
-            if((sg instanceof Rectangle && !(sg.equals(background))) || sg instanceof Circle || sg instanceof Polygon) {
+        for (Node sg : x) {
+            if ((sg instanceof Rectangle && !(sg.equals(background))) || sg instanceof Circle || sg instanceof Polygon) {
                 sg.setCursor(Cursor.HAND);
                 sg.setOnMouseClicked(event -> {
 
-                    for(Vehicle v : allVehicles) {
-                        if(sg.getId().contains(v.getName())) {
+                    for (Vehicle v : allVehicles) {
+                        if (sg.getId().contains(v.getName())) {
 
                             focusedVehicle = v;
-                            if(sg instanceof Circle)
+                            if (sg instanceof Circle)
                                 vehicleOnRouteBus.setVisible(true);
-                            if(sg instanceof Rectangle)
+                            if (sg instanceof Rectangle)
                                 vehicleOnRouteSub.setVisible(true);
-                            if(sg instanceof Polygon)
+                            if (sg instanceof Polygon)
                                 vehicleOnRouteTram.setVisible(true);
                         }
                     }
                     if (focusedVehicle != null) {
-                        int delay =0;
+                        int delay = 0;
                         int speed;
                         String type = focusedVehicle.getLine().getType();
 
@@ -785,18 +989,18 @@ public class Controller {
                         else
                             speed = 3;
 
-                        for (Street s : focusedVehicle.getLine().getStreetList()){
-                            if(s.getTrafficDensity() != 1){
+                        for (Street s : focusedVehicle.getLine().getStreetList()) {
+                            if (s.getTrafficDensity() != 1) {
                                 //meskanie += (dlzka ulice / pixely za sekundu)*spomalenie*2 - (dlzka ulice / pixely za sekundu)
                                 //(dlzka ulice / pixely za sekundu) odcitavame preto lebo pri spomaleni urovne 2 prechod bude trvat 4 nasobnu dobu a teda 1 nasobok odcitame lebo tolko by to trvalo normalne
-                                delay += (s.begin().coordsDistance(s.end())/(5.31340759143*speed)) * s.getTrafficDensity()*2 - (s.begin().coordsDistance(s.end())/(5.31340759143*speed));
+                                delay += (s.begin().coordsDistance(s.end()) / (5.31340759143 * speed)) * s.getTrafficDensity() * 2 - (s.begin().coordsDistance(s.end()) / (5.31340759143 * speed));
                             }
                         }
 //                        System.out.println("delay:" + delay);
-                        double delayInMins = delay/60.0;
-                        int fullMins = (int)delayInMins;
+                        double delayInMins = delay / 60.0;
+                        int fullMins = (int) delayInMins;
 
-                        if((delayInMins - fullMins) > 0.5)
+                        if ((delayInMins - fullMins) > 0.5)
                             ++fullMins;
 
 //                        System.out.println(delayInMins + " " + fullMins);
@@ -804,8 +1008,8 @@ public class Controller {
                         delayText.setText("Delay: " + fullMins + " min");
                     }
 
-                    for(Line line : lines) {
-                        if(sg.getId().contains(line.getName())) {
+                    for (Line line : lines) {
+                        if (sg.getId().contains(line.getName())) {
                             bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
 
                             generateStopsOnPath(line);
@@ -815,7 +1019,7 @@ public class Controller {
                             view.colorRoute(vehicleRoute, line.getColor().saturate().saturate());
                             view.changeFinalStopText(finalStopText, line);
 
-                            for(Line otherLine : lines) {
+                            for (Line otherLine : lines) {
                                 if (!otherLine.getName().equals(line.getName())) {
                                     view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
                                 } else {
@@ -842,32 +1046,32 @@ public class Controller {
 
         LinkedHashMap<String, Coordinate> path = line.getPath();
 
-        path.forEach((k,v)-> {
+        path.forEach((k, v) -> {
             focusedLineStops.add(v);
             focusedLineStopsNames.add(k);
         });
 
         List<Stop> allStops = line.getStopList();
 
-        double realToImPath = line.totalPathLength()/850;
+        double realToImPath = line.totalPathLength() / 850;
         double distFromStart = 0;
         int j = 0;
 
-        for(int i = 1; i < focusedLineStops.size(); i++) {
-            distFromStart += focusedLineStops.get(i).coordsDistance(focusedLineStops.get(i-1));
+        for (int i = 1; i < focusedLineStops.size(); i++) {
+            distFromStart += focusedLineStops.get(i).coordsDistance(focusedLineStops.get(i - 1));
 
-            if(focusedLineStopsNames.get(i).contains("stop")) {
+            if (focusedLineStopsNames.get(i).contains("stop")) {
                 LocalTime stopTime = null;
-                
-                if(focusedVehicle != null) {
+
+                if (focusedVehicle != null) {
                     double secondsOfPassed;
 
-                    if(focusedVehicle instanceof Bus) {
-                        secondsOfPassed = distFromStart/4.64;
-                    } else if(focusedVehicle instanceof Tram) {
-                        secondsOfPassed = distFromStart/(4.64*2);
+                    if (focusedVehicle instanceof Bus) {
+                        secondsOfPassed = distFromStart / 4.64;
+                    } else if (focusedVehicle instanceof Tram) {
+                        secondsOfPassed = distFromStart / (4.64 * 2);
                     } else {
-                        secondsOfPassed = distFromStart/(4.64*3);
+                        secondsOfPassed = distFromStart / (4.64 * 3);
                     }
 
                     int wholeSecs = (int) secondsOfPassed;
@@ -877,7 +1081,7 @@ public class Controller {
                     stopTime = focusedVehicle.getTimeofDeparture().plusSeconds(wholeSecs);
                     stopTime = stopTime.plusNanos(nanos);
                     int stopsToCount = j;
-                    while(stopsToCount > 0) {
+                    while (stopsToCount > 0) {
                         stopTime = stopTime.plusSeconds(34);
                         stopTime = stopTime.plusNanos(449667100);
                         stopsToCount--;
@@ -899,7 +1103,7 @@ public class Controller {
      * @param lines list of all lines
      */
     public void highlightRouteFromList(List<Line> lines) {
-        linesInfo.setOnMouseClicked(event ->{
+        linesInfo.setOnMouseClicked(event -> {
 
             vehicleOnRouteTram.setVisible(false);
             vehicleOnRouteSub.setVisible(false);
@@ -907,14 +1111,14 @@ public class Controller {
 
             view.cleanRouteFromStops(bottomWindow);
 
-            for(Line line : lines) {
-                if(line.getName().equals(linesInfo.getSelectionModel().getSelectedItem())) {
+            for (Line line : lines) {
+                if (line.getName().equals(linesInfo.getSelectionModel().getSelectedItem())) {
                     generateStopsOnPath(line);
                     view.colorRoute(vehicleRoute, line.getColor().saturate().saturate());
                     finalStopText.setOpacity(1.0);
                     view.changeFinalStopText(finalStopText, line);
 
-                    for(Line otherLine : lines) {
+                    for (Line otherLine : lines) {
                         if (!otherLine.getName().equals(line.getName())) {
                             view.changeLineColor(mapContent, otherLine, otherLine.getColor().desaturate().desaturate().desaturate().desaturate());
                         } else {
@@ -931,16 +1135,16 @@ public class Controller {
      */
     public void showVehicleRoute() {
         view.showVehicleRoute(mapContent,
-                                background,
-                                bottomWindow,
-                                nextStopInfo,
-                                nextStopText,
-                                finalStopInfo,
-                                finalStopText,
-                                delayText,
-                                allVehicles,
-                                vehicleRoute,
-                                lines);
+                background,
+                bottomWindow,
+                nextStopInfo,
+                nextStopText,
+                finalStopInfo,
+                finalStopText,
+                delayText,
+                allVehicles,
+                vehicleRoute,
+                lines);
     }
 
     /**
@@ -948,7 +1152,7 @@ public class Controller {
      */
     public void setCurrentTime() {
         timeManager.timer.stop();
-        timeManager.moveInTime( timeManager.formatTime(LocalTime.now().getHour(),LocalTime.now().getMinute(),LocalTime.now().getSecond()), updates, timeGUI,timeTable, mapContent,1, speedChange);
+        timeManager.moveInTime(timeManager.formatTime(LocalTime.now().getHour(), LocalTime.now().getMinute(), LocalTime.now().getSecond()), updates, timeGUI, timeTable, mapContent, 1, speedChange);
         timeManager.setScale(1);
         timeManager.changeSpeed();
     }

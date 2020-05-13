@@ -9,8 +9,15 @@ import java.util.Objects;
  * Point with coordinates [0,0] lies in the upper left corner of the map
  */
 public class Coordinate {
-    private double x; /**< X attribute of the coordinate */
-    private double y; /**< Y attribute of the coordinate */
+    private double x;
+    /**
+     * < X attribute of the coordinate
+     */
+    private double y;
+
+    /**
+     * < Y attribute of the coordinate
+     */
 
     public Coordinate(double inputX, double inputY) {
         x = inputX;
@@ -27,21 +34,21 @@ public class Coordinate {
     }
 
     /**
-     * Returns Y value of coordinate
-     *
-     * @return Y value
-     */
-    public double getY() {
-        return this.y;
-    }
-
-    /**
      * Method sets X value of a coordinate
      *
      * @param inputX This value will be set as X value of given coordinate
      */
     public void setX(double inputX) {
         this.x = inputX;
+    }
+
+    /**
+     * Returns Y value of coordinate
+     *
+     * @return Y value
+     */
+    public double getY() {
+        return this.y;
     }
 
     /**
@@ -58,10 +65,9 @@ public class Coordinate {
      *
      * @param a First coordinate
      * @param b Second coordinate
-     *
      * @return Distance between coordinate a and coordinate b
      */
-    private double distance(Coordinate a, Coordinate b){
+    private double distance(Coordinate a, Coordinate b) {
         return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
     }
 
@@ -69,7 +75,6 @@ public class Coordinate {
      * Distance between coordinate on which method is called and coordinate as parameter
      *
      * @param b One of ends between which distance is calculated
-     *
      * @return Distance between coordinate b and coordinate on which method is called
      */
     public double coordsDistance(Coordinate b) {
@@ -80,10 +85,9 @@ public class Coordinate {
      * Method checks whether coordinate lies on street passed as parameter
      *
      * @param s Street on which the point should lie
-     *
      * @return True if the point lies on the line, otherwise false
      */
-    public boolean liesOn(Street s){
+    public boolean liesOn(Street s) {
         Coordinate stopToAdd = this;
 
         double distance = distance(s.begin(), s.end());                                             // original distance of the street
@@ -99,11 +103,10 @@ public class Coordinate {
      *
      * @param inputX Value to which the X attribute will be changed
      * @param inputY Value of new Y
-     *
      * @return True if coordinates were swapped, otherwise false
      */
-    public boolean change(double inputX, double inputY){
-        if(inputX >= 0 && inputY >= 0) {
+    public boolean change(double inputX, double inputY) {
+        if (inputX >= 0 && inputY >= 0) {
             this.x = inputX;
             this.y = inputY;
             return true;
@@ -116,7 +119,6 @@ public class Coordinate {
      * Method calculates the difference of X values of coordinates
      *
      * @param c Second coordinate, whose X value will be used
-     *
      * @return Difference between X values
      */
     public double diffX(Coordinate c) {
@@ -129,7 +131,6 @@ public class Coordinate {
      * Method calculates the difference of Y values of coordinates
      *
      * @param c Second coordinate, whose Y value will be used
-     *
      * @return Difference between Y values
      */
     public double diffY(Coordinate c) {
@@ -144,7 +145,7 @@ public class Coordinate {
      * @param c Coordinate with with the attributes will be swapped
      */
     public void swapCoordinates(Coordinate c) {
-        Coordinate tempC = new Coordinate(this.x,this.y);
+        Coordinate tempC = new Coordinate(this.x, this.y);
         this.x = c.getX();
         this.y = c.getY();
         c.x = tempC.getX();
