@@ -57,7 +57,7 @@
                                         <Font name="SansSerif Bold" size="55.0" />
                                     </font>
                                 </Text>
-                                <Button fx:id="plusH" layoutX="14.0" mnemonicParsing="false" onAction="#plusHour" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#555555">
+                                <Button fx:id="plusH" layoutX="14.0" mnemonicParsing="false" onAction="#plusHour" opacity="0.75" style="-fx-background-color: none;" textFill="#555555">
                                     <font>
                                         <Font size="25.0" />
                                     </font>
@@ -65,7 +65,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="plusM" layoutX="93.0" mnemonicParsing="false" onAction="#plusMinute" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#555555">
+                                <Button fx:id="plusM" layoutX="93.0" mnemonicParsing="false" onAction="#plusMinute" opacity="0.75" style="-fx-background-color: none;" textFill="#555555">
                                     <font>
                                         <Font size="25.0" />
                                     </font>
@@ -73,7 +73,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="plusS" layoutX="178.0" mnemonicParsing="false" onAction="#plusSecond" opacity="0.75" style="-fx-background-color: none;" text="🢑" textFill="#555555">
+                                <Button fx:id="plusS" layoutX="178.0" mnemonicParsing="false" onAction="#plusSecond" opacity="0.75" style="-fx-background-color: none;" textFill="#555555">
                                     <font>
                                         <Font size="25.0" />
                                     </font>
@@ -81,7 +81,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="minusH" layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusHour" opacity="0.75" style="-fx-background-color: none;" text="🢓" textFill="#555555">
+                                <Button fx:id="minusH" layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusHour" opacity="0.75" style="-fx-background-color: none;" textFill="#555555">
                                     <font>
                                         <Font size="25.0" />
                                     </font>
@@ -89,7 +89,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="minusM" layoutX="93.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusMinute" opacity="0.75" prefHeight="20.0" prefWidth="49.0" style="-fx-background-color: none;" text="🢓" textFill="#555555">
+                                <Button fx:id="minusM" layoutX="93.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusMinute" opacity="0.75" prefHeight="20.0" prefWidth="49.0" style="-fx-background-color: none;" textFill="#555555">
                                     <font>
                                         <Font size="25.0" />
                                     </font>
@@ -97,7 +97,7 @@
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
                                 </Button>
-                                <Button fx:id="minusS" layoutX="178.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusSecond" opacity="0.75" style="-fx-background-color: none;" text="🢓" textFill="#555555">
+                                <Button fx:id="minusS" layoutX="178.0" layoutY="94.0" mnemonicParsing="false" onAction="#minusSecond" opacity="0.75" style="-fx-background-color: none;" textFill="#555555">
                                     <font>
                                         <Font size="25.0" />
                                     </font>
@@ -126,7 +126,7 @@
                                 <Font name="SansSerif Regular" size="31.0" />
                             </font>
                         </Text>
-                  <Button fx:id="playPauseButton" layoutX="60.0" layoutY="109.0" mnemonicParsing="false" onAction="#playPausePressed" style="-fx-background-color: none;" text="⏸">
+                  <Button fx:id="playPauseButton" layoutX="60.0" layoutY="109.0" mnemonicParsing="false" onAction="#playPausePressed" style="-fx-background-color: none;">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -171,7 +171,7 @@
                         </Text>
                         <Circle fx:id="vehicleOnRouteBus" centerX="50.0" centerY="180.0" fill="#323232" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
                   <Rectangle fx:id="vehicleOnRouteSub" arcHeight="5.0" arcWidth="5.0" fill="#323232" height="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="20.0" x="40.0" y="175.0" />
-                  <Rectangle fx:id="vehicleOnRouteTram" fill="#323232" height="16.0" rotate="45.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="16.0" x="42.0" y="172.0" />
+                  <Rectangle fx:id="vehicleOnRouteTram" fill="#323232" height="12.0" rotate="45.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="12.0" x="44.0" y="174.0" />
                     </children>
                 </Pane>
                 <Rectangle fx:id="saveBackground" arcHeight="10.0" arcWidth="10.0" fill="#32a103b0" height="69.0" layoutX="650.0" layoutY="900.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="331.0" />

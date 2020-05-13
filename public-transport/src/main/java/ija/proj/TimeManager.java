@@ -121,7 +121,7 @@ public class TimeManager {
                             if(controller.getFocusedVehicle() instanceof Subway)
                                 controller.getVehicleOnRouteSub().setX(40+controller.getFocusedVehicle().getPassedDistance()/controller.getFocusedVehicle().getLine().totalPathLength()*850);
                             if(controller.getFocusedVehicle() instanceof Tram)
-                                controller.getVehicleOnRouteTram().setX(42+controller.getFocusedVehicle().getPassedDistance()/controller.getFocusedVehicle().getLine().totalPathLength()*850);
+                                controller.getVehicleOnRouteTram().setX(44+controller.getFocusedVehicle().getPassedDistance()/controller.getFocusedVehicle().getLine().totalPathLength()*850);
 
                         }
                         else

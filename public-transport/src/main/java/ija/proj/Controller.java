@@ -509,6 +509,13 @@ public class Controller {
             }
         }
 
+        playPauseButton.setText("\u23F8");
+        plusH.setText("\uD83E\uDC95");
+        plusM.setText("\uD83E\uDC95");
+        plusS.setText("\uD83E\uDC95");
+        minusH.setText("\uD83E\uDC97");
+        minusM.setText("\uD83E\uDC97");
+        minusS.setText("\uD83E\uDC97");
     }
 
     public void addVehicleToController(Vehicle e) {
@@ -524,7 +531,7 @@ public class Controller {
 
             vehicleOnRouteBus.setCenterX(50);
             vehicleOnRouteSub.setX(40);
-            vehicleOnRouteTram.setX(42);
+            vehicleOnRouteTram.setX(44);
 
             view.cleanRouteFromStops(bottomWindow);
             view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
@@ -532,7 +539,7 @@ public class Controller {
             focusedVehicle = null;
             vehicleOnRouteBus.setVisible(false);
             vehicleOnRouteSub.setVisible(false);
-            vehicleOnRouteSub.setVisible(false);
+            vehicleOnRouteTram.setVisible(false);
         });
     }
 
@@ -639,7 +646,7 @@ public class Controller {
                     vehicleOnRouteSub.setVisible(false);
                     vehicleOnRouteBus.setCenterX(50);
                     vehicleOnRouteSub.setX(40);
-                    vehicleOnRouteTram.setX(42);
+                    vehicleOnRouteTram.setX(44);
 
                     delayText.setText("Delay: 0 min");
                     boolean onLine = false;
