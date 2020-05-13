@@ -161,7 +161,7 @@
                                 <Font name="Impact" size="24.0" />
                             </font>
                         </Text>
-                  <Circle fx:id="vehicleOnRoute" centerX="50.0" centerY="180.0" fill="#323232" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
+                        <Circle fx:id="vehicleOnRoute" centerX="50.0" centerY="180.0" fill="#323232" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
                     </children>
                 </Pane>
                 <Rectangle fx:id="saveBackground" arcHeight="10.0" arcWidth="10.0" fill="#32a103b0" height="69.0" layoutX="650.0" layoutY="900.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="331.0" />
@@ -181,11 +181,11 @@
                         <Font name="SansSerif Bold" size="16.0" />
                     </font>
                 </Button>
-            <TextArea fx:id="editJamsInfo" layoutX="1270.0" layoutY="230.0" prefHeight="370.0" prefWidth="311.0" text="You are in traffic jams edit mode.&#10;&#10;How to edit an intensity of traffic&#10;flow on a street:&#10;&#10;1) Click on 1 specific street. The&#10;    street should be dashed now.&#10;2) in given TextField, specify the&#10;   intensity of traffic.&#10;   Rule: the higher the number the&#10;   worste traffic flow, &#10;   from 1(normal)&#10;   to 9(worst traffic).&#10;3) Confirm edited traffic level.&#10;&#10;" visible="false">
-               <font>
-                  <Font name="SansSerif Regular" size="18.0" />
-               </font>
-            </TextArea>
+                <TextArea fx:id="editJamsInfo" layoutX="1270.0" layoutY="230.0" prefHeight="370.0" prefWidth="311.0" text="You are in traffic jams edit mode.&#10;&#10;How to edit an intensity of traffic&#10;flow on a street:&#10;&#10;1) Click on 1 specific street. The&#10;    street should be dashed now.&#10;2) in given TextField, specify the&#10;   intensity of traffic.&#10;   Rule: the higher the number the&#10;   worste traffic flow, &#10;   from 1(normal)&#10;   to 9(worst traffic).&#10;3) Confirm edited traffic level.&#10;&#10;" visible="false">
+                    <font>
+                        <Font name="SansSerif Regular" size="18.0" />
+                    </font>
+                </TextArea>
             </children>
         </Pane>
     </center>

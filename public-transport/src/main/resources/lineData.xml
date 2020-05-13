@@ -405,6 +405,21 @@
     </street>
 
   </line>
+
+<!--  <line id="Bus Line 73" type="bus">-->
+<!--    <street id="Hatton Lawn">-->
+<!--      <stop id="Flowers">-->
+<!--        <x>400</x>-->
+<!--        <y>1300</y>-->
+
+<!--        <x>400</x>-->
+<!--        <y>1400</y>-->
+<!--      </stop>-->
+<!--    </street>-->
+
+<!--    <street id="Maris Vale"></street>-->
+<!--    <street id="Charis St"></street>-->
+<!--  </line>-->
 </lines_data>
 
 
