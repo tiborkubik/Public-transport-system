@@ -900,6 +900,11 @@ public class Controller {
      */
     public void highlightRouteFromList(List<Line> lines) {
         linesInfo.setOnMouseClicked(event ->{
+
+            vehicleOnRouteTram.setVisible(false);
+            vehicleOnRouteSub.setVisible(false);
+            vehicleOnRouteBus.setVisible(false);
+
             view.cleanRouteFromStops(bottomWindow);
 
             for(Line line : lines) {

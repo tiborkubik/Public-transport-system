@@ -32,8 +32,8 @@ public class View {
         colorsForLines.add(Color.CORNFLOWERBLUE);
         colorsForLines.add(Color.YELLOW);
         colorsForLines.add(Color.SANDYBROWN);
-        colorsForLines.add(Color.ROYALBLUE);
-        colorsForLines.add(Color.OLIVE);
+        colorsForLines.add(Color.PURPLE);
+        colorsForLines.add(Color.HOTPINK);
     }
 
     public void setDefaultLineColors(List<Line> lines) {

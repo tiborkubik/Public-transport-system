@@ -149,8 +149,6 @@
     </street>
   </line>
 
-
-
   <line id="Tram Line 1" type="tram">
     <street id="East 1st St">
       <stop id="East 1st St Upper">
@@ -406,20 +404,103 @@
 
   </line>
 
-<!--  <line id="Bus Line 73" type="bus">-->
-<!--    <street id="Hatton Lawn">-->
-<!--      <stop id="Flowers">-->
-<!--        <x>400</x>-->
-<!--        <y>1300</y>-->
+  <line id="Bus Line 73" type="bus">
+    <street id="Baker St">
+      <stop id="Baked">
+        <x>2000</x>
+        <y>1570</y>
+      </stop>
+      <stop id="Roasted">
+        <x>1600</x>
+        <y>1570</y>
+      </stop>
+    </street>
 
-<!--        <x>400</x>-->
-<!--        <y>1400</y>-->
-<!--      </stop>-->
-<!--    </street>-->
+    <street id="Stuart Piece">
+      <stop id="Mixed">
+        <x>1050</x>
+        <y>1570</y>
+      </stop>
+    </street>
 
-<!--    <street id="Maris Vale"></street>-->
-<!--    <street id="Charis St"></street>-->
-<!--  </line>-->
+    <street id="Woodhey Lane">
+      <stop id="Cement Factory">
+        <x>1150</x>
+        <y>1720</y>
+      </stop>
+
+      <stop id="Litch INC">
+        <x>1260</x>
+        <y>1720</y>
+      </stop>
+
+      <stop id="Prison">
+        <x>1750</x>
+        <y>1720</y>
+      </stop>
+    </street>
+
+    <street id="Pub Row">
+      <stop id="Drank Stop">
+        <x>2100</x>
+        <y>1730</y>
+      </stop>
+    </street>
+
+    <street id="Princess Oak"/>
+
+    <street id="Garden Hall">
+      <stop id="Purple">
+        <x>1700</x>
+        <y>1850</y>
+      </stop>
+    </street>
+
+    <street id="Spock St">
+      <stop id="White">
+        <x>1100</x>
+        <y>1850</y>
+      </stop>
+    </street>
+
+    <street id="Colwyn St">
+      <stop id="Ivory">
+        <x>1900</x>
+        <y>1950</y>
+      </stop>
+
+      <stop id="Labour Day">
+        <x>1780</x>
+        <y>1950</y>
+      </stop>
+
+      <stop id="6th of July">
+        <x>1600</x>
+        <y>1950</y>
+      </stop>
+
+      <stop id="State Cross">
+        <x>1000</x>
+        <y>1950</y>
+      </stop>
+    </street>
+
+    <street id="Canadian St"/>
+
+    <street id="Chair St">
+      <stop id="By Forest W">
+        <x>450</x>
+        <y>2000</y>
+      </stop>
+    </street>
+
+    <street id="Maris Vale">
+      <stop id="Purple End">
+        <x>400</x>
+        <y>1800</y>
+      </stop>
+    </street>
+  </line>
 </lines_data>
 
 
