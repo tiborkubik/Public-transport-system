@@ -91,6 +91,8 @@ public class Controller {
     private Rectangle vehicleOnRouteSub;
     @FXML
     private Rectangle vehicleOnRouteTram;
+    @FXML
+    private Button playPauseButton;
 
     private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1); /**< Stores degree of the traffic jam */
     private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true); /**< Defines size of the background picture */
@@ -116,6 +118,7 @@ public class Controller {
     private List<Street> streetsToAddToLine = new ArrayList<>(); /**< while building detour stores all streets added to the line */
 
     private TimeManager timeManager = new TimeManager(view, this); /**< Controls time related calculations */
+    private boolean paused = false;
 
     /***
      * Returns all vehicles on the map
@@ -141,6 +144,27 @@ public class Controller {
      */
     public List<UpdateState> getUpdates() {
         return updates;
+    }
+
+    @FXML
+    private void playPausePressed() {
+        if(paused) {
+            LocalTime time = timeManager.getCurrentTime();
+            timeManager.moveInTime(timeManager.formatTime(time.getHour(), time.getMinute(), time.getSecond()),updates, timeGUI, timeTable, mapContent,2, speedChange);
+            playPauseButton.setText("\u23F8");
+            speedChange.setValue(1);
+            timeManager.setScale(1);
+            timeManager.changeSpeed();
+            paused = false;
+        } else {
+
+            timeManager.timer.stop();
+            playPauseButton.setText("\u25B6");
+            speedChange.setValue(0);
+            timeManager.setScale(0);
+            timeManager.changeSpeed();
+            paused = true;
+        }
     }
 
     /***

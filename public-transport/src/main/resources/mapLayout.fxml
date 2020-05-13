@@ -40,7 +40,7 @@
                 </ScrollPane>
                 <Pane fx:id="sideWindow" layoutX="1246.0" prefHeight="680.0" prefWidth="356.0">
                     <children>
-                        <Rectangle fx:id="rightBlur1" arcHeight="50.0" arcWidth="50.0" fill="#fffffff2" height="277.0" layoutX="33.0" layoutY="-101.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="300.0">
+                        <Rectangle fx:id="rightBlur1" arcHeight="50.0" arcWidth="50.0" fill="#fffffff2" height="293.0" layoutX="33.0" layoutY="-101.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="300.0">
                             <effect>
                                 <BoxBlur iterations="3" width="0.0" />
                             </effect>
@@ -107,7 +107,7 @@
                                 </Button>
                             </children>
                         </Pane>
-                        <Slider fx:id="speedChange" layoutX="103.0" layoutY="126.0" majorTickUnit="10.0" max="50.0" minorTickCount="4" onMouseClicked="#speedChanged" prefHeight="37.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" value="1.0">
+                        <Slider fx:id="speedChange" layoutX="130.0" layoutY="126.0" majorTickUnit="10.0" max="50.0" minorTickCount="4" onMouseClicked="#speedChanged" prefHeight="37.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" value="1.0">
                             <cursor>
                                 <Cursor fx:constant="W_RESIZE" />
                             </cursor>
@@ -126,6 +126,14 @@
                                 <Font name="SansSerif Regular" size="31.0" />
                             </font>
                         </Text>
+                  <Button fx:id="playPauseButton" layoutX="60.0" layoutY="109.0" mnemonicParsing="false" onAction="#playPausePressed" style="-fx-background-color: none;" text="⏸">
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                     </children>
                 </Pane>
                 <Pane fx:id="bottomWindow" layoutY="800.0" prefHeight="225.0" prefWidth="1609.0">
