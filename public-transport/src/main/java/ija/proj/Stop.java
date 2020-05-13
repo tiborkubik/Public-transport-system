@@ -17,19 +17,10 @@ import java.util.List;
  * given street. Stops are always connected to specific street and cannot be on their own.
  */
 public class Stop implements Drawable {
-    private String identifier;
-    /**
-     * < Unique identifier of a stop within given map
-     */
-    private Coordinate location = null;
-    /**
-     * < Location of stop within canvas
-     */
-    private Street onStreet = null;
-    /**
-     * < Definition of street on which a stop lies
-     */
-    private int time_to_stay;                  /**< Time which vehicles spend on given stop */
+    private String identifier;          /**< Unique identifier of a stop within given map */
+    private Coordinate location = null; /**< Location of stop within canvas */
+    private Street onStreet = null;     /**< Definition of street on which a stop lies */
+    private int time_to_stay;           /**< Time which vehicles spend on given stop */
 
     /**
      * Stop constructor. All its attributes must be set

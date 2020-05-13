@@ -31,254 +31,97 @@ import java.util.List;
  */
 public class Controller {
     @FXML
-    private Pane mapContent;
-    /**
-     * < main visual component which contains streets,lines,stops,vehicles and background
-     */
+    private Pane mapContent;        /**< main visual component which contains streets, lines, stops, vehicles and background */
     @FXML
-    private Text nextStopInfo;
-    /**
-     * < Information about the following stop
-     */
+    private Text nextStopInfo;      /**< Information about the following stop */
     @FXML
-    private ScrollPane scrollP;
-    /**
-     * < Wrapper element for map
-     */
+    private ScrollPane scrollP;     /**< Wrapper element for map */
     @FXML
-    private Text nextStopText;
-    /**
-     * < Unique line identifier
-     */
+    private Text nextStopText;      /**< Unique line identifier */
     @FXML
     private Text finalStopInfo;
     /**
      * < Name of the next stop
      */
     @FXML
-    private Text finalStopText;
-    /**
-     * < Name of the Last stop
-     */
+    private Text finalStopText; /**< Name of the Last stop */
     @FXML
-    private Text delayText;
-    /**
-     * < Displays delay
-     */
+    private Text delayText;     /**< Displays delay */
     @FXML
-    private Text timeGUI;
-    /**
-     * < Shows time in GUI
-     */
+    private Text timeGUI;       /**< Shows time in GUI */
     @FXML
-    private Pane bottomWindow;
-    /**
-     * < Bottom pane element of the GUI
-     */
+    private Pane bottomWindow;  /**< Bottom pane element of the GUI */
     @FXML
-    private Rectangle background;
-    /**
-     * < Background of the city map
-     */
+    private Rectangle background;   /**< Background of the city map */
     @FXML
-    private Slider speedChange;
-    /**
-     * < Defines pace of the time
-     */
+    private Slider speedChange;     /**< Defines pace of the time */
     @FXML
-    private ListView<Object> linesInfo;
-    /**
-     * < Information about lines
-     */
+    private ListView<Object> linesInfo; /**< Information about lines */
     @FXML
-    private javafx.scene.shape.Line vehicleRoute;
-    /**
-     * < Bottom line which represents selected line
-     */
+    private javafx.scene.shape.Line vehicleRoute;   /**< Bottom line which represents selected line */
     @FXML
-    private Rectangle rightBlur1;
-    /**
-     * < Blur effect
-     */
+    private Rectangle rightBlur1;       /**< Blur effect */
     @FXML
-    private Rectangle rightBlur111;
-    /**
-     * < Blur effect
-     */
+    private Rectangle rightBlur111;     /**< Blur effect */
     @FXML
-    private Text linesSign;
-    /**
-     * < Sign of the line
-     */
+    private Text linesSign;             /**< Sign of the line */
     @FXML
-    private Button saveExitEditing;
-    /**
-     * < Button to save changes made by admin
-     */
+    private Button saveExitEditing;     /**< Button to save changes made by admin */
     @FXML
-    private Rectangle saveBackground;
-    /**
-     * < saves background image
-     */
+    private Rectangle saveBackground;   /**< Save button background */
     @FXML
-    private Button plusH;
-    /**
-     * < Move one hour forward
-     */
+    private Button plusH;           /** < Move one hour forward */
     @FXML
-    private Button plusM;
-    /**
-     * < Move one minute forward
-     */
+    private Button plusM;   /**< Move one minute forward */
     @FXML
-    private Button plusS;
-    /**
-     * < Move one second forward
-     */
+    private Button plusS;   /**< Move one second forward */
     @FXML
-    private Button minusH;
-    /**
-     * < Move one hour backward
-     */
+    private Button minusH;  /**< Move one hour backward */
     @FXML
-    private Button minusM;
-    /**
-     * < Move one minute backward
-     */
+    private Button minusM;  /**< Move one minute backward */
     @FXML
-    private Button minusS;
-    /**
-     * < Move one second backward
-     */
+    private Button minusS;  /**< Move one second backward */
     @FXML
-    private TextArea editJamsInfo;
-    /**
-     * < to edit jam degree of the street
-     */
+    private TextArea editJamsInfo; /**< to edit jam degree of the street */
     @FXML
-    private TextArea editDetoursInfo;
-    /**
-     * < to edit detours of the line
-     */
+    private TextArea editDetoursInfo;   /**< to edit detours of the line */
     @FXML
-    private Spinner<Integer> trafficSpinner;
-    /**
-     * < degree of the jam
-     */
+    private Spinner<Integer> trafficSpinner;    /**< degree of the jam */
     @FXML
-    private Button setIntensity;
-    /**
-     * < button to save jam degree
-     */
+    private Button setIntensity;    /**< button to save jam degree */
     @FXML
-    private Circle vehicleOnRouteBus;
-    /**
-     * < representation of vehicle on the bottom route - Bus
-     */
+    private Circle vehicleOnRouteBus; /**< representation of vehicle on the bottom route - Bus */
     @FXML
-    private Rectangle vehicleOnRouteSub;
-    /**
-     * < representation of vehicle on the bottom route - Subway
-     */
+    private Rectangle vehicleOnRouteSub; /**< representation of vehicle on the bottom route - Subway */
     @FXML
-    private Rectangle vehicleOnRouteTram;
-    /**
-     * < representation of vehicle on the bottom route - Tram
-     */
+    private Rectangle vehicleOnRouteTram; /**< representation of vehicle on the bottom route - Tram */
     @FXML
-    private Button playPauseButton;
-    /**
-     * < Button that pauses/resumes time when clicked
-     */
+    private Button playPauseButton; /**< Button that pauses/resumes time when clicked */
 
-    private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1);
-    /**
-     * < Stores degree of the traffic jam
-     */
-    private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
-    /**
-     * < Path to style normalize file
-     */
-    private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm();
-    /**
-     * < Path to styles of dashed lines
-     */
-    private Scene mainScene;
-    /**
-     * < Main scene
-     */
-    private List<Line> lines = new ArrayList<>();
-    /**
-     * < Stores all line
-     */
-    private List<UpdateState> updates = new ArrayList<>();
-    /**
-     * < Stores all objects needed to be updated
-     */
-    private List<Vehicle> allVehicles = new ArrayList<>();
-    /**
-     * < Stores all vehicles
-     */
-    private List<String> focusedLineStopsNames = new ArrayList<>();
-    /**
-     * < Stop names of selected line
-     */
-    private List<Coordinate> focusedLineStops = new ArrayList<>();
-    /**
-     * < Stop coordinates of selected line
-     */
-    private boolean inEditTrafficMode = false;
-    /**
-     * < Flag, true if editing traffic
-     */
-    private boolean inEditDetours = false;
-    /**
-     * < Flag, true if editing detours
-     */
-    private Timetable timeTable;
-    /**
-     * < Timetable of the lines
-     */
-    private View view = new View(this);
-    /**
-     * < View object defines what to display
-     */
-    private Tooltip densityInfo = new Tooltip();
-    /**
-     * < Density
-     */
-    private Vehicle focusedVehicle = null;
-    /**
-     * < stores focused vehicle, if null then no vehicle is selected
-     */
-    private List<Drawable> allStreets;
-    /**
-     * < stores all streets typed Drawable
-     */
+    private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1); /**< Stores degree of the traffic jam */
+    private String normalLine = getClass().getResource("/normalLine.css").toExternalForm(); /**< Path to style normalize file */
+    private String dashedLine = getClass().getResource("/dashedLine.css").toExternalForm(); /**< Path to styles of dashed lines */
+    private Scene mainScene;                                        /**< Main scene */
+    private List<Line> lines = new ArrayList<>();                   /**< Stores all line */
+    private List<UpdateState> updates = new ArrayList<>();          /**< Stores all objects needed to be updated */
+    private List<Vehicle> allVehicles = new ArrayList<>();          /**< Stores all vehicles */
+    private List<String> focusedLineStopsNames = new ArrayList<>(); /**< Stop names of selected line */
+    private List<Coordinate> focusedLineStops = new ArrayList<>();  /**< Stop coordinates of selected line */
+    private boolean inEditTrafficMode = false;                      /**< Flag, true if editing traffic */
+    private boolean inEditDetours = false;                          /**< Flag, true if editing detours */
+    private Timetable timeTable;                                    /**< Timetable of the lines */
+    private View view = new View(this);                    /**< View object defines what to display */
+    private Tooltip densityInfo = new Tooltip();                    /**< Density */
+    private Vehicle focusedVehicle = null;                          /**< stores focused vehicle, if null then no vehicle is selected */
+    private List<Drawable> allStreets;                              /**< stores all streets typed Drawable */
+    private Street beingDetoured = null;                            /**< tells us which street is being detoured, if null then none */
+    private Line lineDetoured = null;                               /**< tells us which line is being detoured, if null then none */
+    private List<Street> streetsToAddToLine = new ArrayList<>();    /**< while building detour stores all streets added to the line */
+    private TimeManager timeManager = new TimeManager(view, this); /** < Controls time related calculations */
+    private boolean paused = false;                                 /**< Boolean value which defines whether whole scene is paused or not *
 
-    private Street beingDetoured = null;
-    /**
-     * < tells us which street is being detoured, if null then none
-     */
-    private Line lineDetoured = null;
-    /**
-     * < tells us which line is being detoured, if null then none
-     */
-    private List<Street> streetsToAddToLine = new ArrayList<>();
-    /**
-     * < while building detour stores all streets added to the line
-     */
 
-    private TimeManager timeManager = new TimeManager(view, this);
-    /**
-     * < Controls time related calculations
-     */
-    private boolean paused = false;
-
-    /**
-     * < Boolean value which defines whether whole scene is paused or not
-     * <p>
-     * /***
+     /***
      * Returns all vehicles on the map
      *
      * @return all vehicles on the map

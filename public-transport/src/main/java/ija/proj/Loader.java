@@ -190,7 +190,7 @@ public class Loader {
                         for (Drawable mapStreet : streets) {
                             Street mapS = (Street) mapStreet;
                             if (street.getName() == mapS.getName()) {
-                                ((Street) mapStreet).add_line();
+                                ((Street) mapStreet).addLine();
                             }
                         }
                         newLine.addCoordinates(street.begin(), street.end());

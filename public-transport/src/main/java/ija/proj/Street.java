@@ -16,14 +16,22 @@ import java.util.List;
  * class Street represents one street - from start to end point. Each street has unique identifier and stops that are located on it.
  */
 public class Street implements Drawable {
-    private String identifier;
-    private Coordinate start;
-    private Coordinate end;
-    private List<Stop> stopList = new ArrayList<>();
-    private List<Coordinate> coordinatesList = new ArrayList<>();
-    private int n_lines = 0;
-    private int trafficDensity = 1;
+    private String identifier;                  /**< Unique street name */
+    private Coordinate start;                   /**< Start coordinate of street */
+    private Coordinate end;                     /**< End of street */
+    private List<Stop> stopList = new ArrayList<>();                /**< List of all stops located on street */
+    private List<Coordinate> coordinatesList = new ArrayList<>();   /**< List of all coordinates of street  */
+    private int n_lines = 0;                 /**< Number of lines passing street */
+    private int trafficDensity = 1;         /**<  Traffic density on given street. from 1 to 9, 1 is normal flow */
 
+
+    /**
+     * Constructor of street. Start and end coordinate are added into coordinates list
+     *
+     * @param identifier    Unique street name
+     * @param start         Start coordinate
+     * @param end           End coordinate
+     */
     public Street(String identifier, Coordinate start, Coordinate end) {
         this.identifier = identifier;
         this.start = start;
@@ -31,30 +39,50 @@ public class Street implements Drawable {
 
         coordinatesList.add(start);
         coordinatesList.add(end);
-
     }
 
+    /**
+     * Empty constructor
+     */
     public Street() {
 
     }
 
+
+    /**
+     * @return returns number of stops on given street
+     */
     public int getNStops() {
         return this.stopList.size();
     }
 
+    /**
+     * @return Value of traffic density
+     */
     public int getTrafficDensity() {
         return trafficDensity;
     }
 
+    /**
+     * Method sets traffic density on given street
+     *
+     * @param trafficDensity Value of traffic flow, from 1 to 9, 1 is normal, 9 is worst
+     */
     public void setTrafficDensity(int trafficDensity) {
         this.trafficDensity = trafficDensity;
     }
 
-    public int getN_lines() {
+    /**
+     * @return Number of lines passing street
+     */
+    public int getNLines() {
         return this.n_lines;
     }
 
-    public void add_line() {
+    /**
+     * Increments number of lines attribute when new line passes through street
+     */
+    public void addLine() {
         this.n_lines++;
     }
 
@@ -71,7 +99,7 @@ public class Street implements Drawable {
                 this.identifier = typedStreet.getName();
                 this.start = typedStreet.begin();
                 this.end = typedStreet.end();
-                this.n_lines = typedStreet.getN_lines();
+                this.n_lines = typedStreet.getNLines();
 
                 coordinatesList.add(this.start);
                 coordinatesList.add(this.end);
@@ -80,14 +108,23 @@ public class Street implements Drawable {
     }
 
 
+    /**
+     * @return Begin coordinate
+     */
     public Coordinate begin() {
         return start;
     }
 
+    /**
+     * @return End coordinate
+     */
     public Coordinate end() {
         return end;
     }
 
+    /**
+     * @return Unique street name
+     */
     public String getName() {
         return this.identifier;
     }
@@ -119,11 +156,10 @@ public class Street implements Drawable {
      * @return returns true if the stop lies on the street, false if they don't
      */
     public boolean addStop(Stop stop) {
-        Coordinate stopCoordinate = stop.getCoordinate();
-        Coordinate stop_to_add = stopCoordinate;
+        Coordinate stopCoordinate1 = stop.getCoordinate();
 
         double distance = distance(start, end);     // original distance of the street
-        double distance_with_stop = distance(start, stop_to_add) + distance(stop_to_add, end); //distance of the street trought the new stop
+        double distance_with_stop = distance(start, stopCoordinate1) + distance(stopCoordinate1, end); //distance of the street trought the new stop
         double delta = 0.00001;     // allowed distance from the line (proportional to street length)
         //check if the distances and approximately the same
         if (delta > Math.abs(distance - distance_with_stop) / Math.max(Math.abs(distance), Math.abs(distance_with_stop))) {
@@ -144,6 +180,9 @@ public class Street implements Drawable {
         return Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2));
     }
 
+    /**
+     * @return Slope of street
+     */
     public double getSlope() {
         // vertical line has special value
         if ((this.end.getX() - this.start.getX()) == 0.0) {
@@ -180,7 +219,6 @@ public class Street implements Drawable {
         singleStreet.setStrokeLineCap(StrokeLineCap.ROUND);
         singleStreet.setStrokeLineJoin(StrokeLineJoin.ROUND);
         singleStreet.setId(identifier);
-        //streetName.setId(identifier);
         return Arrays.asList(singleStreet, streetName);
     }
 

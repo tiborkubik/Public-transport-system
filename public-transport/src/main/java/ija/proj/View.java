@@ -18,24 +18,29 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class view modifies GUI elements when controller calls its methods. It contains bunch of methods defining the basic style in addition with
+ * methods that show/hide certain elements, create new etc
+ */
 public class View {
-    List<Color> colorsForLines = new ArrayList<>();
-    Controller controller;
-    private Image bg = new Image("mapa1.jpg");
-    /**
-     * < Path to background image
-     */
-    private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
+    List<Color> colorsForLines = new ArrayList<>();         /**< List of prepared colors for lines */
+    Controller controller;                                  /**< Main program controller */
+    private Image bg = new Image("mapa1.jpg");          /**< Path to background image */
+    private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true); /**< Defines size of the background picture */
 
     /**
-     * < Defines size of the background picture
+     * View constructor. Program controller must be specified in advance
+     *
+     * @param controller Main program controller
      */
-
     public View(Controller controller) {
         this.controller = controller;
         setColorsForLines();
     }
 
+    /**
+     * Colors that will define line colors are added into its list
+     */
     private void setColorsForLines() {
         colorsForLines.add(Color.FORESTGREEN);
         colorsForLines.add(Color.ORANGERED);
@@ -46,12 +51,22 @@ public class View {
         colorsForLines.add(Color.HOTPINK);
     }
 
+    /**
+     * Assigning unique color to each line
+     *
+     * @param lines List of all active lines
+     */
     public void setDefaultLineColors(List<Line> lines) {
         for (int i = 0; i < lines.size(); i++) {
             lines.get(i).setColor(colorsForLines.get(i));
         }
     }
 
+    /**
+     * Setting wallpaper on map
+     *
+     * @param map GUI element representing map content
+     */
     public void setBackground(Pane map) {
         map.setBackground(new Background(new BackgroundImage(bg,
                 BackgroundRepeat.NO_REPEAT,
@@ -60,6 +75,15 @@ public class View {
                 bSize)));
     }
 
+    /**
+     * Method changes opacity of certain elements when clicked on line
+     *
+     * @param nextStopInfo Next stop info GUI
+     * @param nextStopText  Next stop value GUI
+     * @param finalStopInfo Final stop info GUI
+     * @param finalStopText Final stop text GUI
+     * @param delayText Delay text GUI
+     */
     public void setLineInfoFocused(Text nextStopInfo, Text nextStopText, Text finalStopInfo, Text finalStopText, Text delayText) {
         nextStopInfo.setOpacity(1);
         nextStopText.setOpacity(1);
@@ -68,11 +92,27 @@ public class View {
         delayText.setOpacity(1);
     }
 
+    /**
+     * Bottom route is colored according to line color
+     *
+     * @param vehicleRoute Line representing scaled line path
+     * @param color Color of line
+     */
     public void colorRoute(javafx.scene.shape.Line vehicleRoute, Color color) {
         vehicleRoute.setStroke(color);
         vehicleRoute.setOpacity(1.0);
     }
 
+    /**
+     * Method changes opacity and value of certain elements when clicked on background
+     *
+     * @param nextStopInfo Next stop info GUI
+     * @param nextStopText  Next stop value GUI
+     * @param finalStopInfo Final stop info GUI
+     * @param finalStopText Final stop text GUI
+     * @param delayText Delay text GUI
+     * @param route Line representing scaled line route
+     */
     public void setLineInfoDefault(Text nextStopInfo, Text nextStopText, Text finalStopInfo, Text finalStopText, Text delayText, javafx.scene.shape.Line route) {
         nextStopInfo.setId("nextStopInfo");
         nextStopText.setId("nextStopText");
@@ -95,6 +135,7 @@ public class View {
 
     /***
      * changes line to a certain color
+     * @param mapContent Pane GUI representing node where all map elements are
      * @param line line to which it changes color
      * @param color to which color we are changing the line
      */
@@ -110,16 +151,34 @@ public class View {
         }
     }
 
+    /**
+     * Method adds all elements from list of drawables on canvas
+     *
+     * @param elements All drawable elements
+     * @param mapContent Pane representing node containing all drawable elements
+     */
     public void showMapContent(List<Drawable> elements, Pane mapContent) {
         for (Drawable obj : elements) {
             mapContent.getChildren().addAll(obj.getGUI());
         }
     }
 
+    /**
+     * Adding single element on map
+     *
+     * @param element Single drawable element
+     * @param mapContent Pane representing node containing all drawable elements
+     */
     public void addElement(Drawable element, Pane mapContent) {
         mapContent.getChildren().addAll(element.getGUI());
     }
 
+    /**
+     * Lines info is filled by line names
+     *
+     * @param lines List of all lines
+     * @param linesInfo GUI listView element where all lines will be in a list
+     */
     public void viewLinesInfo(List<Line> lines, ListView<Object> linesInfo) {
         for (Line line : lines) {
             linesInfo.getItems().add(line.getName());
@@ -127,11 +186,25 @@ public class View {
 
     }
 
+    /**
+     * Opacity of final stop information is focused
+     *
+     * @param finalStopInfo Final stop Information text
+     * @param finalStopText Final stop Value
+     */
     public void clickedOnLine(Text finalStopInfo, Text finalStopText) {
         finalStopInfo.setOpacity(1);
         finalStopText.setOpacity(1);
     }
 
+    /**
+     * Information in bottom window are unfocused when clicked on background
+     *
+     * @param nextStopText  Next stop value GUI
+     * @param finalStopInfo Final stop info GUI
+     * @param finalStopText Final stop text GUI
+     * @param bottomWindow GUI section of path information
+     */
     public void clickedOnVoid(Text finalStopInfo, Text finalStopText, Text nextStopText, Pane bottomWindow) {
         finalStopInfo.setOpacity(0.5);
         finalStopText.setOpacity(0.5);
@@ -141,6 +214,11 @@ public class View {
         cleanRouteFromStops(bottomWindow);
     }
 
+    /**
+     * Lines and texts representing stops in bottom window are removed
+     *
+     * @param bottomWindow GUI element representing bottom window
+     */
     public void cleanRouteFromStops(Pane bottomWindow) {
         try {
             bottomWindow.getChildren().removeIf(sg2 -> sg2.getId().contains("RouteStop"));
@@ -148,10 +226,26 @@ public class View {
         }
     }
 
+    /**
+     * Value of final stop text is changed according to last Line stop
+     *
+     * @param text Text GUI element
+     * @param line Line of stop
+     */
     public void changeFinalStopText(Text text, Line line) {
         text.setText(line.getStopList().get(line.getStopList().size() - 1).getName());
     }
 
+    /**
+     * Position of vehicle on route in bottom window is changed in proper scale according to the position from start on real line
+     *
+     * @param vehicleRoute Line representing scaled vehicle route
+     * @param distFromStart Distance in pixels from start to current vehicle position
+     * @param realToImPath Ratio of length of real line to route length
+     * @param i Iterator
+     * @param singleV Vehicle on which user clicked
+     * @param bottomWindow Bottom GUI window
+     */
     public void addStopToRoute(javafx.scene.shape.Line vehicleRoute, double distFromStart, double realToImPath, int i, Vehicle singleV, Pane bottomWindow) {
         javafx.scene.shape.Line stopLine = new javafx.scene.shape.Line(vehicleRoute.getStartX() + distFromStart / realToImPath, vehicleRoute.getStartY(), vehicleRoute.getStartX() + distFromStart / realToImPath + 10, vehicleRoute.getStartY() - 10);
         stopLine.setStroke(Color.rgb(50, 50, 50));
@@ -170,6 +264,17 @@ public class View {
         bottomWindow.getChildren().add(stopName);
     }
 
+    /**
+     * Position of vehicle on route in bottom window is changed in proper scale according to the position from start on real line
+     *
+     * @param vehicleRoute Line representing scaled vehicle route
+     * @param distFromStart Distance in pixels from start to current vehicle position
+     * @param realToImPath Ratio of length of real line to route length
+     * @param i Iterator
+     * @param bottomWindow Bottom GUI window
+     * @param allStops List of all stops
+     * @param printTime Time when car leaves given stop
+     */
     public void addStopToRoute(javafx.scene.shape.Line vehicleRoute, double distFromStart, double realToImPath, int i, List<Stop> allStops, Pane bottomWindow, LocalTime printTime) {
         javafx.scene.shape.Line stopLine = new javafx.scene.shape.Line(vehicleRoute.getStartX() + distFromStart / realToImPath, vehicleRoute.getStartY(), vehicleRoute.getStartX() + distFromStart / realToImPath + 10, vehicleRoute.getStartY() - 10);
         stopLine.setStroke(Color.rgb(50, 50, 50));
@@ -204,6 +309,13 @@ public class View {
         }
     }
 
+    /**
+     * Generating of stops from line stop list onto vehicleRoute in bottomWindow
+     *
+     * @param singleV Focused vehicle
+     * @param vehicleRoute Line representing scaled line path
+     * @param bottomWindow GUI bottom window
+     */
     public void generateStopsOnPath(Vehicle singleV, javafx.scene.shape.Line vehicleRoute, Pane bottomWindow) {
         double realToImPath = singleV.totalPathLength() / 850;
 
@@ -222,6 +334,9 @@ public class View {
         addStopToRoute(vehicleRoute, distFromStart, realToImPath, singleV.getLine().getStopList().size(), singleV, bottomWindow);
     }
 
+    /**
+     * Method prepares visibility of all key GUI elements for admin
+     */
     public void prepareGUIforAdmin(
             Rectangle rightBlur1,
             Rectangle rightBlur111,
@@ -276,6 +391,9 @@ public class View {
 
     }
 
+    /**
+     * Method prepares visibility of all key GUI elements when normal state of app - after admin section leaving
+     */
     public void exitGUIAdmin(Rectangle rightBlur1,
                              Rectangle rightBlur111,
                              ListView linesInfo,
@@ -320,6 +438,9 @@ public class View {
         editDetoursInfo.setVisible(false);
     }
 
+    /**
+     * Method is called when usre clicks on a vehicle. Position of scaled vehicle is moved, proper next/final stop is set, etc..
+     */
     public void showVehicleRoute(Pane mapContent,
                                  Rectangle background,
                                  Pane bottomWindow,

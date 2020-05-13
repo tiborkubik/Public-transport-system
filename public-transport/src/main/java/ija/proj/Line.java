@@ -18,46 +18,16 @@ import java.util.List;
  * Each line within one map has special color. Type of line defines what kind of vehicles are used - trams, subways, buses..
  */
 public class Line implements Drawable {
-    private String identifier;
-    /**
-     * < Unique line identifier
-     */
-    private String type;
-    /**
-     * < Type of line - Bus/Tram/Subway
-     */
-    private javafx.scene.paint.Color col;
-    /**
-     * < Unique color of given line
-     */
-    private List<LocalTime> timetable = new ArrayList<>();
-    /**
-     * < Timetable of scheduled departures
-     */
-
-    private List<Street> streetList;
-    /**
-     * < List of all streets that define given line
-     */
-    private List<Stop> stopList;
-    /**
-     * < List of all stops that define given line
-     */
-
-    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();
-    /**
-     * < Path of a line = stops + end of lines
-     */
-    private LinkedHashMap<String, Coordinate> defaultPath = new LinkedHashMap<>();
-    /**
-     * < Path of a line = stops + end of lines before admin's change/s
-     */
-
-    private List<Coordinate> streetsBegins = new ArrayList<>();
-    /**
-     * < List of all stats of lines
-     */
-    private List<Coordinate> streetsEnds = new ArrayList<>();                   /**< List of all ends of lines */
+    private String identifier;                              /**< Unique line identifier */
+    private String type;                                    /**< Type of line - Bus/Tram/Subway */
+    private javafx.scene.paint.Color col;                   /**< Unique color of given line */
+    private List<LocalTime> timetable = new ArrayList<>();  /**< Timetable of scheduled departures */
+    private List<Street> streetList;                        /**< List of all streets that define given line */
+    private List<Stop> stopList;                            /**< List of all stops that define given line */
+    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();         /**< Path of a line = stops + end of lines */
+    private LinkedHashMap<String, Coordinate> defaultPath = new LinkedHashMap<>();  /**< Path of a line = stops + end of lines before admin's change/s */
+    private List<Coordinate> streetsBegins = new ArrayList<>();     /**< List of all stats of lines */
+    private List<Coordinate> streetsEnds = new ArrayList<>();       /**< List of all ends of lines */
 
 
     /**
@@ -273,38 +243,38 @@ public class Line implements Drawable {
 
             Coordinate start = streetsBegins.get(i);
             Coordinate end = streetsEnds.get(i);
-            int n_lines = street.getN_lines();
+            int n_lines = street.getNLines();
 
             //fix endings when last street was shifted by n*6
-            if (i > 0 && streetList.get(i - 1).getN_lines() != 0 && streetList.get(i - 1).getSlope() != street.getSlope()) {
+            if (i > 0 && streetList.get(i - 1).getNLines() != 0 && streetList.get(i - 1).getSlope() != street.getSlope()) {
                 if (streetList.get(i - 1).getSlope() == 2.0) {
-                    start.setX(start.getX() + 6 * (streetList.get(i - 1).getN_lines()));
+                    start.setX(start.getX() + 6 * (streetList.get(i - 1).getNLines()));
                 }
                 if (streetList.get(i - 1).getSlope() == 0.0) {
-                    start.setY(start.getY() - 6 * (streetList.get(i - 1).getN_lines()));
+                    start.setY(start.getY() - 6 * (streetList.get(i - 1).getNLines()));
                 }
             }
-            if (i > 0 && streetList.get(i - 1).getN_lines() == 0 && streetList.get(i - 1).getSlope() != street.getSlope()) {
+            if (i > 0 && streetList.get(i - 1).getNLines() == 0 && streetList.get(i - 1).getSlope() != street.getSlope()) {
                 if (streetList.get(i - 1).getSlope() == 0.0) {
 
-                    start.setX(start.getX() + 6 * streetList.get(i - 1).getN_lines());
+                    start.setX(start.getX() + 6 * streetList.get(i - 1).getNLines());
                 }
             }
-            if (i < streetList.size() - 1 && streetList.get(i + 1).getN_lines() == 1) {
+            if (i < streetList.size() - 1 && streetList.get(i + 1).getNLines() == 1) {
                 if (streetList.get(i + 1).getSlope() != 2.0) {
-                    end.setX(end.getX() + 6 * streetList.get(i + 1).getN_lines());
+                    end.setX(end.getX() + 6 * streetList.get(i + 1).getNLines());
                 }
                 if (streetList.get(i + 1).getSlope() == 2.0 && streetList.get(i).getSlope() == 0.0) {
-                    end.setX(end.getX() + 6 * streetList.get(i + 1).getN_lines());
+                    end.setX(end.getX() + 6 * streetList.get(i + 1).getNLines());
                 }
             }
-            if (i < streetList.size() - 1 && streetList.get(i + 1).getN_lines() != 1) {
+            if (i < streetList.size() - 1 && streetList.get(i + 1).getNLines() != 1) {
                 if (streetList.get(i + 1).getSlope() == 2.0 && streetList.get(i).getSlope() == 0.0) {
-                    end.setX(end.getX() + 6 * streetList.get(i + 1).getN_lines());
+                    end.setX(end.getX() + 6 * streetList.get(i + 1).getNLines());
                 }
             }
 
-            if (street.getSlope() != 0.0 && street.getN_lines() != 0) {
+            if (street.getSlope() != 0.0 && street.getNLines() != 0) {
                 boolean s = start.change(start.getX() + (6), start.getY());
                 boolean e = end.change(end.getX() + (6), end.getY());
 

@@ -16,60 +16,23 @@ import java.util.List;
  * Contains all important information, which define the movement and dynamics of program
  */
 public class Vehicle implements Drawable, UpdateState {
-    /**
-     * < Distance in pixels from the start of vehicle's route
-     */
 
-    protected List<Shape> GUI = new ArrayList<>();
-    private String identifier;
-    /**
-     * < Unique identifier of vehicle
-     */
-    private Coordinate position;
-    /**
-     * < Position of vehicle on map
-     */
-    private Street currentStreet;
-    /**
-     * < Street on which a vehicle currently occurs
-     */
-    private Line onLine;
-    /**
-     * < Line on which the vehicle transports passengers
-     */
-    private Stop nextStop;
-    /**
-     * < Next stop where vehicle stops
-     */
 
-    private Controller controller;
-    /**
-     * < Main controller
-     */
+    protected List<Shape> GUI = new ArrayList<>();  /**< List of GUI elements to be drawn on canvas */
+    private String identifier;                      /**< Unique identifier of vehicle */
+    private Coordinate position;                    /**< Position of vehicle on map */
+    private Street currentStreet;                   /**< Street on which a vehicle currently occurs */
+    private Line onLine;                            /**< Line on which the vehicle transports passengers */
+    private Stop nextStop;                          /**< Next stop where vehicle stops */
+    private Controller controller;                  /**< Main controller */
+    private double speed;                           /**< Speed of movement of vehicle */
+    private double constantSpeed;                   /**< Value of speed not effected by speedUp, etc */
+    private double distance = 0;                     /**< Distance in pixels from the start of vehicle's route */
+    private List<Coordinate> path = new ArrayList<>(); /**< List of all stops and ends of lines */
 
-    private double speed;
-    /**
-     * < Speed of movement of vehicle
-     */
-    private double constantSpeed;
-    /**
-     * < Value of speed not effected by speedUp, etc
-     */
-    private double distance = 0;
-    /**
-     * < List of GUI elements to be drawn on canvas
-     */
-    private List<Coordinate> path = new ArrayList<>();
-    /**
-     * < List of all stops and ends of lines
-     */
-
-    private LocalTime timeofDeparture;
-    private int cnt_time = 0;
-    /**
-     * < Counter that ensures that vehicles stop on stops
-     */
-    private int delay = 0;                                  /**< Delay of a vehicle when a traffic jam is set or a detour */
+    private LocalTime timeofDeparture;              /**< Time of departure of vehicle from timetable */
+    private int cnt_time = 0;                       /** < Counter that ensures that vehicles stop on stops */
+    private int delay = 0;                          /**< Delay of a vehicle when a traffic jam is set or a detour */
 
     /***
      * Method creates a new car of public transport in the given city

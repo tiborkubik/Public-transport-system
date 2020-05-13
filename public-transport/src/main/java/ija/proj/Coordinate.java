@@ -9,16 +9,15 @@ import java.util.Objects;
  * Point with coordinates [0,0] lies in the upper left corner of the map
  */
 public class Coordinate {
-    private double x;
-    /**
-     * < X attribute of the coordinate
-     */
-    private double y;
+    private double x;    /**< X attribute of the coordinate */
+    private double y; /**< Y attribute of the coordinate */
 
     /**
-     * < Y attribute of the coordinate
+     * Coordinate constructor
+     *
+     * @param inputX X value of coordinate
+     * @param inputY Y value of coordinate
      */
-
     public Coordinate(double inputX, double inputY) {
         x = inputX;
         y = inputY;

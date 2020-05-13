@@ -15,45 +15,17 @@ import java.util.List;
  * controller object as well as object view which run the application
  */
 public class Main extends Application {
-    private FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml"));
-    /**
-     * < Loads layout of the application
-     */
+    private FXMLLoader layoutLoader = new FXMLLoader(getClass().getResource("/mapLayout.fxml"));    /**< Loads layout of the application */
     private String normalLine = getClass().getResource("/normalLine.css").toExternalForm();
 
-    private Loader loader;
-    /**
-     * < Loads data about map, lines, stops
-     */
-    private View view;
-    /**
-     * < Object used for manipulation with UI
-     */
-    private Controller controller;
-    /**
-     * < Object resposible for workflow of the application
-     */
-    private BorderPane rootElement;
-    /**
-     * < UI element
-     */
-    private Scene mainScene;
-    /**
-     * <  UI element
-     */
-
-    private List<Drawable> allElements = new ArrayList<>();
-    /**
-     * < All elements to display
-     */
-    private List<Drawable> streets = new ArrayList<>();
-    /**
-     * < List of street on the map
-     */
-    private List<Line> lines = new ArrayList<>();
-    /**
-     * < List of Public transport lines
-     */
+    private Loader loader;      /** < Loads data about map, lines, stops */
+    private View view;          /**< Object used for manipulation with UI */
+    private Controller controller;  /**< Object resposible for workflow of the application */
+    private BorderPane rootElement; /** < UI element */
+    private Scene mainScene;        /**<  UI element */
+    private List<Drawable> allElements = new ArrayList<>(); /**< All elements to display */
+    private List<Drawable> streets = new ArrayList<>();     /**< List of street on the map */
+    private List<Line> lines = new ArrayList<>();           /**< List of Public transport lines */
     private Timetable timeTable;                            /**< departures of specific lines */
 
     /**

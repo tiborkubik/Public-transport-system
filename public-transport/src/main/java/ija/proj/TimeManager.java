@@ -14,49 +14,18 @@ import java.util.List;
  * Class TimeManager controls time of  the application and ensures time jumps, and flow of the time of application
  */
 public class TimeManager {
-    /**
-     * < Instance of the class controller
-     */
-    public Timeline timer;
-    private View view;
-    /**
-     * < Instance of the class view
-     */
-    private Controller controller;
-    /**
-     * < Instance of the class Timeline which keep the time running
-     */
-    private LocalTime timeToJump;
-    /**
-     * < Time would like to jump to
-     */
-    private LocalTime begin;
-    /**
-     * < Used for storing current time while time jumping
-     */
-    private LocalTime currentTime = LocalTime.now().minusHours(1);
-    /**
-     * < Time of the application (at the start 1hour earlier to ensure that lines will be spawned)
-     */
+    public Timeline timer;          /**< Instance of the class Timeline which keep the time running */
+    private View view;              /**< Instance of the class view */
+    private Controller controller;  /**< Instance of the class controller */
+    private LocalTime timeToJump;   /**< Time would like to jump to */
+    private LocalTime begin;        /**< Used for storing current time while time jumping */
+    private LocalTime currentTime = LocalTime.now().minusHours(1);  /**< Time of the application (at the start 1hour earlier to ensure that lines will be spawned) */
 
-    private List<Drawable> vehiclesToAdd = new ArrayList<>();
-    /**
-     * < Vehicles added to be shown, according timetable
-     */
-    private List<Line> lines = new ArrayList<>();
-    /**
-     * < List of lines
-     */
-
-    private double scaleForSpeed = 1.0;
-    /**
-     * < speed of time
-     */
-    private double timeMultiplier = 15;
-    /**
-     * < timer is called "timeMultiplier" times per second
-     */
-    private long elapse_time = 0;       /**< time of elapse */
+    private List<Drawable> vehiclesToAdd = new ArrayList<>();   /**< Vehicles added to be shown, according timetable */
+    private List<Line> lines = new ArrayList<>();               /**< List of lines */
+    private double scaleForSpeed = 1.0;     /**< speed of time */
+    private double timeMultiplier = 15;     /**< timer is called "timeMultiplier" times per seconds */
+    private long elapse_time = 0;           /**< time of elapse */
 
 
     /**
