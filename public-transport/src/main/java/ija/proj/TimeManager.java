@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
 import java.time.LocalTime;
@@ -115,7 +116,13 @@ public class TimeManager {
                         update.update(currentTime,15/this.timeMultiplier, trafficCoeff);
                         if(controller.getFocusedVehicle() != null) {
                             controller.getNextStopText().setText(controller.getFocusedVehicle().getNextStop().getName());
-                            controller.getVehicleOnRoute().setCenterX(50+controller.getFocusedVehicle().getPassedDistance()/controller.getFocusedVehicle().getLine().totalPathLength()*850);
+                            if(controller.getFocusedVehicle() instanceof Bus)
+                                controller.getVehicleOnRouteBus().setCenterX(50+controller.getFocusedVehicle().getPassedDistance()/controller.getFocusedVehicle().getLine().totalPathLength()*850);
+                            if(controller.getFocusedVehicle() instanceof Subway)
+                                controller.getVehicleOnRouteSub().setX(40+controller.getFocusedVehicle().getPassedDistance()/controller.getFocusedVehicle().getLine().totalPathLength()*850);
+                            if(controller.getFocusedVehicle() instanceof Tram)
+                                controller.getVehicleOnRouteTram().setX(42+controller.getFocusedVehicle().getPassedDistance()/controller.getFocusedVehicle().getLine().totalPathLength()*850);
+
                         }
                         else
                             controller.getNextStopText().setText("-");

@@ -161,7 +161,9 @@
                                 <Font name="Impact" size="24.0" />
                             </font>
                         </Text>
-                        <Circle fx:id="vehicleOnRoute" centerX="50.0" centerY="180.0" fill="#323232" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
+                        <Circle fx:id="vehicleOnRouteBus" centerX="50.0" centerY="180.0" fill="#323232" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" />
+                  <Rectangle fx:id="vehicleOnRouteSub" arcHeight="5.0" arcWidth="5.0" fill="#323232" height="10.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="20.0" x="40.0" y="175.0" />
+                  <Rectangle fx:id="vehicleOnRouteTram" fill="#323232" height="16.0" rotate="45.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" visible="false" width="16.0" x="42.0" y="172.0" />
                     </children>
                 </Pane>
                 <Rectangle fx:id="saveBackground" arcHeight="10.0" arcWidth="10.0" fill="#32a103b0" height="69.0" layoutX="650.0" layoutY="900.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="331.0" />

@@ -86,7 +86,11 @@ public class Controller {
     @FXML
     private Button setIntensity;            /**< button to save jam degree*/
     @FXML
-    private Circle vehicleOnRoute;          /**< representation of vehicle on the bottom route */
+    private Circle vehicleOnRouteBus;          /**< representation of vehicle on the bottom route */
+    @FXML
+    private Rectangle vehicleOnRouteSub;
+    @FXML
+    private Rectangle vehicleOnRouteTram;
 
     private SpinnerValueFactory<Integer> spinnerVal = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 9, 1); /**< Stores degree of the traffic jam */
     private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true); /**< Defines size of the background picture */
@@ -494,12 +498,17 @@ public class Controller {
                 view.changeLineColor(mapContent, lines.get(i), view.colorsForLines.get(i));
             }
 
-            vehicleOnRoute.setCenterX(50);
+            vehicleOnRouteBus.setCenterX(50);
+            vehicleOnRouteSub.setX(40);
+            vehicleOnRouteTram.setX(42);
+
             view.cleanRouteFromStops(bottomWindow);
             view.clickedOnVoid(finalStopInfo, finalStopText, nextStopText, bottomWindow);
             delayText.setText("Delay: 0 min");
             focusedVehicle = null;
-            vehicleOnRoute.setVisible(false);
+            vehicleOnRouteBus.setVisible(false);
+            vehicleOnRouteSub.setVisible(false);
+            vehicleOnRouteSub.setVisible(false);
         });
     }
 
@@ -601,8 +610,13 @@ public class Controller {
 
                 sg.setOnMouseClicked(event -> {
                     focusedVehicle = null;
-                    vehicleOnRoute.setVisible(false);
-                    vehicleOnRoute.setCenterX(50);
+                    vehicleOnRouteBus.setVisible(false);
+                    vehicleOnRouteTram.setVisible(false);
+                    vehicleOnRouteSub.setVisible(false);
+                    vehicleOnRouteBus.setCenterX(50);
+                    vehicleOnRouteSub.setX(40);
+                    vehicleOnRouteTram.setX(42);
+
                     delayText.setText("Delay: 0 min");
                     boolean onLine = false;
 
@@ -667,10 +681,24 @@ public class Controller {
     /**
      * Returns vehicle on Route (Bottom line)
      *
-     * @return vehicle on route
+     * @return vehicle on route when clicked on bus
      */
-    public Circle getVehicleOnRoute() {
-        return vehicleOnRoute;
+    public Circle getVehicleOnRouteBus() {
+        return vehicleOnRouteBus;
+    }
+
+    /**
+     * @return Vehicle on route when clicked on sub
+     */
+    public Rectangle getVehicleOnRouteSub() {
+        return vehicleOnRouteSub;
+    }
+
+    /**
+     * @return Vehicle on route when clicked on tram
+     */
+    public Rectangle getVehicleOnRouteTram() {
+        return vehicleOnRouteTram;
     }
 
     /**
@@ -706,7 +734,12 @@ public class Controller {
                         if(sg.getId().contains(v.getName())) {
 
                             focusedVehicle = v;
-                            vehicleOnRoute.setVisible(true);
+                            if(sg instanceof Circle)
+                                vehicleOnRouteBus.setVisible(true);
+                            if(sg instanceof Rectangle)
+                                vehicleOnRouteSub.setVisible(true);
+                            if(sg instanceof Polygon)
+                                vehicleOnRouteTram.setVisible(true);
                         }
                     }
                     if (focusedVehicle != null) {
@@ -728,14 +761,14 @@ public class Controller {
                                 delay += (s.begin().coordsDistance(s.end())/(5.31340759143*speed)) * s.getTrafficDensity()*2 - (s.begin().coordsDistance(s.end())/(5.31340759143*speed));
                             }
                         }
-                        System.out.println("delay:" + delay);
+//                        System.out.println("delay:" + delay);
                         double delayInMins = delay/60.0;
                         int fullMins = (int)delayInMins;
 
                         if((delayInMins - fullMins) > 0.5)
                             ++fullMins;
 
-                        System.out.println(delayInMins + " " + fullMins);
+//                        System.out.println(delayInMins + " " + fullMins);
                         focusedVehicle.setDelay(fullMins);
                         delayText.setText("Delay: " + fullMins + " min");
                     }
