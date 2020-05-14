@@ -267,7 +267,16 @@ public class Controller {
                 }
 
                 lineDetoured.deleteStops(beingDetoured);
-                lineDetoured.setStreets(newStreets, streetsToAddToLine, beingDetoured);
+                double diff =  lineDetoured.setStreets(newStreets, streetsToAddToLine, beingDetoured);
+                int nStops = beingDetoured.getNStops();
+                int speed;
+                if (lineDetoured.getType().equals("Bus"))
+                    speed = 1;
+                else if (lineDetoured.getType().equals("Tram"))
+                    speed = 2;
+                else
+                    speed = 3;
+                lineDetoured.setDelay((int) (diff/(5.31340759143 * speed)-(nStops*34.4496671)/60));
 
             } catch (Exception ignore) {
             }
@@ -850,14 +859,13 @@ public class Controller {
                                 delay += (s.begin().coordsDistance(s.end()) / (5.31340759143 * speed)) * s.getTrafficDensity() * 2 - (s.begin().coordsDistance(s.end()) / (5.31340759143 * speed));
                             }
                         }
-//                        System.out.println("delay:" + delay);
                         double delayInMins = delay / 60.0;
                         int fullMins = (int) delayInMins;
 
                         if ((delayInMins - fullMins) > 0.5)
                             ++fullMins;
-
-//                        System.out.println(delayInMins + " " + fullMins);
+                        focusedVehicle.getLine().setDelay(fullMins);
+                        fullMins = focusedVehicle.getLine().getDelay();
                         focusedVehicle.setDelay(fullMins);
                         delayText.setText("Delay: " + fullMins + " min");
                     }

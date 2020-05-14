@@ -25,11 +25,19 @@ public class Line implements Drawable {
     private List<LocalTime> timetable = new ArrayList<>();  /**< Timetable of scheduled departures */
     private List<Street> streetList;                        /**< List of all streets that define given line */
     private List<Stop> stopList;                            /**< List of all stops that define given line */
-    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>();         /**< Path of a line = stops + end of lines */
-    private LinkedHashMap<String, Coordinate> defaultPath = new LinkedHashMap<>();  /**< Path of a line = stops + end of lines before admin's change/s */
+    private LinkedHashMap<String, Coordinate> path = new LinkedHashMap<>(); /**< Path of a line = stops + end of lines */
+    private int delay = 0;
     private List<Coordinate> streetsBegins = new ArrayList<>();     /**< List of all stats of lines */
     private List<Coordinate> streetsEnds = new ArrayList<>();       /**< List of all ends of lines */
 
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay += delay;
+    }
 
     /**
      * Method creates a new line of public transport system in given city
@@ -45,7 +53,6 @@ public class Line implements Drawable {
         this.streetList = streetList;
         this.stopList = stopList;
         setPath();
-        this.defaultPath = this.path;
     }
 
     /**
@@ -55,9 +62,12 @@ public class Line implements Drawable {
      * @param toAdd      List of old streets together with inserted new streets
      * @param detoured   A street that is being detoured
      */
-    public void setStreets(List<Street> newStreets, List<Street> toAdd, Street detoured) {
+    public double setStreets(List<Street> newStreets, List<Street> toAdd, Street detoured) {
+        double pathBeforeDetouring = totalPathLength();
+        int nStops = detoured.getNStops();
         this.streetList = newStreets;
-        this.setPathDetour(toAdd, detoured);
+        double diff = this.setPathDetour(toAdd, detoured, pathBeforeDetouring, nStops);
+        return  diff;
     }
 
     /**
@@ -93,7 +103,6 @@ public class Line implements Drawable {
                 }
             }
         }
-
     }
 
     /**
@@ -198,7 +207,7 @@ public class Line implements Drawable {
      * @param toAdd    List of streets that are going to define line after detour
      * @param detoured Detoured street
      */
-    private void setPathDetour(List<Street> toAdd, Street detoured) {
+    private double setPathDetour(List<Street> toAdd, Street detoured, double pathBeforeDetouring, int nStops) {
         LinkedHashMap<String, Coordinate> newPath = new LinkedHashMap<>();
 
         path.forEach((k, v) -> {
@@ -213,7 +222,15 @@ public class Line implements Drawable {
             }
         });
         this.path = newPath;
+
+        double afterAddingDetour = totalPathLength();
+
+        double diff = afterAddingDetour - pathBeforeDetouring;// - pathBeforeDetouring-(nStops*);
+        return diff;
     }
+
+
+
 
     /**
      * Method adds a time into line's timetable
