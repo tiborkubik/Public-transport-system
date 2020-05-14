@@ -20,9 +20,6 @@ import java.util.List;
  * Class uses XML parser as all information are in form of XML files.
  */
 public class Loader {
-    private static String resources = "src/main/resources/";
-//    private static String resources= "public-transport/src/main/resources/";
-
     /**
      * Method loads all streets from input XML file. Streets are parsed from XML and added into a list of Drawable objects, which is then returned
      *
@@ -30,7 +27,7 @@ public class Loader {
      */
     public List<Drawable> loadMapData(List<Drawable> allElements) {
         try {
-            File fXmlFile = new File(resources + "mapData.xml");
+            File fXmlFile = new File("data/resources/mapData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -143,7 +140,7 @@ public class Loader {
         List<Line> allLines = new ArrayList<>();
 
         try {
-            File fXmlFile = new File(resources + "lineData.xml");
+            File fXmlFile = new File("data/resources/lineData.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
@@ -231,7 +228,7 @@ public class Loader {
      */
     public void loadTimetableData(List<Line> lines) {
         try {
-            File fXmlFile = new File(resources + "timetable.xml");
+            File fXmlFile = new File("data/resources/timetable.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);

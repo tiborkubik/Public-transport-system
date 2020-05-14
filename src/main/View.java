@@ -29,7 +29,7 @@ import java.util.List;
 public class View {
     List<Color> colorsForLines = new ArrayList<>();         /**< List of prepared colors for lines */
     Controller controller;                                  /**< Main program controller */
-    private Image bg = new Image("mapa1.jpg");          /**< Path to background image */
+    private Image bg = new Image("/map.jpg");          /**< Path to background image */
     private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true); /**< Defines size of the background picture */
 
     /**

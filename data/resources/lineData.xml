@@ -1,0 +1,508 @@
+<?xml version="1.0"?>
+
+<lines_data>
+  <line id="Bus Line 40" type="bus">
+    <street id="Lexington Con">
+      <stop id="1st+Lex">
+        <x>800</x>
+        <y>50</y>
+      </stop>
+      <stop id="2nd+Lex">
+        <x>800</x>
+        <y>150</y>
+      </stop>
+    </street>
+
+    <street id="Babylon Con">
+      <stop id="3rd+Bab">
+        <x>800</x>
+        <y>240</y>
+      </stop>
+    </street>
+
+    <street id="Mid 3rd St">
+      <stop id="3rd+Mid">
+        <x>1120</x>
+        <y>290</y>
+      </stop>
+    </street>
+
+    <street id="East 3rd St">
+      <stop id="East 3rd St Sand St">
+        <x>1600</x>
+        <y>300</y>
+      </stop>
+    </street>
+
+    <street id="Jobs Ave B">
+      <stop id="Jobs Ave B Sloping">
+        <x>1650</x>
+        <y>225</y>
+      </stop>
+    </street>
+
+    <street id="Jobs Ave A">
+    </street>
+
+    <street id="East 1st St">
+      <stop id="East 1st St Upper">
+        <x>1320</x>
+        <y>50</y>
+      </stop>
+      <stop id="East 1st St Lower">
+        <x>1120</x>
+        <y>50</y>
+      </stop>
+    </street>
+  </line>
+
+  <line id="Metro Line A" type="sub">
+    <street id="Bercley St A">
+      <stop id="Bc W1">
+<!--        <time>50</time>-->
+        <x>50</x>
+        <y>50</y>
+      </stop>
+      <stop id="Bc W2">
+        <x>50</x>
+        <y>130</y>
+      </stop>
+    </street>
+
+    <street id="Bercley St B">
+      <stop id="Bc W3">
+<!--        <time>50</time>-->
+        <x>50</x>
+        <y>230</y>
+      </stop>
+    </street>
+
+    <street id="Bercley St C">
+      <stop id="Bc W4N">
+        <x>50</x>
+        <y>280</y>
+      </stop>
+      <stop id="Bc W4S">
+        <x>50</x>
+        <y>370</y>
+      </stop>
+    </street>
+
+    <street id="Monroe Ave">
+    </street>
+
+    <street id="Pitt Ave">
+      <stop id="By Monroes">
+        <x>400</x>
+        <y>900</y>
+      </stop>
+
+      <stop id="By Beverleys">
+        <x>400</x>
+        <y>700</y>
+      </stop>
+
+      <stop id="By Monkeys">
+        <x>400</x>
+        <y>500</y>
+      </stop>
+    </street>
+
+    <street id="Mid 4th St">
+      <stop id="Oxford Cross">
+        <x>400</x>
+        <y>400</y>
+      </stop>
+
+      <stop id="51M Stop">
+        <x>500</x>
+        <y>400</y>
+      </stop>
+
+      <stop id="Mainsons">
+        <x>900</x>
+        <y>400</y>
+      </stop>
+    </street>
+
+    <street id="4th Con">
+      <stop id="4th+2ndE">
+        <x>1010</x>
+        <y>400</y>
+      </stop>
+
+      <stop id="4th+Card">
+        <x>1200</x>
+        <y>400</y>
+      </stop>
+    </street>
+
+    <street id="East 4th St">
+      <stop id="Monokays">
+        <x>1300</x>
+        <y>400</y>
+      </stop>
+      <stop id="4th+Jobs">
+        <x>1630</x>
+        <y>400</y>
+      </stop>
+    </street>
+  </line>
+
+  <line id="Tram Line 1" type="tram">
+    <street id="East 1st St">
+      <stop id="East 1st St Upper">
+        <x>1320</x>
+        <y>50</y>
+      </stop>
+      <stop id="East 1st St Lower">
+        <x>1120</x>
+        <y>50</y>
+      </stop>
+    </street>
+
+    <street id="Lexington Con">
+      <stop id="1st+Lex">
+        <x>800</x>
+        <y>50</y>
+      </stop>
+      <stop id="2nd+Lex">
+        <x>800</x>
+        <y>150</y>
+      </stop>
+    </street>
+
+    <street id="Babylon Con">
+      <stop id="3rd+Bab">
+        <x>800</x>
+        <y>240</y>
+      </stop>
+    </street>
+
+    <street id="Rabadon St">
+    </street>
+
+    <street id="2nd Ave">
+      <stop id="4th+2ndS">
+        <x>1000</x>
+        <y>430</y>
+      </stop>
+
+      <stop id="Eleys">
+        <x>1000</x>
+        <y>600</y>
+      </stop>
+
+      <stop id="Inseys">
+        <x>1000</x>
+        <y>820</y>
+      </stop>
+
+      <stop id="Big Circuit N">
+        <x>1000</x>
+        <y>990</y>
+      </stop>
+    </street>
+
+    <street id="Mountain Tunnel Road">
+      <stop id="By Tunnel Entry E">
+        <x>1200</x>
+        <y>1000</y>
+      </stop>
+
+      <stop id="By Tunnel Entry W">
+        <x>2000</x>
+        <y>1000</y>
+      </stop>
+
+      <stop id="Ex Stop">
+        <x>2200</x>
+        <y>1000</y>
+      </stop>
+    </street>
+
+    <street id="Hancock St">
+      <stop id="Dog Beach">
+        <x>2200</x>
+        <y>850</y>
+      </stop>
+    </street>
+
+    <street id="Ocean Ave C">
+    </street>
+
+    <street id="Ocean Ave B">
+      <stop id="Surf Beach S">
+        <x>2100</x>
+        <y>700</y>
+      </stop>
+
+      <stop id="Surf Beach N">
+        <x>2100</x>
+        <y>600</y>
+      </stop>
+
+      <stop id="Swim Beach S">
+        <x>2100</x>
+        <y>400</y>
+      </stop>
+
+      <stop id="Swim Beach N">
+        <x>2100</x>
+        <y>300</y>
+      </stop>
+    </street>
+
+    <street id="Ocean Ave A">
+      <stop id="Sunsets">
+        <x>1950</x>
+        <y>100</y>
+      </stop>
+    </street>
+  </line>
+
+  <line id="Bus Line 41" type="bus">
+    <street id="Jobs Ave E">
+<!--      <stop id="6th+Jobs">-->
+<!--        <x>1700</x>-->
+<!--        <y>600</y>-->
+<!--      </stop>-->
+
+    </street>
+
+    <street id="Jobs Ave D">
+<!--      <stop id="5th+Jobs">-->
+<!--        <x>1700</x>-->
+<!--        <y>500</y>-->
+<!--      </stop>-->
+    </street>
+    <street id="Jobs Ave C">
+    </street>
+    <street id="Jobs Ave B"/>
+
+    <street id="Jobs Ave A">
+      <stop id="Lawns">
+        <x>1600</x>
+        <y>75</y>
+      </stop>
+      <stop id="1st+Jobs">
+        <x>1600</x>
+        <y>50</y>
+      </stop>
+    </street>
+  </line>
+
+  <line id="Metro Line B" type="sub">
+    <street id="French Loke">
+      <stop id="By Forest W">
+        <x>450</x>
+        <y>2000</y>
+      </stop>
+      <stop id="By Forest E">
+        <x>450</x>
+        <y>2120</y>
+      </stop>
+    </street>
+
+    <street id="Erwin St">
+      <stop id="Old Town Road">
+        <x>650</x>
+        <y>2120</y>
+      </stop>
+      <stop id="HighWay Entry">
+        <x>800</x>
+        <y>2120</y>
+      </stop>
+
+      <stop id="By Highway exit">
+        <x>950</x>
+        <y>2120</y>
+      </stop>
+    </street>
+
+    <street id="Griffin St">
+      <stop id="Marylands">
+        <x>800</x>
+        <y>1950</y>
+      </stop>
+    </street>
+
+    <street id="Whitby Road">
+      <stop id="Graveyard S">
+        <x>800</x>
+        <y>1850</y>
+      </stop>
+      <stop id="Graveyard N">
+        <x>800</x>
+        <y>1720</y>
+      </stop>
+    </street>
+
+    <street id="Torn Road">
+      <stop id="Downtown Hd">
+        <x>800</x>
+        <y>1600</y>
+      </stop>
+      <stop id="Army HQ">
+        <x>800</x>
+        <y>1500</y>
+      </stop>
+    </street>
+
+    <street id="Short St">
+    </street>
+
+    <street id="King St">
+    </street>
+
+    <street id="Pont Glen">
+      <stop id="Red Stop">
+        <x>675</x>
+        <y>1300</y>
+      </stop>
+    </street>
+
+    <street id="Sylvan Lawn"/>
+
+    <street id="Taylor Market">
+      <stop id="On River Delta">
+        <x>400</x>
+        <y>1180</y>
+      </stop>
+    </street>
+
+    <street id="Mid 10th St">
+      <stop id="University Campus W">
+        <x>430</x>
+        <y>1000</y>
+      </stop>
+
+      <stop id="University Campus E">
+        <x>630</x>
+        <y>1000</y>
+      </stop>
+    </street>
+
+    <street id="Pearl St"/>
+
+    <street id="Oxford St">
+      <stop id="University Pitch">
+        <x>900</x>
+        <y>900</y>
+      </stop>
+
+      <stop id="University Buffet">
+        <x>800</x>
+        <y>800</y>
+      </stop>
+
+      <stop id="Circus Place">
+        <x>500</x>
+        <y>500</y>
+      </stop>
+    </street>
+
+  </line>
+
+  <line id="Bus Line 73" type="bus">
+    <street id="Baker St">
+      <stop id="Baked">
+        <x>2000</x>
+        <y>1570</y>
+      </stop>
+      <stop id="Roasted">
+        <x>1600</x>
+        <y>1570</y>
+      </stop>
+    </street>
+
+    <street id="Stuart Piece">
+      <stop id="Mixed">
+        <x>1050</x>
+        <y>1570</y>
+      </stop>
+    </street>
+
+    <street id="Woodhey Lane">
+      <stop id="Cement Factory">
+        <x>1150</x>
+        <y>1720</y>
+      </stop>
+
+      <stop id="Litch INC">
+        <x>1260</x>
+        <y>1720</y>
+      </stop>
+
+      <stop id="Prison">
+        <x>1750</x>
+        <y>1720</y>
+      </stop>
+    </street>
+
+    <street id="Pub Row">
+      <stop id="Drank Stop">
+        <x>2100</x>
+        <y>1730</y>
+      </stop>
+    </street>
+
+    <street id="Princess Oak"/>
+
+    <street id="Garden Hall">
+      <stop id="Purple">
+        <x>1700</x>
+        <y>1850</y>
+      </stop>
+    </street>
+
+    <street id="Spock St">
+      <stop id="White">
+        <x>1100</x>
+        <y>1850</y>
+      </stop>
+    </street>
+
+    <street id="Colwyn St">
+      <stop id="Ivory">
+        <x>1900</x>
+        <y>1950</y>
+      </stop>
+
+      <stop id="Labour Day">
+        <x>1780</x>
+        <y>1950</y>
+      </stop>
+
+      <stop id="6th of July">
+        <x>1600</x>
+        <y>1950</y>
+      </stop>
+
+      <stop id="State Cross">
+        <x>1000</x>
+        <y>1950</y>
+      </stop>
+    </street>
+
+    <street id="Canadian St"/>
+
+    <street id="Chair St">
+      <stop id="By Forest W">
+        <x>450</x>
+        <y>2000</y>
+      </stop>
+    </street>
+
+    <street id="Maris Vale">
+      <stop id="Purple End">
+        <x>400</x>
+        <y>1800</y>
+      </stop>
+    </street>
+  </line>
+</lines_data>
+
+
+
+
