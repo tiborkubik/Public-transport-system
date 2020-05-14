@@ -1,3 +1,13 @@
 .normalLine{
     -fx-stroke-dash-array: none;
 }
+
+.list-view .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #2C2D2F;
+    -fx-text-fill: #CDCDCD;
+}
+

@@ -45,6 +45,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
         this.mainScene = new Scene(rootElement);       // loads root element from GUI
+
         this.mainScene.getStylesheets().add(normalLine);
 
         primaryStage.setScene(mainScene);               // setting scene into stage

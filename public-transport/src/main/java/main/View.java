@@ -29,7 +29,7 @@ import java.util.List;
 public class View {
     List<Color> colorsForLines = new ArrayList<>();         /**< List of prepared colors for lines */
     Controller controller;                                  /**< Main program controller */
-    private Image bg = new Image("mapa1.jpg");          /**< Path to background image */
+    private Image bg = new Image("nightmap.png");          /**< Path to background image */
     private BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true); /**< Defines size of the background picture */
 
     /**
@@ -252,7 +252,7 @@ public class View {
      */
     public void addStopToRoute(javafx.scene.shape.Line vehicleRoute, double distFromStart, double realToImPath, int i, Vehicle singleV, Pane bottomWindow) {
         javafx.scene.shape.Line stopLine = new javafx.scene.shape.Line(vehicleRoute.getStartX() + distFromStart / realToImPath, vehicleRoute.getStartY(), vehicleRoute.getStartX() + distFromStart / realToImPath + 10, vehicleRoute.getStartY() - 10);
-        stopLine.setStroke(Color.rgb(50, 50, 50));
+        stopLine.setStroke(Color.rgb(205, 205, 205));
         stopLine.setStrokeLineCap(StrokeLineCap.ROUND);
         stopLine.setStrokeLineJoin(StrokeLineJoin.ROUND);
         stopLine.setStrokeWidth(4);
@@ -262,7 +262,7 @@ public class View {
 
         stopName.setFont(Font.font("Impact", 14));
         stopName.getTransforms().add(new Rotate(-45, stopLine.getEndX() + 10, stopLine.getEndY() - 5));
-        stopName.setFill(Color.rgb(50, 50, 50));
+        stopName.setFill(Color.rgb(205, 205, 205));
         stopName.setId("RouteStopName");
         bottomWindow.getChildren().add(stopLine);
         bottomWindow.getChildren().add(stopName);
@@ -281,7 +281,7 @@ public class View {
      */
     public void addStopToRoute(javafx.scene.shape.Line vehicleRoute, double distFromStart, double realToImPath, int i, List<Stop> allStops, Pane bottomWindow, LocalTime printTime) {
         javafx.scene.shape.Line stopLine = new javafx.scene.shape.Line(vehicleRoute.getStartX() + distFromStart / realToImPath, vehicleRoute.getStartY(), vehicleRoute.getStartX() + distFromStart / realToImPath + 10, vehicleRoute.getStartY() - 10);
-        stopLine.setStroke(Color.rgb(50, 50, 50));
+        stopLine.setStroke(Color.rgb(205, 205, 205));
         stopLine.setStrokeLineCap(StrokeLineCap.ROUND);
         stopLine.setStrokeLineJoin(StrokeLineJoin.ROUND);
         stopLine.setStrokeWidth(4);
@@ -303,7 +303,7 @@ public class View {
 
             stopName.setFont(Font.font("Impact", 14));
             stopName.getTransforms().add(new Rotate(-45, stopLine.getEndX() + 10, stopLine.getEndY() - 5));
-            stopName.setFill(Color.rgb(50, 50, 50));
+            stopName.setFill(Color.rgb(205, 205, 205));
             stopName.setId("RouteStopName");
 
             bottomWindow.getChildren().add(stopLine);

@@ -823,12 +823,23 @@ public class Controller {
                         if (sg.getId().contains(v.getName())) {
 
                             focusedVehicle = v;
-                            if (sg instanceof Circle)
+                            if (sg instanceof Circle) {
                                 vehicleOnRouteBus.setVisible(true);
-                            if (sg instanceof Rectangle)
+                                vehicleOnRouteBus.setStroke(focusedVehicle.getLine().getColor());
+                                vehicleOnRouteBus.toFront();
+                            }
+
+                            if (sg instanceof Rectangle){
                                 vehicleOnRouteSub.setVisible(true);
-                            if (sg instanceof Polygon)
+                                vehicleOnRouteSub.setStroke(focusedVehicle.getLine().getColor());
+                                vehicleOnRouteSub.toFront();
+                            }
+                            if (sg instanceof Polygon) {
                                 vehicleOnRouteTram.setVisible(true);
+                                vehicleOnRouteTram.setStroke(focusedVehicle.getLine().getColor());
+                                vehicleOnRouteTram.toFront();
+                            }
+
                         }
                     }
                     if (focusedVehicle != null) {
