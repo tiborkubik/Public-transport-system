@@ -1,4 +1,5 @@
 # Public-transport-system
-A GUI application which provides information about public transport. Implemented as a project to IJA/2019L course
+A GUI application which provides information about public transport. 
 
-YOLO 
+Implemented as a project to IJA/2019L course
+
